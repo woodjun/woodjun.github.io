@@ -1546,11 +1546,12 @@ pre .css ~ * .id {
 .tagcloud a:hover, .tagcloud .tag-list-count:hover {
   opacity: 0.8; }
 
-.tagcloud a.tag-a {
+.tagcloud a.tag-list-link {
   float: none;
   padding-right: 0px;
   margin-right: 0px;
-  border-radius: 0; }
+  border-radius: 0;
+  background: #BA8F6C; }
 
 .tagcloud .tag-list-count {
   height: 18px;
@@ -1577,9 +1578,9 @@ pre .css ~ * .id {
   .tagcloud a.color2:before {
     border-right-color: #cc8167; }
 
-.tagcloud a.color3 {
+.tagcloud a.color3, .tagcloud .tag-list-link {
   background: #BA8F6C; }
-  .tagcloud a.color3:before {
+  .tagcloud a.color3:before, .tagcloud .tag-list-link:before {
     border-right-color: #BA8F6C; }
 
 .tagcloud a.list-item {
