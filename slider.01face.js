@@ -1718,9 +1718,13 @@ function init() {
 				// innerArchive: '所有文章'
 				// friends: '友情链接'
 				// aboutme: '关于我'
+				// tags: '标签'
+				// categories: '分类'
 				app.$set('innerArchive', false);
 				app.$set('friends', false);
 				app.$set('aboutme', false);
+				app.$set('tags', false);
+				app.$set('categories', false);
 				app.$set(type, true);
 				app.$set('isShow', true);
 				app.$set('isCtnShow', true);
@@ -1755,6 +1759,7 @@ function init() {
 	});
 
 	function handleSearch(val) {
+		console.log(111, val);
 		val = (val || '').toLowerCase();
 		var type = 'title';
 		if (val.indexOf('#') === 0) {
@@ -1762,6 +1767,7 @@ function init() {
 			type = 'tag';
 		}
 		var items = app.items;
+		console.log(app.items);
 		items.forEach(function (item) {
 			var matchTitle = false;
 			if (item.title.toLowerCase().indexOf(val) > -1) {
@@ -1841,6 +1847,8 @@ function init() {
 			app.$set('innerArchive', true);
 			app.$set('friends', false);
 			app.$set('aboutme', false);
+			app.$set('tags', false);
+			app.$set('categories', false);
 			app.$set('isShow', true);
 			app.$set('isCtnShow', true);
 			app.$set('search', '#' + $em.innerHTML);

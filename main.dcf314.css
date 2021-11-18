@@ -1524,8 +1524,6 @@ pre .css ~ * .id {
   border-radius: 0 5px 5px 0;
   margin: 5px 9px 5px 8px;
   font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace; }
-  .tagcloud a:hover {
-    opacity: 0.8; }
   .tagcloud a:before {
     content: " ";
     width: 0px;
@@ -1545,6 +1543,30 @@ pre .css ~ * .id {
     top: 7px;
     left: 2px; }
 
+.tagcloud a:hover, .tagcloud .tag-list-count:hover {
+  opacity: 0.8; }
+
+.tagcloud a.tag-a {
+  float: none;
+  padding-right: 0px;
+  margin-right: 0px;
+  border-radius: 0; }
+
+.tagcloud .tag-list-count {
+  height: 18px;
+  line-height: 18px;
+  margin: 5px 9px 5px 0px;
+  display: inline-block;
+  padding-right: 5px;
+  font-size: 10px;
+  background: #BA8F6C;
+  border-radius: 0px 5px 5px 0px;
+  font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace; }
+  .tagcloud .tag-list-count::before {
+    content: '('; }
+  .tagcloud .tag-list-count::after {
+    content: ')'; }
+
 .tagcloud a.color1 {
   background: #FF945C; }
   .tagcloud a.color1:before {
@@ -1559,6 +1581,9 @@ pre .css ~ * .id {
   background: #BA8F6C; }
   .tagcloud a.color3:before {
     border-right-color: #BA8F6C; }
+
+.tagcloud a.list-item {
+  float: none; }
 
 .tagcloud a.color4 {
   background: #94635c; }
@@ -2001,6 +2026,7 @@ pre .css ~ * .id {
       position: absolute;
       top: 14px;
       left: 0px;
+      transform: translateY(-50%);
       -webkit-transform: translateY(-50%);
       border-radius: 100%;
       background-color: #91c0f1;
