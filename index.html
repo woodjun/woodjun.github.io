@@ -446,7 +446,50 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="闭包的定义"><a href="#闭包的定义" class="headerlink" title="闭包的定义"></a>闭包的定义</h3><ul>
+<li><p>闭包是指那些能够访问自由变量的函数，自由变量是指在函数中使用的，但既不是函数参数也不是函数局部变量的变量。</p>
+<blockquote>
+<p>闭包 = 函数 + 函数能够访问自由变量</p>
+</blockquote>
+</li>
+<li><p>也可以简单的理解：</p>
+<ul>
+<li>即使创建函数的执行上下文已经被销毁，但是值仍然存在。</li>
+<li>在代码中引用了自由变量</li>
+</ul>
+</li>
+</ul>
+<h3 id="闭包原理"><a href="#闭包原理" class="headerlink" title="闭包原理"></a>闭包原理</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = checkscope();</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>执行过程</p>
+<ol>
+<li>进入全局代码，创建全局上下文，全局执行上下文压入执行上下文栈</li>
+<li>全局执行上下文初始化</li>
+<li>执行checkscope函数，创建checkscope执行上下文，checkscope执行上下文被压入执行上下文栈</li>
+<li>checkscope执行上下文初始化，创建变量对象、作用域链、this等</li>
+<li>checkscope函数执行完毕，checkscope执行上下文被弹出</li>
+<li>执行foo函数，创建foo执行上下文，foo执行上下文压入执行上下文栈中</li>
+<li>foo执行上下文初始化，创建变量对象、作用域链、this等</li>
+<li>foo函数执行完毕，checkscope执行上下文被弹出</li>
+</ol>
+</li>
+<li><p>上面的checkout的执行上下文明明被销毁了，为什么foo函数还能够访问scope变量呢？</p>
+<ul>
+<li><p>原因就是js的作用域链导致的，在foo执行上下文初始化的时候，foo为了读取scope变量，将checkscope活动变量添加到foo作用域链中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fooContext = &#123;</span><br><span class="line">  <span class="attr">Scope</span>: [AO, checkscopeContext.AO, globalContext.AO]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>foo函数可以通过作用域链能够拿到scope变量的值，因此就算checkscope执行上下文被销毁，还是能够访问到scope变量</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="闭包的应用"><a href="#闭包的应用" class="headerlink" title="闭包的应用"></a>闭包的应用</h3><ul>
+<li><p>缓存函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memorize</span>(<span class="params">fn, hasder</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> memorize = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> cache = memorize.cache</span><br><span class="line">    <span class="keyword">var</span> address = <span class="string">&#x27;&#x27;</span> + (hasder ? hasder.apply(<span class="built_in">this</span>, <span class="built_in">arguments</span>) : key)</span><br><span class="line">    <span class="keyword">if</span> (!cache[address]) &#123;</span><br><span class="line">      <span class="keyword">return</span> cache[address] = fn.apply(<span class="built_in">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cache[address]</span><br><span class="line">  &#125;</span><br><span class="line">  memorize.cache = &#123;&#125;</span><br><span class="line">  <span class="keyword">return</span> memorize</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>节流和防抖</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 防抖</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, wait, immediate</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timeout, result</span><br><span class="line">  <span class="keyword">var</span> debounce = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span></span><br><span class="line">    <span class="keyword">if</span> (timeout) <span class="built_in">clearTimeout</span>(timeout)</span><br><span class="line">    <span class="keyword">if</span> (immediate) &#123;</span><br><span class="line">      timeout = <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        timeout = <span class="literal">null</span></span><br><span class="line">      &#125;, wait)</span><br><span class="line">      <span class="keyword">if</span> (callNow) result = fn.apply(<span class="built_in">this</span>, args)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timeout = serTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        fn.apply(<span class="built_in">this</span>, args)</span><br><span class="line">      &#125;, wait)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">  debounce.cancel = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout)</span><br><span class="line">    timeout = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> debounce</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 节流</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, time</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timer = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">let</span> args = <span class="built_in">arguments</span></span><br><span class="line">    timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      fn.apply(<span class="literal">null</span>, args)</span><br><span class="line">      <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">      timer = <span class="literal">null</span></span><br><span class="line">    &#125;, time)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
       
 
       
