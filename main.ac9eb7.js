@@ -1731,22 +1731,29 @@ var _aside = __webpack_require__(212);
 
 var _aside2 = _interopRequireDefault(_aside);
 
+var _toc = __webpack_require__(213);
+
+var _toc2 = _interopRequireDefault(_toc);
+
 var _util = __webpack_require__(136);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// 边缘
+// 目录
 
-// 图片查看器
+// 分享
 // 样式
+
+// 上报
 (0, _util.addLoadEvent)(function () {
 	_share2.default.init();
 	_viewer2.default.init();
 	_aside2.default.init();
+	_toc2.default.init();
 });
-// 分享
+// 边缘
 
-// 上报
+// 图片查看器
 
 /***/ }),
 /* 202 */
@@ -7689,6 +7696,34 @@ function init() {
 
 module.exports = {
     init: init
+};
+
+/***/ }),
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var init = function init() {
+  var $tol = document.querySelector('.article-toc');
+  if (!$tol) return;
+  var $div = document.createElement('div');
+  var $divli = document.createElement('div');
+  var $itag = document.createElement('i');
+  $itag.setAttribute('class', 'icon icon-sort');
+  $div.setAttribute('class', 'toc-btn');
+  $divli.setAttribute('class', 'toc-lis');
+  $div.appendChild($itag);
+  while ($tol.children.length) {
+    $divli.appendChild($tol.children[0]);
+  }
+  $tol.appendChild($divli);
+  $tol.insertBefore($div, $tol.children[0]);
+};
+
+module.exports = {
+  init: init
 };
 
 /***/ })

@@ -2421,6 +2421,52 @@ pre .css ~ * .id {
 #article-nav #article-nav-older {
   float: right; }
 
+.article-toc {
+  position: fixed;
+  top: 30%;
+  right: 20px;
+  width: 28px;
+  height: 28px;
+  z-index: 101;
+  cursor: pointer; }
+  .article-toc .toc-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #4d4d4d;
+    color: #fff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); }
+    .article-toc .toc-btn:hover {
+      background: #24c1f6; }
+  .article-toc .toc-lis {
+    position: relative;
+    width: 300px;
+    right: 300px;
+    max-height: 500px;
+    overflow: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    background: #fff;
+    padding: 15px 10px;
+    border-radius: 8px;
+    transform: translateY(-30%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
+  .article-toc ol {
+    text-indent: 2em; }
+    .article-toc ol ol {
+      text-indent: 2em; }
+      .article-toc ol ol ol {
+        text-indent: 2em; }
+  .article-toc .article-toc-item a:hover {
+    background: #ebedef; }
+  .article-toc:hover .toc-lis {
+    opacity: 1;
+    pointer-events: auto; }
+
 #disqus_thread, .duoshuo, .cloud-tie-wrapper, #SOHUCS, #gitment-ctn {
   padding: 0 30px !important;
   min-height: 20px; }
