@@ -2461,6 +2461,10 @@ pre .css ~ * .id {
       text-indent: 2em; }
       .article-toc ol ol ol {
         text-indent: 2em; }
+  .article-toc .article-toc-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   .article-toc .article-toc-item a:hover {
     background: #ebedef; }
   .article-toc:hover .toc-lis {
