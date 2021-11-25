@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>类型转换 | 木头个人博客</title>
+  <title>继承的多种方式 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="对象转字符串和数字这个转换都是通过转换对象的一个方法来完成的，toString和valieOf，所有对象除了null和undefined之外的任何值都具有toString方法，不过很多类都有自己的特点">
+  <meta name="description" content="原型链继承123456789101112131415161718function Parent() &amp;#123;  this.name &#x3D; &amp;#x27;张三&amp;#x27;  this.identifies &#x3D; [&amp;#x27;学生&amp;#x27;]&amp;#125;Parent.prototype.getName &#x3D; function() &amp;#123;  console.log(this.name)&amp;#125;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="类型转换">
-<meta property="og:url" content="http://example.com/2021/11/19/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/index.html">
+<meta property="og:title" content="继承的多种方式">
+<meta property="og:url" content="http://example.com/2021/11/25/%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="对象转字符串和数字这个转换都是通过转换对象的一个方法来完成的，toString和valieOf，所有对象除了null和undefined之外的任何值都具有toString方法，不过很多类都有自己的特点">
+<meta property="og:description" content="原型链继承123456789101112131415161718function Parent() &amp;#123;  this.name &#x3D; &amp;#x27;张三&amp;#x27;  this.identifies &#x3D; [&amp;#x27;学生&amp;#x27;]&amp;#125;Parent.prototype.getName &#x3D; function() &amp;#123;  console.log(this.name)&amp;#125;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-11-19T08:33:20.000Z">
-<meta property="article:modified_time" content="2021-11-19T16:12:04.695Z">
+<meta property="article:published_time" content="2021-11-24T16:34:39.000Z">
+<meta property="article:modified_time" content="2021-11-25T13:47:00.005Z">
 <meta property="article:author" content="Wood">
-<meta property="article:tag" content="类型转换">
+<meta property="article:tag" content="继承">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
@@ -159,62 +159,75 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-类型转换" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-继承的多种方式" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      类型转换
+      继承的多种方式
     </h1>
   
 
         
-        <a href="/2021/11/19/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2021-11-19T08:33:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-19</time>
+        <a href="/2021/11/25/%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2021-11-24T16:34:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="对象转字符串和数字"><a href="#对象转字符串和数字" class="headerlink" title="对象转字符串和数字"></a>对象转字符串和数字</h3><p>这个转换都是通过转换对象的一个方法来完成的，<code>toString</code>和<code>valieOf</code>，所有对象除了null和undefined之外的任何值都具有toString方法，不过很多类都有自己的特点</p>
+        <h3 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = <span class="string">&#x27;张三&#x27;</span></span><br><span class="line">  <span class="built_in">this</span>.identifies = [<span class="string">&#x27;学生&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child.prototype = <span class="keyword">new</span> Parent()</span><br><span class="line"><span class="keyword">var</span> child = <span class="keyword">new</span> Child()</span><br><span class="line">child.identifies.push(<span class="string">&#x27;小孩&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child.getName()) <span class="comment">// 张三</span></span><br><span class="line"><span class="keyword">var</span> child2 = <span class="keyword">new</span> Child()</span><br><span class="line"><span class="built_in">console</span>.log(child2.identifies) <span class="comment">// [&#x27;学生&#x27;, &#x27;小孩&#x27;]</span></span><br></pre></td></tr></table></figure>
+
 <span id="more"></span>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log((&#123;&#125;).toString()) <span class="comment">// [object Object]</span></span><br><span class="line"><span class="built_in">console</span>.log([].toString()) <span class="comment">// &#x27;&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log([<span class="number">1</span>,<span class="number">2</span>].toString()) <span class="comment">// 1,2</span></span><br><span class="line"><span class="built_in">console</span>.log((<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="keyword">var</span> a=<span class="number">1</span>&#125;).toString()) <span class="comment">// function() &#123;var a=1&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log((<span class="regexp">/\d+/g</span>).toString()) <span class="comment">// /\d+/g</span></span><br><span class="line"><span class="built_in">console</span>.log((<span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2021</span>,<span class="number">11</span>,<span class="number">19</span>)).toString()) <span class="comment">// Sun Dec 19 2021 00:00:00 GMT+0800 (中国标准时间)</span></span><br></pre></td></tr></table></figure>
 
-<p>另一个转换对象的函数时valueOf，表示对象的原始值，默认返回对象的本身，日期除外，日期会返回一个时间戳</p>
-<h4 id="ToPrimitive"><a href="#ToPrimitive" class="headerlink" title="ToPrimitive"></a>ToPrimitive</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一个参数表示要处理的输入值</span></span><br><span class="line"><span class="comment">// 第二各参数表示期望转换成的类型，Number和String，默认是Number，日期是String</span></span><br><span class="line">ToPrimitive(input[, PreferredType])</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>ToPrimitive(obj, Number)，处理如下<ol>
-<li>如果obj为基本类型，直接返回</li>
-<li>否则，先调用valueOf，返回值为原始值直接返回</li>
-<li>再调用toString, 返回值为原始值直接返回</li>
-<li>否则，抛出类型错误异常</li>
-</ol>
-</li>
-<li>ToPrimitive(obj, String)，处理如下<ol>
-<li>如果obj为基本类型，直接返回</li>
-<li>否则，先调用toString，返回值为原始值直接返回</li>
-<li>再调用valueOf, 返回值为原始值直接返回</li>
-<li>否则，抛出类型错误异常</li>
-</ol>
-</li>
-</ul>
-<h3 id="隐式类型转换"><a href="#隐式类型转换" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h3><h4 id="一元操作符"><a href="#一元操作符" class="headerlink" title="一元操作符+"></a>一元操作符+</h4><ul>
-<li><p>会调用ToNumber处理该值，相当于Number(值)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(+[]); <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(+[<span class="string">&#x27;1&#x27;</span>]); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(+[<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>]); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(+&#123;&#125;); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
-<li><p>上面的输出首先会执行ToPrimitive(input, Number)方法，再调用toNumber方式返回其值</p>
-<h4 id="二元操作符"><a href="#二元操作符" class="headerlink" title="二元操作符+"></a>二元操作符+</h4><p>当计算value1+value2时</p>
+<p><strong>缺点：</strong></p>
 <ol>
-<li>lprim = ToPrimitive(value1)</li>
-<li>rprim = ToPrimitive(value2)</li>
-<li>如果lprim或者rprim是字符串就会返回ToString(lprim)和ToString(rprim)拼接的结果</li>
-<li>否则，返回ToNumber(lprim)和ToNumber(rprim)运算的结果</li>
+<li>引用类型的属性被所有实例共享</li>
+<li>Child的实例不能向Parent传参</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 特例</span></span><br><span class="line"><span class="built_in">console</span>.log(&#123;&#125; + []) <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log([] + &#123;&#125;) <span class="comment">// [object Object]</span></span><br><span class="line"><span class="comment">// 上面那个是由于浏览器会把&#123;&#125;当成代码块，就等价于+[]，运算出来的结果为0</span></span><br></pre></td></tr></table></figure></li>
-</ul>
+<h3 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name</span><br><span class="line">  <span class="built_in">this</span>.identifies = [<span class="string">&#x27;学生&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  Parent.call(<span class="built_in">this</span>, name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> child = <span class="keyword">new</span> Child(<span class="string">&#x27;张三&#x27;</span>)</span><br><span class="line">child.identifies.push(<span class="string">&#x27;小孩&#x27;</span>)</span><br><span class="line">child.getName() <span class="comment">// 报错，报错的原因是Child上的原型并没有指向Parent，所以会访问不到Parent原型上的属性和方法</span></span><br><span class="line"><span class="keyword">var</span> child2 = <span class="keyword">new</span> Child(<span class="string">&#x27;李四&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child2.identifies) <span class="comment">// [&#x27;学生&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong></p>
+<ol>
+<li>避免引用类型的属性被所有实例共享</li>
+<li>Child可以向Parent传参</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>不能够获取原型上属性和方法</li>
+</ol>
+<h3 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name</span><br><span class="line">  <span class="built_in">this</span>.identifies = [<span class="string">&#x27;学生&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  Parent.call(<span class="built_in">this</span>, name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child.prototype = <span class="keyword">new</span> Parent()</span><br><span class="line">Child.prototype.constructor = Child</span><br><span class="line"><span class="keyword">var</span> child = <span class="keyword">new</span> Child(<span class="string">&#x27;张三&#x27;</span>)</span><br><span class="line">child.identifies.push(<span class="string">&#x27;孩子&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child.identifies) <span class="comment">// [&#x27;学生&#x27;, &#x27;孩子&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong></p>
+<ol>
+<li>融合原型链继承和构造函数继承的优点</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>创建Child实例过程中会调用两次Parent构造函数，一次是<code>new Parent()</code>，另一次是<code>Parent.call(this, name)</code></li>
+</ol>
+<h3 id="原型式继承"><a href="#原型式继承" class="headerlink" title="原型式继承"></a>原型式继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createObj</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">  F.prototype = o</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">  <span class="attr">identifies</span>: [<span class="string">&#x27;学生&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = createObj(person)</span><br><span class="line">person1.push(<span class="string">&#x27;小孩&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> person2 = createObj(person)</span><br><span class="line"><span class="built_in">console</span>.log(person2.identifies) <span class="comment">// [&#x27;学生&#x27;, &#x27;小孩&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>缺点：</strong></p>
+<ol>
+<li>引用类型的属性被所有<code>createObj</code>创建对象共享</li>
+</ol>
+<h3 id="寄生式继承"><a href="#寄生式继承" class="headerlink" title="寄生式继承"></a>寄生式继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createObj</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> clone = <span class="built_in">Object</span>.create(o)</span><br><span class="line">  clone.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> clone</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">  <span class="attr">identifies</span>: [<span class="string">&#x27;学生&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = createObj(person)</span><br><span class="line">person1.identifies.push(<span class="string">&#x27;小孩&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> person2 = createObj(person)</span><br><span class="line"><span class="built_in">console</span>.log(person2.identifies) <span class="comment">// [&#x27;学生&#x27;, &#x27;小孩&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>缺点：</strong></p>
+<ol>
+<li>依旧没有解决引用类型的属性被所有<code>createObj</code>创建的对象共享问题</li>
+</ol>
+<h3 id="寄生组合式继承"><a href="#寄生组合式继承" class="headerlink" title="寄生组合式继承"></a>寄生组合式继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createObj</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  F.prototype = o;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createProto</span>(<span class="params">child, Parent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> proto = createObj(Parent.prototype)</span><br><span class="line">  proto.constructor = child</span><br><span class="line">  child.prototype = proto</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name</span><br><span class="line">  <span class="built_in">this</span>.identifies = [<span class="string">&#x27;学生&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  Person.call(<span class="built_in">this</span>, name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">createProto(Child, Parent)</span><br><span class="line"><span class="keyword">var</span> child = <span class="keyword">new</span> Child(<span class="string">&#x27;张三&#x27;</span>)</span><br><span class="line">child.identifies.push(<span class="string">&#x27;小孩&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> child2 = <span class="keyword">new</span> Child(<span class="string">&#x27;李四&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child2.identifies) <span class="comment">// [&#x27;学生&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong></p>
+<ol>
+<li>解决调用两次Parent构造函数问题</li>
+<li>解决child实例对象共享Parent属性问题</li>
+</ol>
 
       
 
@@ -228,7 +241,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">类型转换</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">继承</a>
         		</li>
       		
 		</ul>
@@ -295,7 +308,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/11/19/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/11/25/%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -306,22 +319,13 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AF%B9%E8%B1%A1%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%95%B0%E5%AD%97"><span class="article-toc-text">对象转字符串和数字</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#ToPrimitive"><span class="article-toc-text">ToPrimitive</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%9A%90%E5%BC%8F%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="article-toc-text">隐式类型转换</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%80%E5%85%83%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="article-toc-text">一元操作符+</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BA%8C%E5%85%83%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="article-toc-text">二元操作符+</span></a></li></ol></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%BB%A7%E6%89%BF"><span class="article-toc-text">原型链继承</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF"><span class="article-toc-text">构造函数继承</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%BB%84%E5%90%88%E7%BB%A7%E6%89%BF"><span class="article-toc-text">组合继承</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%8E%9F%E5%9E%8B%E5%BC%8F%E7%BB%A7%E6%89%BF"><span class="article-toc-text">原型式继承</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AF%84%E7%94%9F%E5%BC%8F%E7%BB%A7%E6%89%BF"><span class="article-toc-text">寄生式继承</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AF%84%E7%94%9F%E7%BB%84%E5%90%88%E5%BC%8F%E7%BB%A7%E6%89%BF"><span class="article-toc-text">寄生组合式继承</span></a></li></ol>
   
 <nav id="article-nav">
   
-    <a href="/2021/11/19/%E9%97%AD%E5%8C%85/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          闭包
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/11/18/webpack%E9%85%8D%E7%BD%AE/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">webpack配置</div>
+    <a href="/2021/11/21/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">原型和原型链</div>
       <i class="icon-circle-right"></i>
     </a>
   
