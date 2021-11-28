@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Category: 工程化 | 木头个人博客</title>
+  <title>模块化规范 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="木头个人博客">
-<meta property="og:url" content="http://example.com/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/index.html">
+  <meta name="description" content="模块出现之前出现的问题在使用模块化之前，我们常常使用的是以script标签引入js文件，但是不同的js文件之间会出现相互依赖的情况，以至于script标签需要按正确的顺序摆放。 顺序摆放不正确的话，且你中间又使用到前面的依赖，就会查找不到对应的依赖，就会抛出异常，导致整个应用挂掉。 如果你不清楚不同代码之间的依赖关系，随便删除代码或者删除script标签就会导致致命的错误。 而第二个问题就是这些变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模块化规范">
+<meta property="og:url" content="http://example.com/2021/11/25/%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="模块出现之前出现的问题在使用模块化之前，我们常常使用的是以script标签引入js文件，但是不同的js文件之间会出现相互依赖的情况，以至于script标签需要按正确的顺序摆放。 顺序摆放不正确的话，且你中间又使用到前面的依赖，就会查找不到对应的依赖，就会抛出异常，导致整个应用挂掉。 如果你不清楚不同代码之间的依赖关系，随便删除代码或者删除script标签就会导致致命的错误。 而第二个问题就是这些变">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-25T14:43:42.000Z">
+<meta property="article:modified_time" content="2021-11-28T15:42:32.742Z">
 <meta property="article:author" content="Wood">
+<meta property="article:tag" content="模块化">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
@@ -154,36 +159,73 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-模块化规范" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/25/%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83/" class="archive-article-date">
-  	<time datetime="2021-11-25T14:43:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/25/%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83/">模块化规范</a>
+    <h1 class="article-title" itemprop="name">
+      模块化规范
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2021/11/25/%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83/" class="archive-article-date">
+  	<time datetime="2021-11-25T14:43:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="模块出现之前出现的问题"><a href="#模块出现之前出现的问题" class="headerlink" title="模块出现之前出现的问题"></a>模块出现之前出现的问题</h3><p>在使用模块化之前，我们常常使用的是以script标签引入js文件，但是不同的js文件之间会出现相互依赖的情况，以至于script标签需要按正确的顺序摆放。</p>
+<p>顺序摆放不正确的话，且你中间又使用到前面的依赖，就会查找不到对应的依赖，就会抛出异常，导致整个应用挂掉。</p>
+<p>如果你不清楚不同代码之间的依赖关系，随便删除代码或者删除script标签就会导致致命的错误。</p>
+<p>而第二个问题就是这些变量存在于全局作用域，不同人接手项目很容易出现命名冲突。</p>
+<span id="more"></span>
+
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><p>模块不像函数作用域一样，模块能使自身内部变量被其他模块所引用，可以明确安排其中哪些变量、类或者函数被其他模块使用。</p>
+<p>目前常用的模块化规范有AMD、CMD、CommonJs、ES modules。其中CommonJs被应用于服务器端，其他都是用于浏览器端。</p>
+<p>适用于浏览器端的通常使用<strong>异步加载</strong>，原因在于浏览器端加载文件的速度取决于网速、文件大小、代理等因素的影响，会造成浏览器阻塞，无法进行后续代码的解析以及文件加载。</p>
+<p>服务器端使用同步加载，原因在于服务器端加载文件的速度取决于硬盘读取文件的速度，通常耗费时间比较少。</p>
+<h3 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h3><ul>
+<li>使用AMD规范的有requirejs</li>
+<li>AMD规范推崇依赖前置，也就是把依赖统一放在第一个参数的数组中，将其回调结果放入第二个回调函数的实参当中</li>
+<li>AMD规范是运行时加载，也就是代码执行过程才加载对应的依赖。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config.js</span></span><br><span class="line"><span class="comment">// 定义依赖，define必须要有return</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> showTag = <span class="literal">false</span></span><br><span class="line">  <span class="keyword">var</span> config = &#123;</span><br><span class="line">    showTag</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> config</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// utils.js</span></span><br><span class="line">define([<span class="string">&#x27;./config&#x27;</span>], <span class="function"><span class="keyword">function</span>(<span class="params">config</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> utils = &#123;</span><br><span class="line">    <span class="function"><span class="title">getConfig</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(config)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> utils</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 引用依赖, require不需要return</span></span><br><span class="line"><span class="built_in">require</span>([<span class="string">&#x27;./utils&#x27;</span>], <span class="function"><span class="keyword">function</span>(<span class="params">utils</span>) </span>&#123;</span><br><span class="line">  utils.getConfig()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><ul>
+<li><p>使用CMD规范的有seajs</p>
+</li>
+<li><p>强调一个文件一个模块，可按需引入，推崇依赖就近，加载完某个模块后不会立即执行，而是等到了require语句的时候在执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">require</span>, <span class="built_in">exports</span>, <span class="built_in">module</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">&#x27;./a&#x27;</span>) <span class="comment">// 按需引入，依赖就近</span></span><br><span class="line">  a.doSomething()</span><br><span class="line">  <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">&#x27;./b&#x27;</span>)</span><br><span class="line">  b.doSomething()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="ES-modules"><a href="#ES-modules" class="headerlink" title="ES modules"></a>ES modules</h3><ul>
+<li><p>使用import导入，export或者export default导出。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 导出 */</span></span><br><span class="line"><span class="comment">// 方式一</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> num = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式二</span></span><br><span class="line"><span class="keyword">const</span> num = <span class="number">1</span></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">	num</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式三</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 等同于：</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">	foo <span class="keyword">as</span> <span class="keyword">default</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式四(导入再导出)</span></span><br><span class="line"><span class="keyword">export</span> &#123;showTag&#125; <span class="keyword">from</span> <span class="string">&#x27;./config&#x27;</span></span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="keyword">import</span> &#123;showTag&#125; <span class="keyword">from</span> <span class="string">&#x27;./config&#x27;</span></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">	showTag</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>由于ES modules设计成在编译阶段就能够确定不同模块之间的依赖关系，因此模块声明不能使用变量的形式，但ES modules采取的解决方案是使用import()方法进行动态加载。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不能使用以下方式, 编译阶段无法获取path变量的值，不像运行时加载一样</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">`<span class="subst">$&#123;path&#125;</span>/config`</span>;</span><br><span class="line"><span class="comment">// 以下方式可以动态加载，import()返回值为Promise</span></span><br><span class="line"><span class="keyword">import</span>(<span class="string">`<span class="subst">$&#123;path&#125;</span>/config`</span>).then(<span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(config)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>在webpack打包过程中，运用ES modules的形式编写代码能够使用Tree Shaking删除不必要的代码</p>
+</li>
+</ul>
+<h3 id="CommonJs"><a href="#CommonJs" class="headerlink" title="CommonJs"></a>CommonJs</h3><ul>
+<li><p>CommonJs采用同步加载的方式，通常使用在服务器端，只能在运行时确定模块之间的依赖关系。</p>
+</li>
+<li><p>使用require导出，exports或者module.exports导出。</p>
+</li>
+<li><p>对于加载过的模块不会重新加载一次，而是34会从内存中取出已经被加载过的模块。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// math.js</span></span><br><span class="line"><span class="built_in">exports</span>.add = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">&#x27;math&#x27;</span>)</span><br><span class="line">math.add(<span class="number">1</span>,<span class="number">2</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -195,7 +237,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -208,164 +250,54 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%A8%A1%E5%9D%97%E5%87%BA%E7%8E%B0%E4%B9%8B%E5%89%8D%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="article-toc-text">模块出现之前出现的问题</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="article-toc-text">模块化</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#AMD"><span class="article-toc-text">AMD</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#CMD"><span class="article-toc-text">CMD</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#ES-modules"><span class="article-toc-text">ES modules</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#CommonJs"><span class="article-toc-text">CommonJs</span></a></li></ol>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/20/webpack%E4%BC%98%E5%8C%96/" class="archive-article-date">
-  	<time datetime="2021-11-20T10:58:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-20</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/11/25/%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">继承的多种方式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/20/webpack%E4%BC%98%E5%8C%96/">webpack优化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/工程化//" class="article-tag-list-link color4">工程化</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/18/webpack%E9%85%8D%E7%BD%AE/" class="archive-article-date">
-  	<time datetime="2021-11-18T12:35:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/18/webpack%E9%85%8D%E7%BD%AE/">webpack配置</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/工程化//" class="article-tag-list-link color4">工程化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/18/webpack%E5%85%A5%E9%97%A8/" class="archive-article-date">
-  	<time datetime="2021-11-18T11:06:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/18/webpack%E5%85%A5%E9%97%A8/">webpack入门</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/工程化//" class="article-tag-list-link color4">工程化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -388,10 +320,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
