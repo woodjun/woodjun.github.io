@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Category: 工程化 | 木头个人博客</title>
+  <title>js执行机制 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="木头个人博客">
-<meta property="og:url" content="http://example.com/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/index.html">
+  <meta name="description" content="事件循环js是一门单线程语言，这也就意味着同一个时刻只能执行一个任务，如果一个任务耗时过长，那么其他任务就只能等着，直到这个任务执行完毕。如果文章中超清图片加载很慢，网页一直卡着直到图片加载出来，势必会影响用户体验，为了解决这个问题，将执行任务分为两类。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js执行机制">
+<meta property="og:url" content="http://example.com/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="事件循环js是一门单线程语言，这也就意味着同一个时刻只能执行一个任务，如果一个任务耗时过长，那么其他任务就只能等着，直到这个任务执行完毕。如果文章中超清图片加载很慢，网页一直卡着直到图片加载出来，势必会影响用户体验，为了解决这个问题，将执行任务分为两类。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.jpg">
+<meta property="og:image" content="http://example.com/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%AE%8F%E4%BB%BB%E5%8A%A1.jpg">
+<meta property="article:published_time" content="2021-11-28T16:09:37.000Z">
+<meta property="article:modified_time" content="2021-11-29T16:41:04.652Z">
 <meta property="article:author" content="Wood">
+<meta property="article:tag" content="底层原理">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.jpg">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -154,218 +162,137 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-js执行机制" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js执行机制
+    </h1>
+  
+
+        
+        <a href="/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" class="archive-article-date">
+  	<time datetime="2021-11-28T16:09:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-29</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3><p>js是一门单线程语言，这也就意味着同一个时刻只能执行一个任务，如果一个任务耗时过长，那么其他任务就只能等着，直到这个任务执行完毕。如果文章中超清图片加载很慢，网页一直卡着直到图片加载出来，势必会影响用户体验，为了解决这个问题，将执行任务分为两类。</p>
+<span id="more"></span>
+
+<p>任务分为同步任务和异步任务；</p>
+<p><strong>同步任务：</strong>那些没有被引擎挂起、在主线程上排队执行的任务。也就是前一个任务执行完毕，才能执行后一个任务。</p>
+<p><strong>异步任务：</strong>那些被引擎放在一边，不进入主线程，而是进入任务队列中的任务，只有异步任务返回结果或者满足某个条件，才会将该任务放入主线程执行，其他任务可以直接往后执行，不会造成阻塞问题。</p>
+<h4 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h4><p><img src="/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.jpg"></p>
+<p>从上图可知：</p>
+<ol>
+<li>任务进入执行栈后，引擎遇到同步任务就会将其放入主线程，异步任务收钱就会进入事件列表（event table），当异步任务满足某个执行条件，才会进入事件队列当中（event queue）。</li>
+<li>待所有同步任务执行完毕之后，浏览器js引擎中的monitoring process进程（用于检查主线程或者回调栈call stack的任务是否为空）检测到主线程中的任务为空，就会从事件队列中取出对应的异步任务中回到结果继续往下执行。</li>
+<li>不断的重复以上流程，直至所有任务被执行完毕。</li>
+</ol>
+<h4 id="微任务和宏任务"><a href="#微任务和宏任务" class="headerlink" title="微任务和宏任务"></a>微任务和宏任务</h4><p>异步任务可以再细分为微任务(microtask)和宏任务(macrotask)；</p>
+<p><strong>微任务：</strong>遇到相同任务，也能够在一次事件循环中全部执行完毕的任务，例如：promise、process.nextTick、MutationObserver</p>
+<p><strong>宏任务：</strong>遇到相同任务，不能够在一次事件循环中全部执行，必须进入下一次事件循环中继续执行的任务，例如：代码块、setTimeout、setInterval、ajax请求等</p>
+<p><img src="/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%AE%8F%E4%BB%BB%E5%8A%A1.jpg"></p>
+<h4 id="执行流程-1"><a href="#执行流程-1" class="headerlink" title="执行流程"></a>执行流程</h4><ol>
+<li>首先进入一个代码块（宏任务），遇到微任务的话就将其放入microtask queue(微任务队列)中，如果遇到宏任务就放入macrotask queue(宏任务队列)中。</li>
+<li>接下来就会从microtask queue(微任务队列)中的任务逐个取出执行，待到所有队列当中的任务执行完毕，才会从macrotask queue(宏任务队列)取出另一个宏任务。</li>
+<li>不断重复以上的流程，直到所有任务执行完毕。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/25/%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83/" class="archive-article-date">
-  	<time datetime="2021-11-25T14:43:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/25/%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83/">模块化规范</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">模块化</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">底层原理</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/工程化//" class="article-tag-list-link color4">工程化</a>
+        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="article-toc-text">事件循环</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="article-toc-text">执行流程</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%BE%AE%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%AE%8F%E4%BB%BB%E5%8A%A1"><span class="article-toc-text">微任务和宏任务</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B-1"><span class="article-toc-text">执行流程</span></a></li></ol></li></ol>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/20/webpack%E4%BC%98%E5%8C%96/" class="archive-article-date">
-  	<time datetime="2021-11-20T10:58:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-20</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2021/11/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          垃圾回收机制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/11/25/%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">模块化规范</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/20/webpack%E4%BC%98%E5%8C%96/">webpack优化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/工程化//" class="article-tag-list-link color4">工程化</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/18/webpack%E9%85%8D%E7%BD%AE/" class="archive-article-date">
-  	<time datetime="2021-11-18T12:35:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/18/webpack%E9%85%8D%E7%BD%AE/">webpack配置</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/工程化//" class="article-tag-list-link color4">工程化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/18/webpack%E5%85%A5%E9%97%A8/" class="archive-article-date">
-  	<time datetime="2021-11-18T11:06:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/18/webpack%E5%85%A5%E9%97%A8/">webpack入门</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/工程化//" class="article-tag-list-link color4">工程化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -388,10 +315,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
