@@ -156,6 +156,90 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-promise" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/30/promise/">promise</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/30/promise/" class="archive-article-date">
+  	<time datetime="2021-11-29T16:51:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">promise</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/30/promise/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-垃圾回收机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -176,7 +260,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><p>无论哪一种程序语言，内存的生命周期总是大致相同的。</p>
+<ol>
+<li>分配程序所需的内存</li>
+<li>使用分配到的内存（读、写）</li>
+<li>不需要时将内存释放</li>
+</ol>
+<p>当系统发现这些变量不再被使用时，会自动释放这些变量内存，通过语言的垃圾回收机制回收这些内存。</p>
+<p>在js中，数据类型分为两类，基本数据类型和引用类型，其中基本数据类型的内存是保存在栈中，引用类型的内存是保存在堆中。</p>
+<p>对于栈中的内存空间，由操作系统进行分配和释放；堆中的内存空间操作系统无法做到自动释放，需要js引擎来手动释放内存。</p>
+<h3 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h3><p>目前主流浏览器主要采用的垃圾回收机制有两种，分别是引用计数法和标记清除法。</p>
+<h4 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h4><p>在内存管理的上下文中，如果一个对象可以访问另一个对象，则称该对象引用另一个对象。如果有零个指向它的引用，则认为是可垃圾回收的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">  <span class="attr">obj2</span>: &#123;</span><br><span class="line">    <span class="attr">num</span>: <span class="number">1</span></span><br><span class="line">  &#125; <span class="comment">// obj2作为属性被obj1引用一次</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj3 = obj1 <span class="comment">// obj1被引用一次</span></span><br><span class="line">obj1 = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> obj4 = obj3.obj2 <span class="comment">// obj2作为属性被obj4引用一次</span></span><br><span class="line">obj3 = <span class="number">123</span> <span class="comment">// obj3还不能被回收，因为obj3中obj2还被obj4引用着</span></span><br><span class="line">obj4 = <span class="literal">null</span> <span class="comment">// 这时候obj3可以被回收了，同时obj2也可以被回收，因为obj1引用obj2已经被解除，同时obj4引用obj2也被解除</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>引用计数法有一个明显的限制，对于循环引用这种情况无能为力，很容易造成内存泄漏。以下代码出现两个对象中的每一个都被引用过一次，引用次数不为零，显然不会被垃圾回收。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o1 = &#123;&#125;</span><br><span class="line">  <span class="keyword">var</span> o2 = &#123;&#125;</span><br><span class="line">  o1.a = o2</span><br><span class="line">  o2.a = o1</span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
+
+<h4 id="标记清除法"><a href="#标记清除法" class="headerlink" title="标记清除法"></a>标记清除法</h4><p>标记清除法有一个概念叫对象可达性，也就是从初始的根对象（window, global）的指针开始，从这个根对象向下搜索其子节点，被搜索到的子节点说明该节点的引用对象可达，并为其留下标记，然后递归这个搜索过程，直到所有子节点都被遍历结束，那么没有被标记的对象节点，说明该对象没有被任何地方引用，可以证明这个一个需要被释放内存的对象，可以被垃圾回收器回收。</p>
+<p><img src="/2021/11/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%5C%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%E6%B3%95.gif"></p>
+<p>这种方式就可以解决循环引用问题，foo()函数执行完毕之后，两个对象不再被全局对象中的某个变量引用，因此，垃圾收集器就会认为它们不可访问，可以进行垃圾回收。</p>
+<p>想要了解Chrome V8垃圾回收机制，推荐阅读：</p>
+<p><a target="_blank" rel="noopener" href="https://hub.fastgit.org/yacan8/blog/issues/33">深入理解Chrome V8垃圾回收机制</a></p>
+
       
 
       
@@ -417,93 +524,6 @@
 
 
   
-    <article id="post-继承的多种方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/25/%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/">继承的多种方式</a>
-    </h1>
-  
-
-        
-        <a href="/2021/11/25/%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2021-11-24T16:34:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = <span class="string">&#x27;张三&#x27;</span></span><br><span class="line">  <span class="built_in">this</span>.identifies = [<span class="string">&#x27;学生&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child.prototype = <span class="keyword">new</span> Parent()</span><br><span class="line"><span class="keyword">var</span> child = <span class="keyword">new</span> Child()</span><br><span class="line">child.identifies.push(<span class="string">&#x27;小孩&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(child.getName()) <span class="comment">// 张三</span></span><br><span class="line"><span class="keyword">var</span> child2 = <span class="keyword">new</span> Child()</span><br><span class="line"><span class="built_in">console</span>.log(child2.identifies) <span class="comment">// [&#x27;学生&#x27;, &#x27;小孩&#x27;]</span></span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2021/11/25/%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/#more">阅读更多 >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">继承</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/11/25/%E7%BB%A7%E6%89%BF%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next »</a>
@@ -648,6 +668,10 @@
         <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color5">底层原理</a>
         </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">promise</a>
+        </li>
       
       <div class="clearfix"></div>
     </ul>
@@ -695,7 +719,7 @@
   <div class="tagcloud search-tag">
     <p style="margin-top: 15px;color: #999;"><i class="icon-price-tags icon"></i><span style="margin-left: 5px;">标签</span></p>
     <ul class="article-tag-list" q-show="showTags">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/promise/" rel="tag">promise</a><span class="tag-list-count">1</span></li></ul>
       <div class="clearfix"></div>
     </ul>
   </div>
@@ -706,7 +730,7 @@
   <div class="widget tagcloud search-tag">
     <p style="margin-top: 15px;color: #999;"><i class="icon-book icon"></i><span style="margin-left: 5px;">分类</span></p>
     <ul class="article-tag-list" q-show="showTags">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/categories/js/">js</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/categories/js/">js</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a><span class="tag-list-count">1</span></li></ul>
       <div class="clearfix"></div>
     </ul>
   </div>
