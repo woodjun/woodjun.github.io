@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>垃圾回收机制 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="内存管理无论哪一种程序语言，内存的生命周期总是大致相同的。  分配程序所需的内存 使用分配到的内存（读、写） 不需要时将内存释放  当系统发现这些变量不再被使用时，会自动释放这些变量内存，通过语言的垃圾回收机制回收这些内存。 在js中，数据类型分为两类，基本数据类型和引用类型，其中基本数据类型的内存是保存在栈中，引用类型的内存是保存在堆中。 对于栈中的内存空间，由操作系统进行分配和释放；堆中的内存">
+  <meta name="description" content="内存管理无论哪一种程序语言，内存的生命周期总是大致相同的。  分配程序所需的内存 使用分配到的内存（读、写） 不需要时将内存释放">
 <meta property="og:type" content="article">
 <meta property="og:title" content="垃圾回收机制">
 <meta property="og:url" content="http://example.com/2021/11/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="内存管理无论哪一种程序语言，内存的生命周期总是大致相同的。  分配程序所需的内存 使用分配到的内存（读、写） 不需要时将内存释放  当系统发现这些变量不再被使用时，会自动释放这些变量内存，通过语言的垃圾回收机制回收这些内存。 在js中，数据类型分为两类，基本数据类型和引用类型，其中基本数据类型的内存是保存在栈中，引用类型的内存是保存在堆中。 对于栈中的内存空间，由操作系统进行分配和释放；堆中的内存">
+<meta property="og:description" content="内存管理无论哪一种程序语言，内存的生命周期总是大致相同的。  分配程序所需的内存 使用分配到的内存（读、写） 不需要时将内存释放">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2021/11/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%E6%B3%95.gif">
 <meta property="article:published_time" content="2021-11-28T16:18:40.000Z">
-<meta property="article:modified_time" content="2021-12-01T16:29:44.916Z">
+<meta property="article:modified_time" content="2021-12-01T16:31:17.922Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="底层原理">
 <meta name="twitter:card" content="summary">
@@ -187,6 +187,8 @@
 <li>使用分配到的内存（读、写）</li>
 <li>不需要时将内存释放</li>
 </ol>
+<span id="more"></span>
+
 <p>当系统发现这些变量不再被使用时，会自动释放这些变量内存，通过语言的垃圾回收机制回收这些内存。</p>
 <p>在js中，数据类型分为两类，基本数据类型和引用类型，其中基本数据类型的内存是保存在栈中，引用类型的内存是保存在堆中。</p>
 <p>对于栈中的内存空间，由操作系统进行分配和释放；堆中的内存空间操作系统无法做到自动释放，需要js引擎来手动释放内存。</p>
