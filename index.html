@@ -279,7 +279,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o1 = &#123;&#125;</span><br><span class="line">  <span class="keyword">var</span> o2 = &#123;&#125;</span><br><span class="line">  o1.a = o2</span><br><span class="line">  o2.a = o1</span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
 
 <h4 id="标记清除法"><a href="#标记清除法" class="headerlink" title="标记清除法"></a>标记清除法</h4><p>标记清除法有一个概念叫对象可达性，也就是从初始的根对象（window, global）的指针开始，从这个根对象向下搜索其子节点，被搜索到的子节点说明该节点的引用对象可达，并为其留下标记，然后递归这个搜索过程，直到所有子节点都被遍历结束，那么没有被标记的对象节点，说明该对象没有被任何地方引用，可以证明这个一个需要被释放内存的对象，可以被垃圾回收器回收。</p>
-<p><img src="/2021/11/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%5C%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%E6%B3%95.gif"></p>
+<p><img src="/2021/11/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%E6%B3%95.gif"></p>
 <p>这种方式就可以解决循环引用问题，foo()函数执行完毕之后，两个对象不再被全局对象中的某个变量引用，因此，垃圾收集器就会认为它们不可访问，可以进行垃圾回收。</p>
 <p>想要了解Chrome V8垃圾回收机制，推荐阅读：</p>
 <p><a target="_blank" rel="noopener" href="https://hub.fastgit.org/yacan8/blog/issues/33">深入理解Chrome V8垃圾回收机制</a></p>
