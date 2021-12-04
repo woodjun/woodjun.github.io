@@ -1853,6 +1853,7 @@ function init() {
 			app.$set('aboutme', false);
 			app.$set('tags', false);
 			app.$set('categories', false);
+			app.$set('navType', '');
 			app.$set('isShow', true);
 			app.$set('isCtnShow', true);
 			app.$set('search', '#' + $em.innerHTML);
