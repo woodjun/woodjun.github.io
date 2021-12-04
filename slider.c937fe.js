@@ -1695,7 +1695,8 @@ function init() {
 			items: [],
 			jsonFail: false,
 			showTags: false,
-			search: ''
+			search: '',
+			navType: ''
 		},
 		methods: {
 			stop: function stop(e) {
@@ -1727,6 +1728,7 @@ function init() {
 				app.$set('tags', false);
 				app.$set('categories', false);
 				app.$set(type, true);
+				app.$set('navType', type);
 				app.$set('isShow', true);
 				app.$set('isCtnShow', true);
 				setScrollZero();
@@ -1741,6 +1743,9 @@ function init() {
 			},
 			isNotEmptyStr: function isNotEmptyStr(str) {
 				return str !== '';
+			},
+			isInnerArchiveOrAboutme: function isInnerArchiveOrAboutme(str) {
+				return str === 'aboutme' || str === 'innerArchive';
 			},
 			urlformat: function urlformat(str) {
 				if (window.yiliaConfig && window.yiliaConfig.root) {
@@ -1760,7 +1765,6 @@ function init() {
 	});
 
 	function handleSearch(val) {
-		console.log(111, val);
 		val = (val || '').toLowerCase();
 		var type = 'title';
 		if (val.indexOf('#') === 0) {
@@ -1768,7 +1772,6 @@ function init() {
 			type = 'tag';
 		}
 		var items = app.items;
-		console.log(app.items);
 		items.forEach(function (item) {
 			var matchTitle = false;
 			if (item.title.toLowerCase().indexOf(val) > -1) {
