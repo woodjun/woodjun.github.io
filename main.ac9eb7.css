@@ -1930,7 +1930,6 @@ pre .css ~ * .id {
       font-size: 12px; }
 
 .tools-col {
-  width: 300px;
   height: 100%;
   position: fixed;
   left: 0;
@@ -1938,8 +1937,7 @@ pre .css ~ * .id {
   z-index: 0;
   padding: 0;
   opacity: 0;
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch; }
+  -webkit-overflow-scrolling: touch; }
   .tools-col.show {
     opacity: 1; }
   .tools-col.hide {
@@ -2091,6 +2089,45 @@ pre .css ~ * .id {
     height: 100%;
     color: #fffdd8;
     text-shadow: 1px 1px rgba(77, 77, 77, 0.45); }
+  .tools-col .header-menu {
+    height: auto;
+    margin: 10px 0 20px; }
+    .tools-col .header-menu.tools-nav {
+      width: 100%;
+      z-index: 9999; }
+      .tools-col .header-menu.tools-nav ul, .tools-col .header-menu.tools-nav li {
+        border-color: #fff; }
+        .tools-col .header-menu.tools-nav ul a, .tools-col .header-menu.tools-nav li a {
+          color: #fff; }
+          .tools-col .header-menu.tools-nav ul a.active, .tools-col .header-menu.tools-nav li a.active {
+            background: #81b5cc; }
+    .tools-col .header-menu ul {
+      text-align: center;
+      cursor: default;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      position: relative;
+      z-index: 1;
+      border: 1px solid #a0a0a0;
+      border-radius: 3px;
+      margin: 0 auto; }
+    .tools-col .header-menu li {
+      border-left: 1px solid #a0a0a0; }
+      .tools-col .header-menu li:first-child {
+        border-left: 0; }
+      .tools-col .header-menu li:last-child {
+        border-right: 0; }
+      .tools-col .header-menu li a {
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+        color: #a0a0a0; }
+        .tools-col .header-menu li a.active {
+          color: #eaeaea;
+          background: #a0a0a0; }
 
 .body-wrap > article {
   position: relative; }
@@ -3197,6 +3234,7 @@ pre .css ~ * .id {
     position: relative;
     overflow: hidden;
     background: #88acdb;
+    transition: all 0.2s ease-in;
     -webkit-transition: all 0.2s ease-in;
     display: -webkit-box;
     -webkit-box-orient: horizontal;
