@@ -2037,6 +2037,9 @@ pre .css ~ * .id {
       background: rgba(255, 255, 255, 0.2); }
       .tools-col .tools-section .search-tag.tagcloud .article-tag-list.show {
         display: block; }
+      .tools-col .tools-section .search-tag.tagcloud .article-tag-list.tag > ul {
+        display: flex;
+        flex-wrap: wrap; }
     .tools-col .tools-section .search-tag.tagcloud .a {
       float: initial; }
   .tools-col .tools-section .search-ul {
@@ -2982,6 +2985,7 @@ pre .css ~ * .id {
     .tools-col .tools-wrap {
       padding-top: 48px; }
     .tools-col .tools-wrap, .tools-col .tools-section {
+      padding-bottom: 20px;
       width: 300px; }
       .tools-col .tools-wrap .search-wrap, .tools-col .tools-section .search-wrap {
         width: 280px; }
