@@ -1667,209 +1667,203 @@ window.Promise = window.Promise || promise.Promise;
 
 window.fetch = window.fetch || fetch;
 
-var localTagKey = 'yilia-tag';
-var localSearchKey = 'yilia-search';
+var localTagKey = "yilia-tag";
+var localSearchKey = "yilia-search";
 var isMobile = _browser2.default.versions.mobile && window.screen.width < 800;
 
 function fixzero(str) {
-	str = str + '';
-	return str.length === 1 ? '0' + str : str;
+  str = str + "";
+  return str.length === 1 ? "0" + str : str;
 }
 
 function setScrollZero() {
-	var $sct = document.querySelectorAll('.tools-section');
-	$sct.forEach(function (em) {
-		em.scrollTop = 0;
-	});
+  var $sct = document.querySelectorAll(".tools-section");
+  $sct.forEach(function (em) {
+    em.scrollTop = 0;
+  });
 }
 
 function init() {
-	var app = new _Q2.default({
-		el: '#container',
-		data: {
-			isCtnShow: false,
-			isShow: 0,
-			innerArchive: false,
-			friends: false,
-			aboutme: false,
-			items: [],
-			jsonFail: false,
-			showTags: false,
-			search: '',
-			navType: ''
-		},
-		methods: {
-			stop: function stop(e) {
-				e.stopPropagation();
-			},
-			choseTag: function choseTag(e, name) {
-				app.$set('search', '#' + (name ? name : e.target.innerHTML));
-			},
-			clearChose: function clearChose(e) {
-				app.$set('search', '');
-			},
-			toggleTag: function toggleTag(e) {
-				app.$set('showTags', !app.showTags);
-				window.localStorage && window.localStorage.setItem(localTagKey, app.showTags);
-			},
-			openSlider: function openSlider(e, type) {
-				e.stopPropagation();
-				if (!type) {
-					type = 'innerArchive';
-				}
-				// innerArchive: '所有文章'
-				// friends: '友情链接'
-				// aboutme: '关于我'
-				// tags: '标签'
-				// categories: '分类'
-				app.$set('innerArchive', false);
-				app.$set('friends', false);
-				app.$set('aboutme', false);
-				app.$set('tags', false);
-				app.$set('categories', false);
-				app.$set(type, true);
-				app.$set('navType', type);
-				app.$set('isShow', true);
-				app.$set('isCtnShow', true);
-				setScrollZero();
-			}
-		},
-		filters: {
-			isFalse: function isFalse(val) {
-				return val === false;
-			},
-			isEmptyStr: function isEmptyStr(str) {
-				return str === '';
-			},
-			isNotEmptyStr: function isNotEmptyStr(str) {
-				return str !== '';
-			},
-			isInnerArchiveOrAboutme: function isInnerArchiveOrAboutme(str) {
-				return str === 'aboutme' || str === 'innerArchive';
-			},
-			urlformat: function urlformat(str) {
-				if (window.yiliaConfig && window.yiliaConfig.root) {
-					return window.yiliaConfig.root + str;
-				}
-				return '/' + str;
-			},
-			tagformat: function tagformat(str) {
-				return '#' + str;
-			},
-			dateformat: function dateformat(str) {
-				var d = new Date(str);
-				return d.getFullYear() + '-' + fixzero(d.getMonth() + 1) + '-' + fixzero(d.getDate());
-			}
-		},
-		ready: function ready() {}
-	});
+  var app = new _Q2.default({
+    el: "#container",
+    data: {
+      isCtnShow: false,
+      isShow: 0,
+      items: [],
+      collectItems: [],
+      jsonFail: false,
+      showTags: false,
+      search: "",
+      navType: "",
+      menus: ['innerArchive', 'friends', 'aboutme', 'tags', 'categories', 'collects']
+    },
+    methods: {
+      stop: function stop(e) {
+        e.stopPropagation();
+      },
+      choseTag: function choseTag(e, name) {
+        app.$set("search", "#" + (name ? name : e.target.innerHTML));
+      },
+      clearChose: function clearChose(e) {
+        app.$set("search", "");
+      },
+      toggleTag: function toggleTag(e) {
+        app.$set("showTags", !app.showTags);
+        window.localStorage && window.localStorage.setItem(localTagKey, app.showTags);
+      },
+      openSlider: function openSlider(e, type) {
+        e.stopPropagation();
+        if (!type) {
+          type = "innerArchive";
+        }
+        app.menus.forEach(function (item) {
+          app.$set(item, false);
+        });
+        app.$set(type, true);
+        app.$set("navType", type);
+        app.$set("isShow", true);
+        app.$set("isCtnShow", true);
+        setScrollZero();
+      }
+    },
+    filters: {
+      isFalse: function isFalse(val) {
+        return val === false;
+      },
+      isEmptyStr: function isEmptyStr(str) {
+        return str === "";
+      },
+      isNotEmptyStr: function isNotEmptyStr(str) {
+        return str !== "";
+      },
+      isInnerArchiveOrAboutme: function isInnerArchiveOrAboutme(str) {
+        return str === "aboutme" || str === "innerArchive";
+      },
+      urlformat: function urlformat(str) {
+        if (window.yiliaConfig && window.yiliaConfig.root) {
+          return window.yiliaConfig.root + str;
+        }
+        return "/" + str;
+      },
+      tagformat: function tagformat(str) {
+        return "#" + str;
+      },
+      dateformat: function dateformat(str) {
+        var d = new Date(str);
+        return d.getFullYear() + "-" + fixzero(d.getMonth() + 1) + "-" + fixzero(d.getDate());
+      }
+    },
+    ready: function ready() {}
+  });
 
-	function handleSearch(val) {
-		val = (val || '').toLowerCase();
-		var type = 'title';
-		if (val.indexOf('#') === 0) {
-			val = val.substr(1, val.length);
-			type = 'tag';
-		}
-		var items = app.items;
-		items.forEach(function (item) {
-			var matchTitle = false;
-			if (item.title.toLowerCase().indexOf(val) > -1) {
-				matchTitle = true;
-			}
+  function handleSearch(val) {
+    val = (val || "").toLowerCase();
+    var type = "title";
+    if (val.indexOf("#") === 0) {
+      val = val.substr(1, val.length);
+      type = "tag";
+    }
+    var items = app.items;
+    items.forEach(function (item) {
+      var matchTitle = false;
+      if (item.title.toLowerCase().indexOf(val) > -1) {
+        matchTitle = true;
+      }
 
-			var matchTags = false;
-			item.tags.forEach(function (tag) {
-				if (tag.name.toLowerCase().indexOf(val) > -1) {
-					matchTags = true;
-				}
-			});
+      var matchTags = false;
+      item.tags.forEach(function (tag) {
+        if (tag.name.toLowerCase().indexOf(val) > -1) {
+          matchTags = true;
+        }
+      });
 
-			if (type === 'title' && matchTitle || type === 'tag' && matchTags) {
-				item.isShow = true;
-			} else {
-				item.isShow = false;
-			}
-		});
-		app.$set('items', items);
-	}
+      if (type === "title" && matchTitle || type === "tag" && matchTags) {
+        item.isShow = true;
+      } else {
+        item.isShow = false;
+      }
+    });
+    app.$set("items", items);
+  }
 
-	app.$watch('search', function (val, oldVal) {
-		window.localStorage && window.localStorage.setItem(localSearchKey, val);
-		handleSearch(val);
-	});
+  app.$watch("search", function (val, oldVal) {
+    window.localStorage && window.localStorage.setItem(localSearchKey, val);
+    handleSearch(val);
+  });
 
-	window.fetch(window.yiliaConfig.root + 'content.json?t=' + +new Date(), {
-		method: 'get'
-	}).then(function (res) {
-		return res.json();
-	}).then(function (data) {
-		data.forEach(function (em) {
-			em.isShow = true;
-		});
-		app.$set('items', data);
-		// 搜索
-		var searchWording = window.localStorage && window.localStorage.getItem(localSearchKey) || '';
-		app.$set('search', searchWording);
-		searchWording !== '' && handleSearch(searchWording);
-	}).catch(function (err) {
-		app.$set('jsonFail', true);
-	});
+  window.fetch(window.yiliaConfig.root + "content.json?t=" + +new Date(), {
+    method: "get"
+  }).then(function (res) {
+    return res.json();
+  }).then(function (data) {
+    data.forEach(function (em) {
+      em.isShow = true;
+    });
+    app.$set("items", data);
+    app.$set("collectItems", data.filter(function (item) {
+      return item.collect === true;
+    }));
+    // 搜索
+    var searchWording = window.localStorage && window.localStorage.getItem(localSearchKey) || "";
+    app.$set("search", searchWording);
+    searchWording !== "" && handleSearch(searchWording);
+  }).catch(function (err) {
+    app.$set("jsonFail", true);
+  });
 
-	// 隐藏
-	document.querySelector('#container').onclick = function (e) {
-		if (app.isShow) {
-			app.$set('isShow', false);
-			setTimeout(function () {
-				app.$set('isCtnShow', false);
-			}, 300);
-		}
-	};
+  // 隐藏
+  document.querySelector("#container").onclick = function (e) {
+    if (app.isShow) {
+      app.$set("isShow", false);
+      setTimeout(function () {
+        app.$set("isCtnShow", false);
+      }, 300);
+    }
+  };
 
-	// tag 显示/隐藏
-	var localTag = false;
-	if (window.localStorage) {
-		localTag = window.localStorage.getItem(localTagKey);
-	}
-	var isTagOn = 'false';
-	if (localTag === null) {
-		isTagOn = window.yiliaConfig && window.yiliaConfig.showTags ? 'true' : 'false';
-	} else {
-		isTagOn = window.localStorage && window.localStorage.getItem(localTagKey) || 'false';
-	}
-	app.$set('showTags', JSON.parse(isTagOn));
+  // tag 显示/隐藏
+  var localTag = false;
+  if (window.localStorage) {
+    localTag = window.localStorage.getItem(localTagKey);
+  }
+  var isTagOn = "false";
+  if (localTag === null) {
+    isTagOn = window.yiliaConfig && window.yiliaConfig.showTags ? "true" : "false";
+  } else {
+    isTagOn = window.localStorage && window.localStorage.getItem(localTagKey) || "false";
+  }
+  app.$set("showTags", JSON.parse(isTagOn));
 
-	// 其他标签点击
-	// 标签
-	var $tags = document.querySelectorAll('.tagcloud a.js-tag');
+  // 其他标签点击
+  // 标签
+  var $tags = document.querySelectorAll(".tagcloud a.js-tag");
 
-	var _loop = function _loop() {
-		var $em = $tags[i];
-		$em.setAttribute('href', 'javascript:void(0)');
-		$em.onclick = function (e) {
-			e.stopPropagation();
-			app.$set('innerArchive', true);
-			app.$set('friends', false);
-			app.$set('aboutme', false);
-			app.$set('tags', false);
-			app.$set('categories', false);
-			app.$set('navType', '');
-			app.$set('isShow', true);
-			app.$set('isCtnShow', true);
-			app.$set('search', '#' + $em.innerHTML);
-			setScrollZero();
-			return false;
-		};
-	};
+  var _loop = function _loop() {
+    var $em = $tags[i];
+    $em.setAttribute("href", "javascript:void(0)");
+    $em.onclick = function (e) {
+      e.stopPropagation();
+      app.menus.forEach(function (item) {
+        app.$set(item, false);
+      });
+      app.$set("innerArchive", true);
+      app.$set("navType", "");
+      app.$set("isShow", true);
+      app.$set("isCtnShow", true);
+      app.$set("search", "#" + $em.innerHTML);
+      setScrollZero();
+      return false;
+    };
+  };
 
-	for (var i = 0, len = $tags.length; i < len; i++) {
-		_loop();
-	}
+  for (var i = 0, len = $tags.length; i < len; i++) {
+    _loop();
+  }
 }
 
 init();
 if (!isMobile) {
-	_anm2.default.init();
+  _anm2.default.init();
 }
 
 module.exports = {};
