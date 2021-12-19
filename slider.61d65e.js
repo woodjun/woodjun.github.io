@@ -1751,6 +1751,9 @@ function init() {
       dateformat: function dateformat(str) {
         var d = new Date(str);
         return d.getFullYear() + "-" + fixzero(d.getMonth() + 1) + "-" + fixzero(d.getDate());
+      },
+      lengthformat: function lengthformat(arr) {
+        return arr.length;
       }
     },
     ready: function ready() {}
