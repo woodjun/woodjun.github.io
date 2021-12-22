@@ -8,13 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>策略模式 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="定义一系列算法，把它们一个个封装起来，并且使他们可以相互替换，这就是策略模式。 策略模式的存在就是为了解决使用多个if判断问题，同时这些if的条件又只依赖一个变量中的不同类型来执行不同算法，类似switch那种。如果要添加另一种类型又要重新写一个if来判断，违反了“开放封闭原则”。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="策略模式">
 <meta property="og:url" content="http://example.com/2021/12/20/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="定义一系列算法，把它们一个个封装起来，并且使他们可以相互替换，这就是策略模式。 策略模式的存在就是为了解决使用多个if判断问题，同时这些if的条件又只依赖一个变量中的不同类型来执行不同算法，类似switch那种。如果要添加另一种类型又要重新写一个if来判断，违反了“开放封闭原则”。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-12-20T12:37:38.000Z">
-<meta property="article:modified_time" content="2021-12-21T15:11:42.846Z">
+<meta property="article:modified_time" content="2021-12-22T17:15:58.925Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -197,7 +199,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><strong>定义一系列算法，把它们一个个封装起来，并且使他们可以相互替换，</strong>这就是策略模式。</p>
+<p>策略模式的存在就是为了解决使用多个if判断问题，同时这些if的条件又只依赖一个变量中的不同类型来执行不同算法，类似switch那种。如果要添加另一种类型又要重新写一个if来判断，违反了“开放封闭原则”。</p>
+<span id="more"></span>
+
+<h3 id="年终奖例子"><a href="#年终奖例子" class="headerlink" title="年终奖例子"></a>年终奖例子</h3><p>很多公司的年终奖是根据员工的工资基数和年底绩效情况来发放的。例如</p>
+<ol>
+<li>绩效为S的员工有4倍工资</li>
+<li>绩效为A的员工有3倍工资</li>
+<li>绩效为B的员工有2倍工资</li>
+</ol>
+<p><strong>作为一个if-else大侠的写法：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> calcuBonus = <span class="function"><span class="keyword">function</span>(<span class="params">level, salary</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (level === <span class="string">&#x27;S&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> salary * <span class="number">4</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (level === <span class="string">&#x27;A&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> salary * <span class="number">3</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (level === <span class="string">&#x27;B&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> salary * <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样的写法好像也没太大问题，但是如果再加一种类型，这时候就要去改动calcuBonus函数代码，感觉改一个也什么，但是面对多个类型，不断往里面添加逻辑，代码就会变得臃肿。</p>
+<p><strong>改用策略模式的写法：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> strategies = &#123;</span><br><span class="line">  <span class="string">&#x27;S&#x27;</span>: <span class="function"><span class="keyword">function</span> (<span class="params">salary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> salary * <span class="number">4</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&#x27;A&#x27;</span>: <span class="function"><span class="keyword">function</span>(<span class="params">salary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> salary * <span class="number">3</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&#x27;B&#x27;</span>: <span class="function"><span class="keyword">function</span>(<span class="params">salary</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> salary * <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> calcuBonus = <span class="function"><span class="keyword">function</span>(<span class="params">level, salary</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> strategies[level](salary)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种写法即使再增加不同的类型，只需要在strategies中增加就行了。</p>
+
       
       
     </div>
@@ -236,7 +256,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B9%B4%E7%BB%88%E5%A5%96%E4%BE%8B%E5%AD%90"><span class="article-toc-text">年终奖例子</span></a></li></ol>
   
 <nav id="article-nav">
   
