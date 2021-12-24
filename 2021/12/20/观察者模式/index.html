@@ -8,13 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>观察者模式 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="餐厅的一天工作开始了，一名服务员和三名厨师，三名厨师刚想上手做菜，但是服务员说：“客人还没下单，先别做”，三名厨师只能乖乖地等着。 这时候来了三名客人，分别下单娃娃菜、红烧肉、海带猪肉汤，服务员就会拿着这些订单去通知厨师做菜，擅长菜系的厨师做娃娃菜、擅长肉系的厨师做红烧肉、另一个负责做汤。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="观察者模式">
 <meta property="og:url" content="http://example.com/2021/12/20/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="餐厅的一天工作开始了，一名服务员和三名厨师，三名厨师刚想上手做菜，但是服务员说：“客人还没下单，先别做”，三名厨师只能乖乖地等着。 这时候来了三名客人，分别下单娃娃菜、红烧肉、海带猪肉汤，服务员就会拿着这些订单去通知厨师做菜，擅长菜系的厨师做娃娃菜、擅长肉系的厨师做红烧肉、另一个负责做汤。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-12-20T12:37:55.000Z">
-<meta property="article:modified_time" content="2021-12-21T15:12:14.469Z">
+<meta property="article:modified_time" content="2021-12-24T16:18:06.918Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -197,7 +199,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>餐厅的一天工作开始了，一名服务员和三名厨师，三名厨师刚想上手做菜，但是服务员说：“客人还没下单，先别做”，三名厨师只能乖乖地等着。</p>
+<p>这时候来了三名客人，分别下单娃娃菜、红烧肉、海带猪肉汤，服务员就会拿着这些订单去通知厨师做菜，擅长菜系的厨师做娃娃菜、擅长肉系的厨师做红烧肉、另一个负责做汤。</p>
+<span id="more"></span>
+
+<p>这里的服务员就相当于发布者，而三位厨师就是订阅者，客户点完单，服务员就去通知厨师去制作属于自己擅长的菜肴。</p>
+<h3 id="实现Event-Bus"><a href="#实现Event-Bus" class="headerlink" title="实现Event Bus"></a>实现Event Bus</h3><p><strong>Event Bus</strong>的实现其实就是一种订阅/发布者模式，可以理解为一个事件中心，所有事件的订阅和发布都不能直接由订阅者和发布者来直接沟通，而是由事件中心统一进行处理。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventBus</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.events = &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">on</span>(<span class="params">type, event</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.events[type]) &#123;</span><br><span class="line">      <span class="built_in">this</span>.events[type].push(event)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.events[type] = [event]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">emit</span>(<span class="params">type, params=[]</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!(params <span class="keyword">instanceof</span> <span class="built_in">Array</span>)) &#123;</span><br><span class="line">      <span class="built_in">console</span>.error(<span class="string">&#x27;params参数必须为数组&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> events = <span class="built_in">this</span>.events[type] || []</span><br><span class="line">    events.forEach(<span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">      event.apply(<span class="built_in">this</span>, params)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">off</span>(<span class="params">type, event</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!event) &#123;</span><br><span class="line">      <span class="built_in">this</span>.events[type] = []</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> events = <span class="built_in">this</span>.events[type] || []</span><br><span class="line">    <span class="keyword">var</span> index = events.indexOf(event)</span><br><span class="line">    <span class="keyword">if</span> (index !== -<span class="number">1</span>) &#123;</span><br><span class="line">      events.splice(index, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">once</span>(<span class="params">type, event</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.off(type)</span><br><span class="line">    <span class="built_in">this</span>.on(type, event)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
       
     </div>
@@ -236,7 +246,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AE%9E%E7%8E%B0Event-Bus"><span class="article-toc-text">实现Event Bus</span></a></li></ol>
   
 <nav id="article-nav">
   
