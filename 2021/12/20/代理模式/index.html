@@ -16,7 +16,7 @@
 <meta property="og:description" content="我们生活中常常见到的中间商就是代理模式的典型例子，客户由于某些原因不能够直接和商家直接交易，只能通过中间商来达成交易，这时候中间商就可以在完成交易前提下添油加醋，达成盈利的目的。 出于某种考虑，一个对象不能够直接访问另一个对象，需要通过第三者牵线搭桥来间接达成目的，这就是代理模式。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-12-20T12:37:08.000Z">
-<meta property="article:modified_time" content="2022-01-01T10:57:30.764Z">
+<meta property="article:modified_time" content="2022-01-01T12:07:40.905Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -203,6 +203,14 @@
 <p>出于某种考虑，一个对象不能够直接访问另一个对象，需要通过第三者牵线搭桥来间接达成目的，这就是<strong>代理模式</strong>。</p>
 <span id="more"></span>
 
+<h3 id="虚拟代理"><a href="#虚拟代理" class="headerlink" title="虚拟代理"></a>虚拟代理</h3><p>我们需要给图片加上一个预加载，也就是当图片还未加载出来，先使用一张加载图片进行占位，等到图片加载完毕再替换。</p>
+<p>一般我们把图片对象与图片预加载弄在一起，写法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> preLoadImg = <span class="function"><span class="keyword">function</span>(<span class="params">url, imgNode</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> LAZYIMGPATH = <span class="string">&#x27;./load,gif&#x27;</span> <span class="comment">// 懒加载图片路径</span></span><br><span class="line">  imgNode.src = LAZYIMGPATH</span><br><span class="line">  <span class="keyword">var</span> img = <span class="keyword">new</span> Image()</span><br><span class="line">  img.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    imgNode.src = img.src</span><br><span class="line">  &#125;</span><br><span class="line">  img.src = url</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用代理模式将两个职责分离，写法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> imgNode = <span class="built_in">document</span>.createElement(<span class="string">&#x27;img&#x27;</span>)</span><br><span class="line"><span class="built_in">document</span>.body.append(imgNode)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myImg = (<span class="function"><span class="keyword">function</span>(<span class="params">imgNode</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">setSrc</span>: <span class="function"><span class="keyword">function</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">      imgNode.src = url</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(imgNode)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 预加载职责</span></span><br><span class="line"><span class="keyword">var</span> proxyImg = <span class="function"><span class="keyword">function</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> LAZYIMGPATH = <span class="string">&#x27;./load,gif&#x27;</span> <span class="comment">// 懒加载图片路径</span></span><br><span class="line">  myImg.src(LAZYIMGPATH)</span><br><span class="line">  <span class="keyword">var</span> img = <span class="keyword">new</span> Image()</span><br><span class="line">  img.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    myImg.setSrc(img.src)</span><br><span class="line">  &#125;</span><br><span class="line">  img.src = url</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
       
       
     </div>
@@ -241,7 +249,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E8%99%9A%E6%8B%9F%E4%BB%A3%E7%90%86"><span class="article-toc-text">虚拟代理</span></a></li></ol>
   
 <nav id="article-nav">
   
