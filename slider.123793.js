@@ -1779,7 +1779,6 @@ function init() {
           matchTags = true;
         }
       });
-
       if (type === "title" && matchTitle || type === "tag" && matchTags) {
         item.isShow = true;
       } else {
