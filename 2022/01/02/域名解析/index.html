@@ -8,18 +8,22 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>域名解析 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="DNS域名解析过程分为两个过程：递归查询和迭代查询。 递归查询： 迭代查询：">
+  <meta name="description" content="浏览器访问服务器是通过ip地址进行访问的，但是想要记住ip地址对应的哪个网站就比较难，相比较域名方式来记住某个网站相对来说容易得多。由于浏览器是只认ip地址，所以需要一个中间者将ip和域名之间的映射关系记录下来，这样域名服务器就诞生了，域名服务器就是专门来干解析域名这种活的。 DNS域名解析过程分为两个过程：递归查询和迭代查询。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="域名解析">
 <meta property="og:url" content="http://example.com/2022/01/02/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="DNS域名解析过程分为两个过程：递归查询和迭代查询。 递归查询： 迭代查询：">
+<meta property="og:description" content="浏览器访问服务器是通过ip地址进行访问的，但是想要记住ip地址对应的哪个网站就比较难，相比较域名方式来记住某个网站相对来说容易得多。由于浏览器是只认ip地址，所以需要一个中间者将ip和域名之间的映射关系记录下来，这样域名服务器就诞生了，域名服务器就是专门来干解析域名这种活的。 DNS域名解析过程分为两个过程：递归查询和迭代查询。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/01/02/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2.jpg">
+<meta property="og:image" content="http://example.com/2022/01/02/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/%E8%BF%AD%E4%BB%A3%E6%9F%A5%E8%AF%A2.jpg">
+<meta property="og:image" content="http://example.com/2022/01/02/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8.jpg">
 <meta property="article:published_time" content="2022-01-02T10:59:08.000Z">
-<meta property="article:modified_time" content="2022-01-03T03:35:12.658Z">
+<meta property="article:modified_time" content="2022-01-04T16:28:24.761Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="http">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/02/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2.jpg">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -199,11 +203,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>DNS域名解析过程分为两个过程：<strong>递归查询</strong>和<strong>迭代查询</strong>。</p>
-<p><strong>递归查询：</strong></p>
-<p><strong>迭代查询：</strong></p>
+        <p>浏览器访问服务器是通过ip地址进行访问的，但是想要记住ip地址对应的哪个网站就比较难，相比较域名方式来记住某个网站相对来说容易得多。由于浏览器是只认ip地址，所以需要一个中间者将ip和域名之间的映射关系记录下来，这样域名服务器就诞生了，域名服务器就是专门来干解析域名这种活的。</p>
+<p>DNS域名解析过程分为两个过程：<strong>递归查询</strong>和<strong>迭代查询</strong>。</p>
 <span id="more"></span>
 
+<p><strong>递归查询：</strong>主机向本地域名服务器的查询一般都是使用递归查询。</p>
+<p><img src="/2022/01/02/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2.jpg"></p>
+<p>当浏览器输入地url，会有一个递归查询的过程，浏览器输入url-&gt;本地hosts文件查找-&gt;本地DNS解析缓存中查找-&gt;本地DNS域名服务器查找，这些过程有一个找到就会结束，返回ip地址给浏览器访问对应的服务器，不会再往下递归下去。</p>
+<p><strong>迭代查询：</strong>本地域名服务器向根域名服务器的查询过程一般是迭代查询。</p>
+<p><img src="/2022/01/02/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/%E8%BF%AD%E4%BB%A3%E6%9F%A5%E8%AF%A2.jpg"></p>
+<p>由于递归查询过程还是没有找到域名对应的IP地址，这时候就需要走迭代查询，也就是本地DNS域名服务器向根域名服务器查找的过程。举一个栗子，百度(<a target="_blank" rel="noopener" href="http://www.baidu.com)./">www.baidu.com)。</a></p>
+<p>本地DNS域名服务向根域名服务器（2）查找<a href="http://www.baidu.com，但是根域名服务器找不到就说：“哥，我不知道这个域名的IP地址，但是我知道它肯定在com顶级域名服务器下面，这是com顶级域名的IP地址：x.x.x.x，你去找它吧。”">www.baidu.com，但是根域名服务器找不到就说：“哥，我不知道这个域名的IP地址，但是我知道它肯定在com顶级域名服务器下面，这是com顶级域名的IP地址：x.x.x.x，你去找它吧。”</a></p>
+<p>本地DNS域名服务找到com顶级域名服务器的家，就说：“哥，你知道<a href="http://www.baidu.com的家在哪里吗？”">www.baidu.com的家在哪里吗？”</a></p>
+<p>com顶级域名服务说：“我不知道，但是他应该在baidu.com权威域名服务器的家，你去看看。这是它的IP地址：x.x.x.x。”</p>
+<p>本地DNS域名服务器找到baidu.com权威域名服务器的家，就说：“哥，你知道<a href="http://www.baidu.com的家在哪里吗？”">www.baidu.com的家在哪里吗？”</a></p>
+<p>baidu.com权威域名服务器就说：“这个我知道，在14.215.177.38那里。”本地DNS域名服务器兴兴奋奋将百度的家告诉浏览器，浏览器再去访问百度，去做为所欲为的事情~~~</p>
+<p><strong>域名服务器</strong></p>
+<p>上面出现的根域名服务器、顶级域名服务器、权威域名服务器。这些域名服务器有时候不会直接存储所有的域名，而是进行分级管理。将根域名服务器会将域名分派下去，交给下面域名服务器进行查询。</p>
+<ul>
+<li>根域名服务器：返回顶级域名服务器的ip地址</li>
+<li>顶级域名服务器：返回权威域名服务器的ip地址</li>
+<li>权威域名服务器：返回响应主机的ip地址</li>
+</ul>
+<p><img src="/2022/01/02/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8.jpg"></p>
 
       
       
