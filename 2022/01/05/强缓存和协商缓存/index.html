@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: this | 木头个人博客</title>
+  <title>强缓存和协商缓存 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="木头个人博客">
-<meta property="og:url" content="http://example.com/tags/this/index.html">
+  <meta name="description" content="强缓存 强缓存是利用http头中的Expires和Cache-Control两个字段来控制。第一次发送请求时，响应报文中如果使用强缓存就会写入expires或cache-control字段，当再次请求时浏览器会先判断请求资源是否过期，若没有过期就会从浏览器缓存中取，不会再与服务器发生通信。一旦过期，就会走协商缓存。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强缓存和协商缓存">
+<meta property="og:url" content="http://example.com/2022/01/05/%E5%BC%BA%E7%BC%93%E5%AD%98%E5%92%8C%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="强缓存 强缓存是利用http头中的Expires和Cache-Control两个字段来控制。第一次发送请求时，响应报文中如果使用强缓存就会写入expires或cache-control字段，当再次请求时浏览器会先判断请求资源是否过期，若没有过期就会从浏览器缓存中取，不会再与服务器发生通信。一旦过期，就会走协商缓存。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/01/05/%E5%BC%BA%E7%BC%93%E5%AD%98%E5%92%8C%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/%E7%BC%93%E5%AD%98%E5%86%B3%E7%AD%96.jpg">
+<meta property="article:published_time" content="2022-01-05T02:09:02.000Z">
+<meta property="article:modified_time" content="2022-01-05T16:22:51.828Z">
 <meta property="article:author" content="Wood">
+<meta property="article:tag" content="http">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/05/%E5%BC%BA%E7%BC%93%E5%AD%98%E5%92%8C%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/%E7%BC%93%E5%AD%98%E5%86%B3%E7%AD%96.jpg">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -174,75 +181,137 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-  
+            <article id="post-强缓存和协商缓存" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/19/this/" class="archive-article-date">
-  	<time datetime="2021-11-19T10:41:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-19</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/19/this/">
-      this
-      
-    </a>
+    <h1 class="article-title" itemprop="name">
+      强缓存和协商缓存
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2022/01/05/%E5%BC%BA%E7%BC%93%E5%AD%98%E5%92%8C%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/" class="archive-article-date">
+  	<time datetime="2022-01-05T02:09:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h3><ul>
+<li><p>强缓存是利用http头中的<strong>Expires</strong>和<strong>Cache-Control</strong>两个字段来控制。第一次发送请求时，响应报文中如果使用强缓存就会写入expires或cache-control字段，当再次请求时浏览器会先判断请求资源是否过期，若没有过期就会从浏览器缓存中取，不会再与服务器发生通信。一旦过期，就会走协商缓存。</p>
+<span id="more"></span></li>
+<li><p><strong>Expires</strong>返回的是一个时间戳，该时间戳是服务器来定义的，与之相比较的是客户端的本地时间，所以会对客户端时间与服务器时间的一致性提出了极高要求。</p>
+</li>
+<li><p><strong>Cache-Control</strong>可以设置相对时间（<strong>max-age</strong>）来达到相应的目的（<strong>HTTP1.1</strong>支持），客户端会记录下请求到资源的时间点，max-age就是相对于这个时间点来计算，<strong>Cache-Control的优先级会比Expires更高</strong></p>
+<ul>
+<li><strong>s-maxage</strong>是针对代理服务器的，优先级会比max-age高，并只对public缓存有效。</li>
+<li><strong>public与private</strong>——public设置资源既可以被浏览器缓存，也可以被代理服务器缓存，private设置只能是被浏览器缓存</li>
+<li><strong>no-cache</strong>直接绕开浏览器，向服务器询问该资源是否过期（即走协商缓存路线）</li>
+<li><strong>no-store</strong>不采用任何缓存策略，直接向服务器发送请求，并下载完整的资源</li>
+</ul>
+</li>
+</ul>
+<h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h3><ul>
+<li><p>当强缓存命中失效后，在协商缓存机制下，浏览器需要向服务器询问缓存的相关信息，进而判断是重新发送请求，下载完整的响应还是获取本地缓存资源。</p>
+</li>
+<li><p>如果服务器提示资源未改动（<strong>304 Not Modified</strong>）,资源会重定向到浏览器缓存。一旦发生变动就会返回一个完整的响应内容并在响应头上添加last-modified，否则就不会添加last-modified.</p>
+</li>
+<li><p>协商缓存利用字段<strong>Last-Modified</strong>和<strong>ETag</strong>来实现，<strong>ETag的优先级比Last-Modified的优先级更高</strong>。</p>
+<ul>
+<li><strong>Last-Modified</strong>是一个时间戳，随后每次请求都会带上叫<strong>If-Modified-Since</strong>字段，这个字段的值就是<strong>Last-Modified</strong>的值<ul>
+<li>缺陷：这个字段只能精确到秒，文件修改过快的话不会识别为内容已改动，照样会返回304</li>
+<li>编辑了文件，但文件内容没有改变也会识别为内容改动，会重新下载完整的资源。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>ETag在感知文件变化上比Last-Modified更加精确，优先级更高。</strong>随后每次请求都会带上<strong>If-None-Match</strong>字段，值和<strong>ETag</strong>的相同。但是ETag的生成需要服务器付出更多的开销，会影响服务端的性能。</p>
+</li>
+</ul>
+<h3 id="http缓存决策"><a href="#http缓存决策" class="headerlink" title="http缓存决策"></a>http缓存决策</h3><p><img src="/2022/01/05/%E5%BC%BA%E7%BC%93%E5%AD%98%E5%92%8C%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/%E7%BC%93%E5%AD%98%E5%86%B3%E7%AD%96.jpg"></p>
+
+      
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">this</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">http</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
+        			<a href="/categories/计算机网络//" class="article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%BC%BA%E7%BC%93%E5%AD%98"><span class="article-toc-text">强缓存</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98"><span class="article-toc-text">协商缓存</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#http%E7%BC%93%E5%AD%98%E5%86%B3%E7%AD%96"><span class="article-toc-text">http缓存决策</span></a></li></ol>
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2022/01/03/http%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">http请求方式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -265,9 +334,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
