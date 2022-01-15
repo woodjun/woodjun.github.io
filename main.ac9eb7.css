@@ -2509,9 +2509,9 @@ pre .css ~ * .id {
   .article-toc ol {
     text-indent: 2em; }
     .article-toc ol ol {
-      text-indent: 2em; }
+      text-indent: 4em; }
       .article-toc ol ol ol {
-        text-indent: 2em; }
+        text-indent: 6em; }
   .article-toc .article-toc-item {
     white-space: nowrap;
     overflow: hidden;
