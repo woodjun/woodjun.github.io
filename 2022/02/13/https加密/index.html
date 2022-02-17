@@ -8,16 +8,24 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>https加密 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="接着对称加密和非对称加密所提到的对称加密和非对称加密还是会遭受盗取私匙的问题。 出现上面问题的核心在于如何辨别公匙是不是真正的发送方的。 hash算法可以将公匙和个人信息生成消息摘要。  同时让有公证的认证中心(CA)负责将消息摘要使用私匙加密形成数字签名。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="https加密">
 <meta property="og:url" content="http://example.com/2022/02/13/https%E5%8A%A0%E5%AF%86/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="接着对称加密和非对称加密所提到的对称加密和非对称加密还是会遭受盗取私匙的问题。 出现上面问题的核心在于如何辨别公匙是不是真正的发送方的。 hash算法可以将公匙和个人信息生成消息摘要。  同时让有公证的认证中心(CA)负责将消息摘要使用私匙加密形成数字签名。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/02/13/https%E5%8A%A0%E5%AF%86/hash%E5%8A%A0%E5%AF%86.png">
+<meta property="og:image" content="http://example.com/2022/02/13/https%E5%8A%A0%E5%AF%86/CA%E5%8A%A0%E5%AF%86.png">
+<meta property="og:image" content="http://example.com/2022/02/13/https%E5%8A%A0%E5%AF%86/%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6.png">
+<meta property="og:image" content="http://example.com/2022/02/13/https%E5%8A%A0%E5%AF%86/%E8%AF%81%E4%B9%A6%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="http://example.com/2022/02/13/https%E5%8A%A0%E5%AF%86/%E5%8A%A0%E5%AF%86%E6%B5%81%E7%A8%8B.png">
 <meta property="article:published_time" content="2022-02-13T01:47:29.000Z">
-<meta property="article:modified_time" content="2022-02-13T01:51:26.478Z">
+<meta property="article:modified_time" content="2022-02-17T15:11:18.440Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="https">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/02/13/https%E5%8A%A0%E5%AF%86/hash%E5%8A%A0%E5%AF%86.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -197,7 +205,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>接着<a href="/2022/02/13/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/" title="对称加密和非对称加密">对称加密和非对称加密</a>所提到的对称加密和非对称加密还是会遭受盗取私匙的问题。</p>
+<p>出现上面问题的核心在于如何辨别公匙是不是真正的发送方的。</p>
+<p>hash算法可以将公匙和个人信息生成<strong>消息摘要</strong>。</p>
+<p><img src="/2022/02/13/https%E5%8A%A0%E5%AF%86/hash%E5%8A%A0%E5%AF%86.png"><br></p>
+<p>同时让有公证的认证中心(<strong>CA</strong>)负责将<strong>消息摘要</strong>使用私匙加密形成<strong>数字签名</strong>。</p>
+<p><img src="/2022/02/13/https%E5%8A%A0%E5%AF%86/CA%E5%8A%A0%E5%AF%86.png"><br></p>
+<span id="more"></span>
+
+<h3 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h3><p>数字证书是将原始信息和数字签名两者相互合并，形成<strong>数字证书</strong>。</p>
+<p><img src="/2022/02/13/https%E5%8A%A0%E5%AF%86/%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6.png"><br></p>
+<p>辨别公匙是否被篡改，就是利用原始信息进行<strong>hash算法</strong>加密生成的消息摘要和利用<strong>CA</strong>给的公匙对<strong>数字签名</strong>进行解密生成的消息摘要相互对比，查看两者是否一致。</p>
+<p><img src="/2022/02/13/https%E5%8A%A0%E5%AF%86/%E8%AF%81%E4%B9%A6%E5%AF%B9%E6%AF%94.png"><br></p>
+<p>上面这种方案就确保公匙方面不会被第三方进行篡改了^_^</p>
+<h3 id="https加密流程"><a href="#https加密流程" class="headerlink" title="https加密流程"></a>https加密流程</h3><p>所谓的加密流程其实就是<strong>数字证书+对称加密和非对称加密结合</strong></p>
+<p>对称加密和非对称加密结合出现的问题就是公匙容易被篡改，数字证书就确保公匙不被篡改，两者结合就形成加密过程。</p>
+<p><img src="/2022/02/13/https%E5%8A%A0%E5%AF%86/%E5%8A%A0%E5%AF%86%E6%B5%81%E7%A8%8B.png"></p>
+
       
       
     </div>
@@ -236,7 +260,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6"><span class="article-toc-text">数字证书</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#https%E5%8A%A0%E5%AF%86%E6%B5%81%E7%A8%8B"><span class="article-toc-text">https加密流程</span></a></li></ol>
   
 <nav id="article-nav">
   
