@@ -8,16 +8,23 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>flex布局 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="采用flex布局，需设置display: flex，被flex修饰的元素作为一个弹性容器，其所有的子元素都是其项目，flex相关的属性可以分为两大类属性：容器属性和项目属性。 具体的实例项目请戳：flex示例">
+<meta property="og:type" content="article">
 <meta property="og:title" content="flex布局">
 <meta property="og:url" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="采用flex布局，需设置display: flex，被flex修饰的元素作为一个弹性容器，其所有的子元素都是其项目，flex相关的属性可以分为两大类属性：容器属性和项目属性。 具体的实例项目请戳：flex示例">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/direction.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/nowrap.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/wrap.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/wrap-reverse.png">
 <meta property="article:published_time" content="2022-02-13T03:50:13.000Z">
-<meta property="article:modified_time" content="2022-02-13T04:00:19.595Z">
+<meta property="article:modified_time" content="2022-02-18T15:24:38.305Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="flex">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/direction.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -197,7 +204,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>采用flex布局，需设置<code>display: flex</code>，被flex修饰的元素作为一个弹性容器，其所有的子元素都是其项目，flex相关的属性可以分为两大类属性：<strong>容器属性</strong>和<strong>项目属性</strong>。</p>
+<p>具体的实例项目请戳：<a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/tree/master/Flex">flex示例</a></p>
+<span id="more"></span>
+
+<h3 id="容器属性"><a href="#容器属性" class="headerlink" title="容器属性"></a>容器属性</h3><p>容器属性是用来操控所有子元素的主轴方向、换行、水平对齐、垂直对齐的。</p>
+<h4 id="flex-direction-转换主轴方向"><a href="#flex-direction-转换主轴方向" class="headerlink" title="flex-direction(转换主轴方向)"></a>flex-direction(转换主轴方向)</h4><p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/direction.png" style="zoom:50%;"><br></p>
+<h4 id="flex-wrap-换行"><a href="#flex-wrap-换行" class="headerlink" title="flex-wrap(换行)"></a>flex-wrap(换行)</h4><p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/nowrap.png" style="zoom:50%;"><br></p>
+<p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/wrap.png" style="zoom:50%;"><br></p>
+<p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/wrap-reverse.png" style="zoom:50%;"><br></p>
+<h4 id="justify-content-水平对齐"><a href="#justify-content-水平对齐" class="headerlink" title="justify-content(水平对齐)"></a>justify-content(水平对齐)</h4><h3 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h3>
       
       
     </div>
@@ -236,7 +252,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AE%B9%E5%99%A8%E5%B1%9E%E6%80%A7"><span class="article-toc-text">容器属性</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex-direction-%E8%BD%AC%E6%8D%A2%E4%B8%BB%E8%BD%B4%E6%96%B9%E5%90%91"><span class="article-toc-text">flex-direction(转换主轴方向)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex-wrap-%E6%8D%A2%E8%A1%8C"><span class="article-toc-text">flex-wrap(换行)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#justify-content-%E6%B0%B4%E5%B9%B3%E5%AF%B9%E9%BD%90"><span class="article-toc-text">justify-content(水平对齐)</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7"><span class="article-toc-text">项目属性</span></a></li></ol>
   
 <nav id="article-nav">
   
