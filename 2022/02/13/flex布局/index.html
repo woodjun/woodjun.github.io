@@ -19,8 +19,16 @@
 <meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/nowrap.png">
 <meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/wrap.png">
 <meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/wrap-reverse.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/justify-content-top.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/justify-content-bottom.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/align-items-top.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/align-items-bottom.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/order.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/grow.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/shrink.png">
+<meta property="og:image" content="http://example.com/2022/02/13/flex%E5%B8%83%E5%B1%80/basis.png">
 <meta property="article:published_time" content="2022-02-13T03:50:13.000Z">
-<meta property="article:modified_time" content="2022-02-18T15:24:38.305Z">
+<meta property="article:modified_time" content="2022-02-19T14:32:09.458Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="flex">
 <meta name="twitter:card" content="summary">
@@ -208,12 +216,34 @@
 <p>具体的实例项目请戳：<a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/tree/master/Flex">flex示例</a></p>
 <span id="more"></span>
 
-<h3 id="容器属性"><a href="#容器属性" class="headerlink" title="容器属性"></a>容器属性</h3><p>容器属性是用来操控所有子元素的主轴方向、换行、水平对齐、垂直对齐的。</p>
+<h3 id="容器属性"><a href="#容器属性" class="headerlink" title="容器属性"></a>容器属性</h3><p>容器属性是用来操控所有子元素的<strong>主轴方向、换行、水平和垂直对齐</strong>。</p>
 <h4 id="flex-direction-转换主轴方向"><a href="#flex-direction-转换主轴方向" class="headerlink" title="flex-direction(转换主轴方向)"></a>flex-direction(转换主轴方向)</h4><p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/direction.png" style="zoom:50%;"><br></p>
 <h4 id="flex-wrap-换行"><a href="#flex-wrap-换行" class="headerlink" title="flex-wrap(换行)"></a>flex-wrap(换行)</h4><p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/nowrap.png" style="zoom:50%;"><br></p>
 <p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/wrap.png" style="zoom:50%;"><br></p>
 <p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/wrap-reverse.png" style="zoom:50%;"><br></p>
-<h4 id="justify-content-水平对齐"><a href="#justify-content-水平对齐" class="headerlink" title="justify-content(水平对齐)"></a>justify-content(水平对齐)</h4><h3 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h3>
+<h4 id="justify-content-水平对齐"><a href="#justify-content-水平对齐" class="headerlink" title="justify-content(水平对齐)"></a>justify-content(水平对齐)</h4><p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/justify-content-top.png" style="zoom:50%;"><br></p>
+<p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/justify-content-bottom.png" style="zoom:50%;"><br></p>
+<h4 id="align-items-垂直对齐"><a href="#align-items-垂直对齐" class="headerlink" title="align-items(垂直对齐)"></a>align-items(垂直对齐)</h4><p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/align-items-top.png" style="zoom:50%;"><br></p>
+<p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/align-items-bottom.png" style="zoom:50%;"><br></p>
+<h3 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h3><p>项目属性可以操控单个子元素的<strong>排序、放大缩小比例以及所占主轴空间</strong>。</p>
+<h4 id="order-排序"><a href="#order-排序" class="headerlink" title="order(排序)"></a>order(排序)</h4><p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/order.png" style="zoom:50%;"><br></p>
+<h4 id="flex-grow-放大倍数"><a href="#flex-grow-放大倍数" class="headerlink" title="flex-grow(放大倍数)"></a>flex-grow(放大倍数)</h4><p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/grow.png" style="zoom:50%;"><br></p>
+<h4 id="flex-shrink-是否缩小"><a href="#flex-shrink-是否缩小" class="headerlink" title="flex-shrink(是否缩小)"></a>flex-shrink(是否缩小)</h4><p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/shrink.png" style="zoom:50%;"><br></p>
+<h4 id="flex-basis-项目所占空间"><a href="#flex-basis-项目所占空间" class="headerlink" title="flex-basis(项目所占空间)"></a>flex-basis(项目所占空间)</h4><p>flex-basis分为两种情况来讨论：父容器有<strong>足够空间</strong>和<strong>没有足够空间</strong>。</p>
+<p><strong>足够空间的优先级：</strong></p>
+<blockquote>
+<p>content -&gt; width -&gt; flex-basis(被限制max|min-width)</p>
+</blockquote>
+<p>也就是在空间足够的情况下，flex-basis会覆盖width设置的宽度，同时又被<code>max|min-width</code>所限制。</p>
+<p><strong>没有足够空间：</strong></p>
+<blockquote>
+<p>项目会按照压缩率来压缩项目，达到填充满容器的目的。</p>
+</blockquote>
+<p><img src="/2022/02/13/flex%E5%B8%83%E5%B1%80/basis.png" style="zoom:50%;"><br></p>
+<h4 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h4><p>flex是flex-grow、flex-shrink、flex-basis三者合一的写法，默认值为<code>0 1 auto</code>, </p>
+<p><code>flex: auto</code>值为<code>1 1 auto</code></p>
+<p><code>flex: none</code>值为<code>0 0 auto</code></p>
+
       
       
     </div>
@@ -252,7 +282,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AE%B9%E5%99%A8%E5%B1%9E%E6%80%A7"><span class="article-toc-text">容器属性</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex-direction-%E8%BD%AC%E6%8D%A2%E4%B8%BB%E8%BD%B4%E6%96%B9%E5%90%91"><span class="article-toc-text">flex-direction(转换主轴方向)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex-wrap-%E6%8D%A2%E8%A1%8C"><span class="article-toc-text">flex-wrap(换行)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#justify-content-%E6%B0%B4%E5%B9%B3%E5%AF%B9%E9%BD%90"><span class="article-toc-text">justify-content(水平对齐)</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7"><span class="article-toc-text">项目属性</span></a></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AE%B9%E5%99%A8%E5%B1%9E%E6%80%A7"><span class="article-toc-text">容器属性</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex-direction-%E8%BD%AC%E6%8D%A2%E4%B8%BB%E8%BD%B4%E6%96%B9%E5%90%91"><span class="article-toc-text">flex-direction(转换主轴方向)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex-wrap-%E6%8D%A2%E8%A1%8C"><span class="article-toc-text">flex-wrap(换行)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#justify-content-%E6%B0%B4%E5%B9%B3%E5%AF%B9%E9%BD%90"><span class="article-toc-text">justify-content(水平对齐)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#align-items-%E5%9E%82%E7%9B%B4%E5%AF%B9%E9%BD%90"><span class="article-toc-text">align-items(垂直对齐)</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7"><span class="article-toc-text">项目属性</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#order-%E6%8E%92%E5%BA%8F"><span class="article-toc-text">order(排序)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex-grow-%E6%94%BE%E5%A4%A7%E5%80%8D%E6%95%B0"><span class="article-toc-text">flex-grow(放大倍数)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex-shrink-%E6%98%AF%E5%90%A6%E7%BC%A9%E5%B0%8F"><span class="article-toc-text">flex-shrink(是否缩小)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex-basis-%E9%A1%B9%E7%9B%AE%E6%89%80%E5%8D%A0%E7%A9%BA%E9%97%B4"><span class="article-toc-text">flex-basis(项目所占空间)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#flex"><span class="article-toc-text">flex</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
