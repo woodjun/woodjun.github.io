@@ -8,13 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>两列等高布局 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="保持左右列的高度一致。 布局核心在于左列float脱离文档流，父盒子的高度由右列的高度撑开。 由于父盒子没有设置高度并且使用overflow: hidden，使用padding-bottom为正margin-bottom为负，两者值相反可以达到互相抵消的效果。 为何设置这两个相反值能够相互抵消呢？">
+<meta property="og:type" content="article">
 <meta property="og:title" content="两列等高布局">
 <meta property="og:url" content="http://example.com/2022/02/26/%E4%B8%A4%E5%88%97%E7%AD%89%E9%AB%98%E5%B8%83%E5%B1%80/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="保持左右列的高度一致。 布局核心在于左列float脱离文档流，父盒子的高度由右列的高度撑开。 由于父盒子没有设置高度并且使用overflow: hidden，使用padding-bottom为正margin-bottom为负，两者值相反可以达到互相抵消的效果。 为何设置这两个相反值能够相互抵消呢？">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-02-26T13:02:38.000Z">
-<meta property="article:modified_time" content="2022-02-26T13:05:19.237Z">
+<meta property="article:modified_time" content="2022-02-28T17:00:14.447Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="布局">
 <meta name="twitter:card" content="summary">
@@ -197,7 +199,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>保持左右列的高度一致。</p>
+<p>布局核心在于左列float脱离文档流，父盒子的高度由右列的高度撑开。</p>
+<p>由于父盒子没有设置高度并且使用<code>overflow: hidden</code>，使用<strong>padding-bottom为正margin-bottom为负，两者值相反可以达到互相抵消的效果。</strong></p>
+<p>为何设置这两个相反值能够相互抵消呢？</p>
+<span id="more"></span>
+
+<p>如果我们去掉父容器的overflow就会发现：盒子展现的高度是height+padding-bottom，似乎margin-bottom没有起到效果。其实不是，当margin-bottom为-100px时，在视觉上没有区别，但是下边界已经往上移动100px；</p>
+<p>也就是说两者为相反值，盒子的下边界就到盒子内容的底部。由于父盒子被右列高度撑开，且设置<code>overflow：hidden</code>，父盒子能够遮到的高度和右列高度保持一致。盒子的下边界又在父盒子内部，就可以借用padding-bottom打补丁，直到<strong>盒子到下边界的高度+padding-bottom补丁=右列高度</strong>为止。</p>
+<p>想要了解margin负值情况请戳：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25892372">浅谈margin负值</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">  *&#123;</span></span><br><span class="line"><span class="css">    <span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">    <span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="css">  &#125;</span></span><br><span class="line"><span class="css">  <span class="selector-class">.container</span>&#123;</span></span><br><span class="line"><span class="css">    <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="css">  &#125;</span></span><br><span class="line"><span class="css">  <span class="selector-class">.left</span>&#123;</span></span><br><span class="line"><span class="css">    <span class="attribute">float</span>: left;</span></span><br><span class="line"><span class="css">    <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">    <span class="attribute">padding-bottom</span>: <span class="number">5000px</span>;</span></span><br><span class="line"><span class="css">    <span class="attribute">margin-bottom</span>: -<span class="number">5000px</span>;</span></span><br><span class="line"><span class="css">    <span class="attribute">background-color</span>: <span class="number">#89479b</span>;</span></span><br><span class="line"><span class="css">  &#125;</span></span><br><span class="line"><span class="css">  <span class="selector-class">.right</span>&#123;</span></span><br><span class="line"><span class="css">    <span class="attribute">height</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="css">    <span class="attribute">margin-left</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="css">    <span class="attribute">background-color</span>: <span class="number">#ffd552</span>;</span></span><br><span class="line"><span class="css">  &#125;</span></span><br><span class="line"><span class="css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
       
       
     </div>
