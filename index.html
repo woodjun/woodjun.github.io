@@ -286,6 +286,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+        <h3 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h3><p><strong>防抖</strong>：当持续触发事件时，在一定时间段内没有再触发事件，事件处理函数才会执行一次。</p>
+<p>也就是说前面触发事件的时间还没到，又重新触发这个事件的话，就会重新开始计时。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> ctx = <span class="built_in">this</span></span><br><span class="line">  <span class="keyword">var</span> timer = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) &#123;</span><br><span class="line">      <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">      timer = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      fn.apply(ctx, args)</span><br><span class="line">    &#125;, wait)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2022/02/26/%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81/#more">阅读更多 >></a>
         
       
       
