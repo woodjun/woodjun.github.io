@@ -8,13 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>http版本系列 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="HTTP&#x2F;0.9 仅支持get请求方式 仅能请求访问HTML格式资源">
+<meta property="og:type" content="article">
 <meta property="og:title" content="http版本系列">
 <meta property="og:url" content="http://example.com/2022/03/05/http%E7%89%88%E6%9C%AC%E7%B3%BB%E5%88%97/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="HTTP&#x2F;0.9 仅支持get请求方式 仅能请求访问HTML格式资源">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-05T03:36:26.000Z">
-<meta property="article:modified_time" content="2022-03-05T03:37:12.342Z">
+<meta property="article:modified_time" content="2022-03-08T14:10:22.107Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="http">
 <meta name="twitter:card" content="summary">
@@ -197,7 +199,37 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="HTTP-0-9"><a href="#HTTP-0-9" class="headerlink" title="HTTP/0.9"></a>HTTP/0.9</h3><ol>
+<li>仅支持<strong>get</strong>请求方式</li>
+<li>仅能请求<strong>访问HTML</strong>格式资源</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h3><p>在HTTP/0.9基础之上做了一下进步：</p>
+<ol>
+<li>请求和响应增加<strong>头部信息</strong></li>
+<li>增加<strong>POST</strong>和<strong>HEAD</strong>请求方式</li>
+<li>支持<strong>多种数据格式资源</strong>的访问</li>
+<li><strong>短连接</strong>：每次TCP连接只能发送一个请求，当服务器响应后就会关闭这次连接，下次请求需要再次建立TCP连接</li>
+<li>其他新增功能：<strong>状态码、缓存、权限和内容编码</strong>等。</li>
+</ol>
+<h3 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h3><p>在HTTP/1.0基础之上做了以下改进：</p>
+<ol>
+<li><strong>持久连接</strong>：一个TCP连接可以允许多个HTTP请求，不过服务器响应还是按照顺序进行处理</li>
+<li>增加<strong>PUT、PATCH、OPTIONS、DELETE、TRACE、CONNECT</strong>请求方式</li>
+<li>增加缓存新特性：<strong>cache-control</strong>和<strong>etag</strong></li>
+<li>请求和响应支持<strong>Host头域</strong>：也就是多个域名共享一个IP地址，这个字段的出现只要是因为一台物理服务器上可以有多个虚拟主机，并且它们共享一个IP地址</li>
+<li><strong>分块传输编码</strong>：将实体分块传送并逐快标明长度，直到长度为0时表示传输结束，这种编码针对于不知道数据长度的情况</li>
+<li>支持<strong>文件断点传输</strong>：HTTP/1.1可以根据range元数据标记当前文件从哪个字节开始传送。</li>
+</ol>
+<h3 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP/2.0"></a>HTTP/2.0</h3><ol>
+<li><strong>多路复用</strong>：同一个TCP连接中，可以同时发送多个请求和响应，并且不用按照顺序一一对应。HTTP/2.0是基于二进制帧组成的，每个二进制帧的头部信息都会标识自己所属的流，接收端可以根据帧头的信息组成一个完整的数据，这样就能解决不用按照顺序进行发送，但却能组成完整信息的问题。</li>
+<li><strong>头部压缩</strong>：HTTP/2.0使用HPACK算法对头部信息进行压缩，同时客户端和服务器两边共同维护一张头信息表，每个字段对应一个索引号，就不用发送字段，直接发索引号就行了</li>
+<li><strong>服务器推送</strong>：服务器未经请求，可以主动向客户端发送资源。正常情况下，客户端必须收到网页后，解析HTML源码，发现有静态资源的需求，才会发送静态资源请求，HTTP/2.0服务器可以预期到客户端请求网页后，很可能会在请求静态资源，所以就主动把这些静态资源随着网页一起发送给客户端</li>
+<li><strong>二进制分帧</strong>：HTTP/2.0是一个彻底的二进制协议，头部信息和数据体都是采用二进制进行传输，两者统称为“帧”：头信息帧和数据帧</li>
+<li><strong>请求优先级</strong>：每个流都有自己的优先级别，客户端会指定流的优先级别，优先级高的最先请求，调整请求优先级别能够更好提升性能，就比如说：当前浏览器急需css和js文件，但是图片优先加载造成阻塞，可以适当调整优先级，提高页面渲染性能。</li>
+</ol>
+
       
       
     </div>
@@ -236,7 +268,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#HTTP-0-9"><span class="article-toc-text">HTTP&#x2F;0.9</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#HTTP-1-0"><span class="article-toc-text">HTTP&#x2F;1.0</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#HTTP-1-1"><span class="article-toc-text">HTTP&#x2F;1.1</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#HTTP-2-0"><span class="article-toc-text">HTTP&#x2F;2.0</span></a></li></ol>
   
 <nav id="article-nav">
   
