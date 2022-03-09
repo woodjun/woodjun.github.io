@@ -200,6 +200,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+        <h3 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h3><p><img src="/2022/03/05/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/前序遍历.png" style="zoom: 67%;"><br></p>
+<p><strong>递归实现</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">preorderTraversal</span>(<span class="params">root, arr=[]</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  arr.push(root.val)</span><br><span class="line">  preorderTraversal(root.left, arr)</span><br><span class="line">  preorderTraversal(root.right, arr)</span><br><span class="line">  <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2022/03/05/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/#more">阅读更多 >></a>
         
       
       
