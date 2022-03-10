@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://example.com/2022/03/05/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/中序遍历.png">
 <meta property="og:image" content="http://example.com/2022/03/05/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/后序遍历.png">
 <meta property="article:published_time" content="2022-03-05T03:43:01.000Z">
-<meta property="article:modified_time" content="2022-03-10T02:19:29.966Z">
+<meta property="article:modified_time" content="2022-03-10T14:28:10.927Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="二叉树">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,15 @@
 <p><strong>非递归实现</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">postorderTraversal</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> result = []</span><br><span class="line">  <span class="keyword">var</span> stack = []</span><br><span class="line">  <span class="keyword">var</span> current = root</span><br><span class="line">  <span class="keyword">var</span> last = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">while</span> (current || stack.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (current) &#123;</span><br><span class="line">      stack.push(current)</span><br><span class="line">      current = current.left</span><br><span class="line">    &#125;</span><br><span class="line">    current = stack[stack.length - <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> (!current.right || current.right == last) &#123;</span><br><span class="line">      current = stack.pop()</span><br><span class="line">      result.push(current.val)</span><br><span class="line">      last = current</span><br><span class="line">      current = <span class="literal">null</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      current = current.right</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>主要关注非递归实现，利用栈<strong>先进后出</strong>的特性保存节点，对于前序和中序遍历而言，节点压入栈的顺序和其遍历顺序有关。</p>
+<p><strong>左子节点：</strong></p>
+<p><strong>前序</strong>：取值-&gt;压入节点-&gt;跑向左子节点</p>
+<p><strong>中序和后序</strong>：压入节点-&gt;跑向左子节点</p>
+<p><strong>右子节点：</strong></p>
+<p><strong>前序</strong>：跑向右子节点</p>
+<p><strong>中序</strong>：取值-&gt;跑向右子节点</p>
+<p><strong>后序</strong>：标记最后一个没有右子节点的节点，当这个标记和当前节点的右子节点一致的话，就代表当前节点已经遍历完右子节点了，就需要取值和改变标记的指向</p>
+
       
       
     </div>
