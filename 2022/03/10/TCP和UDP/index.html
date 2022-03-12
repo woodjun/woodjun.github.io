@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>TCP和UDP | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="TCP&#x2F;IP是 UDP">
+  <meta name="description" content="TCP和UDP都是TCP&#x2F;IP协议中的一种，两者都属于传输层协议。 想要了解TCP和UDP头部信息请戳：TCP和UDP头部结构 UDPUDP有不提供数据包分组、组装和不能对数据包进行排序的缺点，以至于当报文发送后，是无法得知其是否安全完整抵达目的地。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP和UDP">
 <meta property="og:url" content="http://example.com/2022/03/10/TCP%E5%92%8CUDP/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="TCP&#x2F;IP是 UDP">
+<meta property="og:description" content="TCP和UDP都是TCP&#x2F;IP协议中的一种，两者都属于传输层协议。 想要了解TCP和UDP头部信息请戳：TCP和UDP头部结构 UDPUDP有不提供数据包分组、组装和不能对数据包进行排序的缺点，以至于当报文发送后，是无法得知其是否安全完整抵达目的地。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-10T01:39:38.000Z">
-<meta property="article:modified_time" content="2022-03-12T03:12:54.699Z">
+<meta property="article:modified_time" content="2022-03-12T17:54:45.608Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="http">
 <meta name="twitter:card" content="summary">
@@ -199,10 +199,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>TCP/IP是</p>
-<h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><span id="more"></span>
+        <p>TCP和UDP都是<a href="/2022/03/12/TCP-IP%E5%8D%8F%E8%AE%AE/" title="TCP&#x2F;IP协议">TCP&#x2F;IP协议</a>中的一种，两者都属于<strong>传输层协议</strong>。</p>
+<p>想要了解TCP和UDP头部信息请戳：<a href="/2022/03/11/TCP%E5%92%8CUDP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84/" title="TCP和UDP头部结构">TCP和UDP头部结构</a></p>
+<h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><p>UDP有不提供数据包分组、组装和不能对数据包进行排序的缺点，以至于当报文发送后，是无法得知其是否安全完整抵达目的地。</p>
+<span id="more"></span>
 
-<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3>
+<p>UDP具有以下特点：</p>
+<h4 id="面向无连接"><a href="#面向无连接" class="headerlink" title="面向无连接"></a>面向无连接</h4><p>UDP是不需要和TCP一样在发送数据前需要进行三次握手进行连接的，想发送就直接发送，并且只是数据报文的搬运工，不会对数据报文进行任何拆分或拼接操作。也就是说，UDP只会给数据增加或移除一个UDP头部标识，再继续传输出去。</p>
+<h4 id="单播、多播、广播传输功能"><a href="#单播、多播、广播传输功能" class="headerlink" title="单播、多播、广播传输功能"></a>单播、多播、广播传输功能</h4><p>UDP不止支持一对一传输方式，同时支持一对多、多对多、多对一多种传输方式。</p>
+<h4 id="面向报文传输"><a href="#面向报文传输" class="headerlink" title="面向报文传输"></a>面向报文传输</h4><p>发送方的UDP对应的应用程序交下来的报文，在添加首部之后就传输到网络层，不会对报文进行合并或拆分。</p>
+<h4 id="不可靠性"><a href="#不可靠性" class="headerlink" title="不可靠性"></a>不可靠性</h4><p>不可靠性体现在无连接上面，通行都不用建立连接就可以发送数据，收到什么数据就传递什么数据，自然是不可靠。</p>
+<p>同时在发送数据时也不会去校验是否正确接收到数据了，一股脑的传输过去，无法确保数据的是否丢失。但是在某些实时性要求高的场景（视频会议）就比较适合使用。</p>
+<h4 id="头部开销小"><a href="#头部开销小" class="headerlink" title="头部开销小"></a>头部开销小</h4><p>头部信息只有8个字节，开销比较小，传输</p>
+<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>TCP协议全称是传输控制协议，是一种<strong>面向连接的、可靠的、基于字节流的</strong>传输层通信协议。</p>
+<p>TCP具有以下特点：</p>
+<h4 id="面向连接的"><a href="#面向连接的" class="headerlink" title="面向连接的"></a>面向连接的</h4><p>面向连接是指发送数据之前必须先两端建立好连接。这样为数据的可靠性传输打下基础，建立连接采用的方法是<a href="/2022/01/02/TCP%E8%BF%9E%E6%8E%A5/" title="三次握手">三次握手</a></p>
+<h4 id="单播传输"><a href="#单播传输" class="headerlink" title="单播传输"></a>单播传输</h4><p>每个TCP传输连接两个端点，只能够进行点对点的数据传输。</p>
+<h4 id="面向字节流"><a href="#面向字节流" class="headerlink" title="面向字节流"></a>面向字节流</h4><p>TCP是以字节流方式进行传输数据的。</p>
+<h4 id="可靠传输"><a href="#可靠传输" class="headerlink" title="可靠传输"></a>可靠传输</h4><p>TCP可靠性体现在判断是否丢包和数据传输过程中是否损坏。TCP给每个包一个序号，发送端将数据发送出去，接收端成功接收到之后回应一个确认信号(ack)；如果发送端在合理的往返时延(RTT)内没有收到确认信号，就会认为数据丢失了，需要重传。</p>
+<p>同时CRC算法能够检验TCP头部和数据部分在传输过程中是否损坏。</p>
+<h4 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h4><p>当网络出现拥塞的时候，TCP能够减小向网络注入数据的速率和数量，缓解拥塞。</p>
+<h4 id="全双工通信"><a href="#全双工通信" class="headerlink" title="全双工通信"></a>全双工通信</h4><p>TCP允许通行双方的应用程序在任何时候都能够发送数据，因为TCP连接的两端都设有缓存，用来临时存放双向通信数据。</p>
+
       
       
     </div>
@@ -241,7 +259,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#UDP"><span class="article-toc-text">UDP</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#TCP"><span class="article-toc-text">TCP</span></a></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#UDP"><span class="article-toc-text">UDP</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E9%9D%A2%E5%90%91%E6%97%A0%E8%BF%9E%E6%8E%A5"><span class="article-toc-text">面向无连接</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%8D%95%E6%92%AD%E3%80%81%E5%A4%9A%E6%92%AD%E3%80%81%E5%B9%BF%E6%92%AD%E4%BC%A0%E8%BE%93%E5%8A%9F%E8%83%BD"><span class="article-toc-text">单播、多播、广播传输功能</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E9%9D%A2%E5%90%91%E6%8A%A5%E6%96%87%E4%BC%A0%E8%BE%93"><span class="article-toc-text">面向报文传输</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%8D%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="article-toc-text">不可靠性</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%A4%B4%E9%83%A8%E5%BC%80%E9%94%80%E5%B0%8F"><span class="article-toc-text">头部开销小</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#TCP"><span class="article-toc-text">TCP</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E7%9A%84"><span class="article-toc-text">面向连接的</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%8D%95%E6%92%AD%E4%BC%A0%E8%BE%93"><span class="article-toc-text">单播传输</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E9%9D%A2%E5%90%91%E5%AD%97%E8%8A%82%E6%B5%81"><span class="article-toc-text">面向字节流</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="article-toc-text">可靠传输</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="article-toc-text">拥塞控制</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%85%A8%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1"><span class="article-toc-text">全双工通信</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
