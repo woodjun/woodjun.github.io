@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://example.com/2022/02/24/diff%E7%AE%97%E6%B3%95/es.png">
 <meta property="og:image" content="http://example.com/2022/02/24/diff%E7%AE%97%E6%B3%95/other.png">
 <meta property="article:published_time" content="2022-02-24T13:08:14.000Z">
-<meta property="article:modified_time" content="2022-02-27T16:32:28.009Z">
+<meta property="article:modified_time" content="2022-03-18T05:44:34.330Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="底层原理">
 <meta name="twitter:card" content="summary">
@@ -238,22 +238,22 @@
 <h3 id="updateChildren"><a href="#updateChildren" class="headerlink" title="updateChildren"></a>updateChildren</h3><p>updateChildren主要作用在于对比各个子节点，在旧子节点基础之上对子节点进行添加、删除、置换位置等操作。</p>
 <p>这个函数主要分为以下几种情况讨论：</p>
 <h4 id="头头对比"><a href="#头头对比" class="headerlink" title="头头对比"></a>头头对比</h4><p>新子节点和旧子节点的<strong>开始节点相同</strong>，两者的<strong>头指针</strong>往后移动一位。</p>
-<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/s.png" style="zoom: 67%;">
+<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/s.png" style="display:block;margin:0 auto;zoom: 67%;">
 
 <h4 id="尾尾对比"><a href="#尾尾对比" class="headerlink" title="尾尾对比"></a>尾尾对比</h4><p>新子节点和旧子节点的<strong>结束节点相同</strong>，两者的<strong>尾指针</strong>往前移动一位。</p>
-<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/e.png" style="zoom:67%;">
+<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/e.png" style="display:block;margin:0 auto;zoom:67%;">
 
 <h4 id="头尾之间对比"><a href="#头尾之间对比" class="headerlink" title="头尾之间对比"></a>头尾之间对比</h4><p>新子节点的<strong>结束节点</strong>和旧子节点的<strong>开始节点</strong>相同，说明旧子节点的开始节点要调换到尾指针的后面，才能同步新子节点的序列。同时旧子节点的头指针往后移动一位，新子节点的尾指针往前移动一位。</p>
-<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/se.png" style="zoom: 33%;">
+<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/se.png" style="display:block;margin:0 auto;zoom: 33%;">
 
 <p>新子节点的<strong>开始节点</strong>和旧子节点的<strong>结束节点</strong>相同，说明旧子节点的开始节点要调换到头指针的前面，才能同步新子节点的序列。同时新子节点的头指针往后移动一位，旧子节点的尾指针往前移动一位。</p>
-<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/es.png" style="zoom: 67%;">
+<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/es.png" style="display:block;margin:0 auto;zoom: 67%;">
 
 <h4 id="乱序情况"><a href="#乱序情况" class="headerlink" title="乱序情况"></a>乱序情况</h4><p>对于乱序情况来说，生成旧子节点的key-index的map映射对象，方便于标记新子节点的<strong>开始节点</strong>在旧子节点所要置换的位置。</p>
 <p>若是新子节点的开始节点存在于旧子节点中，根据map映射关系找到所要置换的位置，再更换过去。</p>
 <p>若是不存在，说明这是一个新节点，可以生成一个新节点放在旧子节点的头指针前面。</p>
 <p>操作完之后，新子节点的头指针往后移动一位。</p>
-<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/other.png" style="zoom:67%;">
+<img src="/2022/02/24/diff%E7%AE%97%E6%B3%95/other.png" style="display:block;margin:0 auto;zoom:67%;">
 
 <p>这个过程完毕之后，只能是剩下新子节点（或旧子节点）头尾指针未超过。</p>
 <p>若是只剩下新子节点，将所有新子节点放入父元素中。</p>
