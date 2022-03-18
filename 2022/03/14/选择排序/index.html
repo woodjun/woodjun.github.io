@@ -8,16 +8,20 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>选择排序 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="选择排序就是记住当前轮次的最大值（降序）或最小值（升序）的下标号，利用这个下标号的数据和前面的数据进行交换，不断重复以上步骤，直到遍历结束。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="选择排序">
 <meta property="og:url" content="http://example.com/2022/03/14/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="选择排序就是记住当前轮次的最大值（降序）或最小值（升序）的下标号，利用这个下标号的数据和前面的数据进行交换，不断重复以上步骤，直到遍历结束。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/03/14/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F.gif">
 <meta property="article:published_time" content="2022-03-14T03:48:00.000Z">
-<meta property="article:modified_time" content="2022-03-14T03:49:51.728Z">
+<meta property="article:modified_time" content="2022-03-18T03:13:35.084Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="排序">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/14/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F.gif">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -197,7 +201,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>选择排序就是记住当前轮次的最大值（降序）或最小值（升序）的下标号，利用这个下标号的数据和前面的数据进行交换，不断重复以上步骤，直到遍历结束。</p>
+<p><img src="/2022/03/14/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F.gif"><br></p>
+<span id="more"></span>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectionSort</span>(<span class="params">arr, isAsc=<span class="literal">true</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;arr.length-<span class="number">1</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> minIndex = i</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> j=i+<span class="number">1</span>; j&lt;arr.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (isAsc ? arr[minIndex] &gt; arr[j] : arr[minIndex] &lt; arr[j]) &#123;</span><br><span class="line">        minIndex = j</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (minIndex !== i) &#123;</span><br><span class="line">      [arr[minIndex], arr[i]] = [arr[i], arr[minIndex]]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度</strong></p>
+<p>时间复杂度：O(n^2)</p>
+<p>空间复杂度：O(1)</p>
+
       
       
     </div>
