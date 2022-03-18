@@ -8,16 +8,20 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>插入排序 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="插入排序分为两个区：已排序和未排序 插入排序就是将未排序区中取出一个值，用来和已排序区中数据逐一比较，最后将其放在适当的位置，形成新的已排序区。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="插入排序">
 <meta property="og:url" content="http://example.com/2022/03/14/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="插入排序分为两个区：已排序和未排序 插入排序就是将未排序区中取出一个值，用来和已排序区中数据逐一比较，最后将其放在适当的位置，形成新的已排序区。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/03/14/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/插入排序.gif">
 <meta property="article:published_time" content="2022-03-14T03:47:48.000Z">
-<meta property="article:modified_time" content="2022-03-17T14:06:55.511Z">
+<meta property="article:modified_time" content="2022-03-18T04:16:28.542Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="排序">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/14/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/插入排序.gif">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -197,7 +201,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <span id="more"></span>
+        <p>插入排序分为两个区：<strong>已排序</strong>和<strong>未排序</strong></p>
+<p>插入排序就是将未排序区中取出一个值，用来和已排序区中数据逐一比较，最后将其放在适当的位置，形成新的已排序区。</p>
+<p><img src="/2022/03/14/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/插入排序.gif" style="zoom:60%;"><br></p>
+<span id="more"></span>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertSort</span>(<span class="params">arr, isAsc=<span class="literal">true</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">1</span>; i&lt;arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> temp = arr[i]</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> j=i-<span class="number">1</span>; j&gt;=<span class="number">0</span>; j--) &#123;</span><br><span class="line">      <span class="keyword">if</span> (isAsc ? arr[j] &gt; temp : arr[j] &lt; temp) &#123;</span><br><span class="line">        [arr[j], arr[j+<span class="number">1</span>]] = [arr[j+<span class="number">1</span>], arr[j]]</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度</strong></p>
+<p>时间复杂度：O(n^2)</p>
+<p>空间复杂度：O(1)</p>
 
       
       
