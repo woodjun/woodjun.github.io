@@ -8,16 +8,21 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>CDN | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="内容分发网络(CDN)是一组分布在多个不同地理位置的web服务器，其内部缓存着源站分发的内容，用户可就近取得所需内容。CDN的存在不仅降低了网络的拥塞状况、提高请求的响应速度，也能够减少源站的负载压力。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="CDN">
 <meta property="og:url" content="http://example.com/2022/03/21/CDN/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="内容分发网络(CDN)是一组分布在多个不同地理位置的web服务器，其内部缓存着源站分发的内容，用户可就近取得所需内容。CDN的存在不仅降低了网络的拥塞状况、提高请求的响应速度，也能够减少源站的负载压力。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/03/21/CDN/DNS解析.png">
+<meta property="og:image" content="http://example.com/2022/03/21/CDN/cdn.png">
 <meta property="article:published_time" content="2022-03-21T03:42:07.000Z">
-<meta property="article:modified_time" content="2022-03-21T03:44:31.324Z">
+<meta property="article:modified_time" content="2022-03-28T15:28:10.849Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="CDN">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/21/CDN/DNS解析.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -197,7 +202,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>内容分发网络(CDN)是一组分布在多个不同地理位置的web服务器，其内部缓存着源站分发的内容，用户可就近取得所需内容。CDN的存在不仅降低了网络的拥塞状况、提高请求的响应速度，也能够减少源站的负载压力。</p>
+<span id="more"></span>
+
+<h3 id="DNS解析"><a href="#DNS解析" class="headerlink" title="DNS解析"></a>DNS解析</h3><p>当用户没有使用缓存情况下访问一个网站时，大体流程如下：</p>
+<p><img src="/2022/03/21/CDN/DNS解析.png" style="display:block;margin:auto;zoom:67%;"><br></p>
+<ol>
+<li>浏览器要将域名解析成IP地址，需要向本地DNS发出请求。</li>
+<li>本地DNS依次向根服务器、顶级域名服务器、权威域名服务器发送，得到网站服务器的IP地址。</li>
+<li>本地DNS将IP地址发回客户端，客户端再向源网站发出请求并获取资源。</li>
+</ol>
+<p>域名解析详细过程请戳：<a href="/2022/01/02/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/" title="域名解析">域名解析</a></p>
+<h3 id="CDN原理"><a href="#CDN原理" class="headerlink" title="CDN原理"></a>CDN原理</h3><p>从下图可以看出，在DNS解析过程中增加一个**全局负载均衡系统(GSLB)**。</p>
+<p><strong>全局负载均衡系统(GSLB)：</strong>根据用户的本地DNS的地址判断用户位置，筛选出距离用户较近的**区域负载均衡系统(SLB)**，并将SLB的IP地址返回给本地DNS。</p>
+<p><strong>区域负载均衡系统(SLB)：</strong>负责判断缓存服务器集群中是否包含用户请求的资源数据，如果缓存服务器中存在请求的资源，就会根据缓存服务器集群中节点的健康程度、负载量、连接数等因素筛选出最优的缓存节点，并将HTTP请求重定向到最优的缓存节点上。</p>
+<p><img src="/2022/03/21/CDN/cdn.png" style="display:block;margin:auto;zoom:70%;"><br></p>
+<ol>
+<li>浏览器要将域名解析成IP地址，需要向本地DNS发出请求。</li>
+<li>本地DNS依次向根服务器、顶级域名服务器、权威域名服务器发送，得到全局负载均衡系统（GSLB）的IP地址。</li>
+<li>本地DNS向GSLB发送请求，拿到距离用户较近的区域负载均衡系统（SLB）的IP地址，并将该IP地址返回给客户端。</li>
+<li>客户端根据IP地址向SLB发送请求，SLB综合考虑缓存服务器集群中各个节点的资源限制条件、健康度、负载情况等因素，<strong>筛选出最优的缓存节点</strong>后回应客户端请求（状态码为302，重定向地址为最优缓存节点的IP地址）。</li>
+<li>客户端接受到SLB的回复后，重定向到该缓存节点上；缓存节点判断请求的资源是否存在、过期，若没有，则将缓存资源直接返回给客户端，否则，服务器就要向它的上一级缓存服务器请求内容，直至追溯到网站的源服务器将内容拉到本地。</li>
+</ol>
+
       
       
     </div>
@@ -236,7 +263,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#DNS%E8%A7%A3%E6%9E%90"><span class="article-toc-text">DNS解析</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#CDN%E5%8E%9F%E7%90%86"><span class="article-toc-text">CDN原理</span></a></li></ol>
   
 <nav id="article-nav">
   
