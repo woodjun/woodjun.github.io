@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>loader和plugin | 木头个人博客</title>
+  <title>webpack工作原理 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="loader和plugin">
-<meta property="og:url" content="http://example.com/2022/03/20/loader%E5%92%8Cplugin/index.html">
+  <meta name="description" content="基本概念 Entry: 入口，webpack执行构建的第一步将从Entry开始，可抽象成输入 Module: 模块，在webpack里一切皆模块，一个模块对应一个文件，webpack会从配置的Entry开始递归找出所有依赖的模块 Chunk：代码块，一个Chunk由多个模块组合而成，用于代码合并与分割 Loader：模块转换器，用于把模块原内容按照需求转换成新内容 Plugin：扩展插件，在web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack工作原理">
+<meta property="og:url" content="http://example.com/2022/03/30/webpack%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="基本概念 Entry: 入口，webpack执行构建的第一步将从Entry开始，可抽象成输入 Module: 模块，在webpack里一切皆模块，一个模块对应一个文件，webpack会从配置的Entry开始递归找出所有依赖的模块 Chunk：代码块，一个Chunk由多个模块组合而成，用于代码合并与分割 Loader：模块转换器，用于把模块原内容按照需求转换成新内容 Plugin：扩展插件，在web">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-03-20T14:51:17.000Z">
-<meta property="article:modified_time" content="2022-03-20T14:54:55.548Z">
+<meta property="article:published_time" content="2022-03-30T15:56:40.000Z">
+<meta property="article:modified_time" content="2022-03-30T16:38:03.352Z">
 <meta property="article:author" content="Wood">
-<meta property="article:tag" content="loader">
-<meta property="article:tag" content="plugin">
+<meta property="article:tag" content="webpack">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
@@ -178,27 +179,240 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-loader和plugin" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-webpack工作原理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      loader和plugin
+      webpack工作原理
     </h1>
   
 
         
-        <a href="/2022/03/20/loader%E5%92%8Cplugin/" class="archive-article-date">
-  	<time datetime="2022-03-20T14:51:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-20</time>
+        <a href="/2022/03/30/webpack%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" class="archive-article-date">
+  	<time datetime="2022-03-30T15:56:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-30</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li>Entry: 入口，webpack执行构建的第一步将从Entry开始，可抽象成输入</li>
+<li>Module: 模块，在webpack里一切皆模块，一个模块对应一个文件，webpack会从配置的Entry开始递归找出所有依赖的模块</li>
+<li>Chunk：代码块，一个Chunk由多个模块组合而成，用于代码合并与分割</li>
+<li>Loader：模块转换器，用于把模块原内容按照需求转换成新内容</li>
+<li>Plugin：扩展插件，在webpack构建流程中的特定时机会广播对应的事件，插件可以监听这些事件的发生，在特定时机做对应的事情</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="流程概括"><a href="#流程概括" class="headerlink" title="流程概括"></a>流程概括</h3><p>webpack的运行流程是一个串行的过程，从启动到结束会依次执行以下流程：</p>
+<ol>
+<li>初始化参数：从配置文件和Shell语句中读取与合并参数，得出最终的参数</li>
+<li>开始编译：用上一步得到的参数初始化Compiler对象，加载所有配置的插件，执行对象的run方法开始执行编译</li>
+<li>确定入口：根据配置中的entry找出所有入口文件</li>
+<li>编译模块：从入口文件出发，调用所有配置的Loader对模块进行翻译，在找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理</li>
+<li>完成模块的编译：在经过第4步使用Loader翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系</li>
+<li>输出资源：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的Chunk，再把每个Chunk转换成一个单独文件加入输出列表，这部是可以修改输出内容的最后机会</li>
+<li>输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统</li>
+</ol>
+<p>在以上过程中，webpack会在特定的时间点广播出特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用webpack提供的API改变webpack的运行结果</p>
+<h4 id="初始化阶段"><a href="#初始化阶段" class="headerlink" title="初始化阶段"></a>初始化阶段</h4><table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始化参数</td>
+<td>从配置文件和 Shell 语句中读取与合并参数，得出最终的参数。 这个过程中还会执行配置文件中的插件实例化语句 <code>new Plugin()</code>。</td>
+</tr>
+<tr>
+<td>实例化 Compiler</td>
+<td>用上一步得到的参数初始化 Compiler 实例，Compiler 负责文件监听和启动编译。Compiler 实例中包含了完整的 Webpack 配置，全局只有一个 Compiler 实例。</td>
+</tr>
+<tr>
+<td>加载插件</td>
+<td>依次调用插件的 apply 方法，让插件可以监听后续的所有事件节点。同时给插件传入 compiler 实例的引用，以方便插件通过 compiler 调用 Webpack 提供的 API。</td>
+</tr>
+<tr>
+<td>environment</td>
+<td>开始应用 Node.js 风格的文件系统到 compiler 对象，以方便后续的文件寻找和读取。</td>
+</tr>
+<tr>
+<td>entry-option</td>
+<td>读取配置的 Entrys，为每个 Entry 实例化一个对应的 EntryPlugin，为后面该 Entry 的递归解析工作做准备。</td>
+</tr>
+<tr>
+<td>after-plugins</td>
+<td>调用完所有内置的和配置的插件的 apply 方法。</td>
+</tr>
+<tr>
+<td>after-resolvers</td>
+<td>根据配置初始化完 resolver，resolver 负责在文件系统中寻找指定路径的文件。</td>
+</tr>
+</tbody></table>
+<h4 id="编译阶段"><a href="#编译阶段" class="headerlink" title="编译阶段"></a>编译阶段</h4><table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>run</td>
+<td>启动一次新的编译。</td>
+</tr>
+<tr>
+<td>watch-run</td>
+<td>和 run 类似，区别在于它是在监听模式下启动的编译，在这个事件中可以获取到是哪些文件发生了变化导致重新启动一次新的编译。</td>
+</tr>
+<tr>
+<td>compile</td>
+<td>该事件是为了告诉插件一次新的编译将要启动，同时会给插件带上 compiler 对象。</td>
+</tr>
+<tr>
+<td>compilation</td>
+<td>当 Webpack 以开发模式运行时，每当检测到文件变化，一次新的 Compilation 将被创建。一个 Compilation 对象包含了当前的模块资源、编译生成资源、变化的文件等。Compilation 对象也提供了很多事件回调供插件做扩展。</td>
+</tr>
+<tr>
+<td>make</td>
+<td>一个新的 Compilation 创建完毕，即将从 Entry 开始读取文件，根据文件类型和配置的 Loader 对文件进行编译，编译完后再找出该文件依赖的文件，递归的编译和解析。</td>
+</tr>
+<tr>
+<td>after-compile</td>
+<td>一次 Compilation 执行完成。</td>
+</tr>
+<tr>
+<td>invalid</td>
+<td>当遇到文件不存在、文件编译错误等异常时会触发该事件，该事件不会导致 Webpack 退出。</td>
+</tr>
+</tbody></table>
+<ul>
+<li>compilation阶段包括很多小事件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>build-module</td>
+<td>使用对应的 Loader 去转换一个模块。</td>
+</tr>
+<tr>
+<td>normal-module-loader</td>
+<td>在用 Loader 对一个模块转换完后，使用 acorn 解析转换后的内容，输出对应的抽象语法树（AST），以方便 Webpack 后面对代码的分析。</td>
+</tr>
+<tr>
+<td>program</td>
+<td>从配置的入口模块开始，分析其 AST，当遇到 <code>require</code> 等导入其它模块语句时，便将其加入到依赖的模块列表，同时对新找出的依赖模块递归分析，最终搞清所有模块的依赖关系。</td>
+</tr>
+<tr>
+<td>seal</td>
+<td>所有模块及其依赖的模块都通过 Loader 转换完成后，根据依赖关系开始生成 Chunk。</td>
+</tr>
+</tbody></table>
+<h4 id="输出阶段"><a href="#输出阶段" class="headerlink" title="输出阶段"></a>输出阶段</h4><table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>should-emit</td>
+<td>所有需要输出的文件已经生成好，询问插件哪些文件需要输出，哪些不需要。</td>
+</tr>
+<tr>
+<td>emit</td>
+<td>确定好要输出哪些文件后，执行文件输出，可以在这里获取和修改输出内容。</td>
+</tr>
+<tr>
+<td>after-emit</td>
+<td>文件输出完毕。</td>
+</tr>
+<tr>
+<td>done</td>
+<td>成功完成一次完成的编译和输出流程。</td>
+</tr>
+<tr>
+<td>failed</td>
+<td>如果在编译和输出流程中遇到异常导致 Webpack 退出时，就会直接跳转到本步骤，插件可以在本事件中获取到具体的错误原因。</td>
+</tr>
+</tbody></table>
+<h3 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h3><h4 id="Loader的特性"><a href="#Loader的特性" class="headerlink" title="Loader的特性"></a>Loader的特性</h4><p>由于webpack本身只能够打包commonJs规范的js，针对于css、ts、图片等格式文件没法打包，就需要引入第三方模块进行打包。</p>
+<p>loader只是关注转化文件（transform），完成压缩、打包和语言翻译工作。</p>
+<p>loader运行在打包文件之前。</p>
+<h4 id="Loader的职责"><a href="#Loader的职责" class="headerlink" title="Loader的职责"></a>Loader的职责</h4><p>一个Loader的职责是单一的，只需要完成一种转换。如果一个原文件需要经历多步转换才能正常使用，就通过多个Loader去转换。在调用多个Loader去转换一个文件时，每个Loader会链式的顺序执行上一个Loader处理后的结果会传给下一个接着处理，最后的Loader将处理后的最终结果返回给webpak</p>
+<h4 id="获取options"><a href="#获取options" class="headerlink" title="获取options"></a>获取options</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> loaderUtils = <span class="built_in">require</span>(<span class="string">&#x27;loader-utils&#x27;</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">source</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获取到用户给当前 Loader 传入的 options</span></span><br><span class="line">  <span class="keyword">const</span> options = loaderUtils.getOptions(<span class="built_in">this</span>);</span><br><span class="line">  <span class="keyword">return</span> source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="返回其他结果"><a href="#返回其他结果" class="headerlink" title="返回其他结果"></a>返回其他结果</h4><p>上面的 Loader 都只是返回了原内容转换后的内容，但有些场景下还需要返回除了内容之外的东西</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">source</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 this.callback 告诉 Webpack 返回的结果</span></span><br><span class="line">  <span class="built_in">this</span>.callback(<span class="literal">null</span>, source, sourceMaps);</span><br><span class="line">  <span class="comment">// 当你使用 this.callback 返回内容时，该 Loader 必须返回 undefined，</span></span><br><span class="line">  <span class="comment">// 以让 Webpack 知道该 Loader 返回的结果在 this.callback 中，而不是 return 中 </span></span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">source</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 告诉 Webpack 本次转换是异步的，Loader 会在 callback 中回调结果</span></span><br><span class="line">    <span class="keyword">var</span> callback = <span class="built_in">this</span>.async();</span><br><span class="line">    someAsyncOperation(source, <span class="function"><span class="keyword">function</span>(<span class="params">err, result, sourceMaps, ast</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 通过 callback 返回异步执行后的结果</span></span><br><span class="line">        callback(err, result, sourceMaps, ast);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="处理二进制数据"><a href="#处理二进制数据" class="headerlink" title="处理二进制数据"></a>处理二进制数据</h4><p>在默认的情况下，Webpack 传给 Loader 的原内容都是 UTF-8 格式编码的字符串。 但有些场景下 Loader 不是处理文本文件，而是处理二进制文件，例如 file-loader，就需要 Webpack 给 Loader 传入二进制格式的数据。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">source</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 在 exports.raw === true 时，Webpack 传给 Loader 的 source 是 Buffer 类型的</span></span><br><span class="line">    source <span class="keyword">instanceof</span> Buffer === <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// Loader 返回的类型也可以是 Buffer 类型的</span></span><br><span class="line">    <span class="comment">// 在 exports.raw !== true 时，Loader 也可以返回 Buffer 类型的结果</span></span><br><span class="line">    <span class="keyword">return</span> source;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 通过 exports.raw 属性告诉 Webpack 该 Loader 是否需要二进制数据 </span></span><br><span class="line"><span class="built_in">module</span>.exports.raw = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="缓存加速"><a href="#缓存加速" class="headerlink" title="缓存加速"></a>缓存加速</h4><p>在有些情况下，有些转换操作需要大量计算非常耗时，如果每次构建都重新执行重复的转换操作，构建将会变得非常缓慢。Webpack 会默认缓存所有 Loader 的处理结果，也就是说在需要被处理的文件或者其依赖的文件没有发生变化时， 是不会重新调用对应的 Loader 去执行转换操作的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">source</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 关闭该 Loader 的缓存功能</span></span><br><span class="line">  <span class="built_in">this</span>.cacheable(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">return</span> source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h4><ul>
+<li><code>this.context</code>：当前处理文件的所在目录，假如当前 Loader 处理的文件是 <code>/src/main.js</code>，则 <code>this.context</code> 就等于 <code>/src</code>。</li>
+<li><code>this.resource</code>：当前处理文件的完整请求路径，包括 querystring，例如 <code>/src/main.js?name=1</code>。</li>
+<li><code>this.resourcePath</code>：当前处理文件的路径，例如 <code>/src/main.js</code>。</li>
+<li><code>this.resourceQuery</code>：当前处理文件的 querystring。</li>
+<li><code>this.loadModule</code>：当 Loader 在处理一个文件时，如果依赖其它文件的处理结果才能得出当前文件的结果时， 就可以通过 <code>this.loadModule(request: string, callback: function(err, source, sourceMap, module))</code> 去获得 <code>request</code> 对应文件的处理结果。</li>
+<li><code>this.resolve</code>：像 <code>require</code> 语句一样获得指定文件的完整路径，使用方法为 <code>resolve(context: string, request: string, callback: function(err, result: string))</code>。</li>
+<li><code>this.addDependency</code>：给当前处理文件添加其依赖的文件，以便再其依赖的文件发生变化时，会重新调用 Loader 处理该文件。使用方法为 <code>addDependency(file: string)</code>。</li>
+<li><code>this.addContextDependency</code>：和 <code>addDependency</code> 类似，但 <code>addContextDependency</code> 是把整个目录加入到当前正在处理文件的依赖中。使用方法为 <code>addContextDependency(directory: string)</code>。</li>
+<li><code>this.clearDependencies</code>：清除当前正在处理文件的所有依赖，使用方法为 <code>clearDependencies()</code>。</li>
+<li><code>this.emitFile</code>：输出一个文件，使用方法为 <code>emitFile(name: string, content: Buffer|string, sourceMap: &#123;...&#125;)</code>。</li>
+</ul>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><ul>
+<li><p>配置webpack.config.js中的resolveLoader选项，首先查找node_modules再找loaders目录下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">resolveLoader</span>: &#123;</span><br><span class="line">    <span class="attr">module</span>: [<span class="string">&#x27;node_modules&#x27;</span>、<span class="string">&#x27;./loaders/&#x27;</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>将<code>// @import &#39;../style/index.css&#39;</code>转换成<code>import &#39;../style/index.css&#39;</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新建loaders/comment-import-loader目录</span></span><br><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">module</span>: &#123;</span><br><span class="line">    <span class="attr">rules</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span><br><span class="line">        use: [<span class="string">&#x27;comment-import-loader&#x27;</span>],</span><br><span class="line">        <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// comment-import-loader/index.js</span></span><br><span class="line"><span class="keyword">import</span> replace <span class="keyword">from</span> <span class="string">&#x27;./replace&#x27;</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">content</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">this</span>.cacheable) &#123;</span><br><span class="line">    <span class="built_in">this</span>.cacheable()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> replace(content)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// comment-import-loader/replace.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">replace</span>(<span class="params">content</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> content.replace(<span class="regexp">/(\/\/ *@import) +((&#x27;|&quot;).+(&#x27;|&quot;))/g</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = replace</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Plugin"><a href="#Plugin" class="headerlink" title="Plugin"></a>Plugin</h3><ul>
+<li><p>在webpack运行的生命周期中会广播出很多事件，Plugin可以监听这些事件，在合适时机通过webpack提供的API改变输出结果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BasicPlugin</span></span>&#123;</span><br><span class="line">  <span class="comment">// 获取用户给该插件传入的配置</span></span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">options</span>)</span> &#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// webpack会调用BasicPlugin实例的apply方法给实例传入compiler对象</span></span><br><span class="line">  <span class="function"><span class="title">apply</span>(<span class="params">compiler</span>)</span> &#123;</span><br><span class="line">    compiler.plugin(<span class="string">&#x27;compilation&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">comilation</span>) </span>&#123;&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>webpack启动后，在读取配置的过程中会先执行<code>new BasicPlugin(options)</code>初始化一个BasicPlugin获得实例，在初始化compiler对象后，再调用<code>basicPlugin.apply(compiler)</code>传入compiler对象，获取到compiler对象后，可以通过<code>compiler.plugin(事件名称, 回调函数)</code>监听到webpack广播出来的事件，并且可以通过compiler对象去操作webpack</p>
+</li>
+</ul>
+<h4 id="plugin的特性"><a href="#plugin的特性" class="headerlink" title="plugin的特性"></a>plugin的特性</h4><p>plugin是为了扩展webpack功能，在webpack运行的生命周期中会广播出许多事件，plugin可以监听这些事件，在合适的时机通过调用webpack提供的API改变输出结果。</p>
+<p>从打包优化到压缩，到重新定义环境变量，功能强大到可以用来处理各种各样的任务。</p>
+<p>plugin在整个编译周期都起作用。</p>
+<h4 id="Compiler和Compilation"><a href="#Compiler和Compilation" class="headerlink" title="Compiler和Compilation"></a>Compiler和Compilation</h4><ul>
+<li>Compiler对象包含了webpack环境所有的配置信息，包括options、loaders、plugins等信息，这些对象在webpack启动时候被实例化，全局唯一的</li>
+<li>Compilation对象包含了当前的模块资源、编译生成资源、变化的文件等。当webpack以开发模式运行时，每当检测到一个文件变化时，一次新的Compilation将被创建</li>
+</ul>
+<h4 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h4><p>webpack就像一条生产线，要经过一系列处理流程后才能将源文件转换成输出结果。这条生产线上的每个流程的职责都是单一的，多个流程之间有存在依赖关系，只有完成当前处理后才能交给下一个流程去处理。插件就像是一个插入到生产线中的一个功能，在特定的时机对生产线上的资源做处理。</p>
+<p>webpack的事件流机制应用了观察者模式，和node.js中的EventEmitter非常相似。可以使用Compiler对象广播和监听事件，监听异步的事件，要执行第二个参数的回调函数，否则会被卡在这个流程</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 广播事件</span></span><br><span class="line">compiler.apply(<span class="string">&#x27;event-name&#x27;</span>, params)</span><br><span class="line"><span class="comment">// 监听事件</span></span><br><span class="line">compiler.plugin(<span class="string">&#x27;event-name&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">params</span>)</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="读取输出资源、代码块、模块及其依赖"><a href="#读取输出资源、代码块、模块及其依赖" class="headerlink" title="读取输出资源、代码块、模块及其依赖"></a>读取输出资源、代码块、模块及其依赖</h4><p>在emit事件发生时，代表源文件的转换和组装已经完成，在这里可以读取到最终将输出的资源、代码块、模块及其依赖，并且可以修改输出资源的内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plugin</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="title">apply</span>(<span class="params">compiler</span>)</span> &#123;</span><br><span class="line">    compiler.plugin(<span class="string">&#x27;emit&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">compilation, callback</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// compilation.chunks 存放所有代码块，是一个数组</span></span><br><span class="line">      compilation.chunks.forEach(<span class="function"><span class="params">chunk</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// chunk 代表一个代码块</span></span><br><span class="line">        <span class="comment">// 代码块由多个模块组成，通过 chunk.forEachModule 能读取组成代码块的每个模块</span></span><br><span class="line">        chunk.forEachModule(<span class="function"><span class="params">module</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// module 代表一个模块</span></span><br><span class="line">          <span class="comment">// module.fileDependencies 存放当前模块的所有依赖的文件路径，是一个数组</span></span><br><span class="line">          <span class="built_in">module</span>.fileDependencies.forEach(<span class="function"><span class="params">filepath</span> =&gt;</span> &#123;&#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">        chunk.files.forEach(<span class="function"><span class="params">filename</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// compilation.assets 存放当前所有即将输出的资源</span></span><br><span class="line">          <span class="comment">// 调用一个输出资源的 source() 方法能获取到输出资源的内容</span></span><br><span class="line">          <span class="keyword">let</span> source = compilation.assets[filename].source()</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="comment">// 这是一个异步事件所以要执行回调函数</span></span><br><span class="line">      callback()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="监听文件变化"><a href="#监听文件变化" class="headerlink" title="监听文件变化"></a>监听文件变化</h4><p>webpack会从配置的入口模块出发，依次找出所有的依赖模块，当入口模块或者其依赖的模块发生变化时，就会触发一次新的Compilation</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当依赖的文件发生变化时会触发watch-run事件</span></span><br><span class="line">compiler.plugin(<span class="string">&#x27;watch-run&#x27;</span>, <span class="function">(<span class="params">watching, callback</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 获取发生变化的文件列表</span></span><br><span class="line">  <span class="keyword">const</span> changedFiles = watching.compiler.watchFileSystem.watcher.mtimes</span><br><span class="line">  <span class="comment">// changedFiles格式为键值对，键为发生变化的文件路径</span></span><br><span class="line">  <span class="keyword">if</span> (changedFiles[filePath] !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="comment">// filePath对应的文件发生变化</span></span><br><span class="line">  &#125;</span><br><span class="line">  callback()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// webpack默认情况下只会监听入口和其依赖的模块是否发生变化，想要增加一个监听文件</span></span><br><span class="line">compiler.plugin(<span class="string">&#x27;after-compile&#x27;</span>, <span class="function">(<span class="params">compilation, callback</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 把HTML文件添加到文件依赖路径就可以让webpack监听html模块文件</span></span><br><span class="line">  compilation.fileDependencies.puh(filePath)</span><br><span class="line">  callback()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改文件输出资源"><a href="#修改文件输出资源" class="headerlink" title="修改文件输出资源"></a>修改文件输出资源</h4><ul>
+<li><p>所有要输出的资源会存放在compilation.assets中，compoilation.assets是一个键值对，键为输出文件名称，值为文件对应的内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">compiler.plugin(<span class="string">&#x27;emit&#x27;</span>, <span class="function">(<span class="params">compilation, callback</span>) =&gt;</span> &#123;</span><br><span class="line">  compilation.assets[filaName] = &#123;</span><br><span class="line">    <span class="comment">// 返回文件内容</span></span><br><span class="line">    <span class="attr">source</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> fileContent</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 返回文件大小</span></span><br><span class="line">    <span class="attr">size</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> Buffer.byteLength(fileContent, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  callback()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="判断文件使用的插件"><a href="#判断文件使用的插件" class="headerlink" title="判断文件使用的插件"></a>判断文件使用的插件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hasExtractTextPlugin</span>(<span class="params">compiler</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> plugins = compiler.options.plugins</span><br><span class="line">  <span class="keyword">return</span> plugins.find(<span class="function"><span class="params">plugin</span> =&gt;</span> plugin.__proto__.constructor === ExtractTextPlugin) != <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实战-1"><a href="#实战-1" class="headerlink" title="实战"></a>实战</h4><p>Webpack 构建是否执行成功，并且提供成功或失败后的操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">import</span> EndWebpackPlugin <span class="keyword">from</span> <span class="string">&#x27;./plugins/EndWebpackPlugin&#x27;</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> EndWebpackPlugin(<span class="function">(<span class="params">stats</span>) =&gt;</span> &#123;&#125;, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// EndWebpackPlugin.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EndWebpackPlugin</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">doneCallback, failCallback</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.done = doneCallback</span><br><span class="line">    <span class="built_in">this</span>.fail = failCallback</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">apply</span>(<span class="params">compiler</span>)</span> &#123;</span><br><span class="line">    compiler.plugin(<span class="string">&#x27;done&#x27;</span>, <span class="function">(<span class="params">stats</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.done(stats)</span><br><span class="line">    &#125;)</span><br><span class="line">    compiler.plugin(<span class="string">&#x27;fail&#x27;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.fail(err)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = EndWebpackPlugin</span><br></pre></td></tr></table></figure>
+
       
       
     </div>
@@ -210,11 +424,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">loader</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">plugin</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
         		</li>
       		
 		</ul>
@@ -241,22 +451,13 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="article-toc-text">基本概念</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%B5%81%E7%A8%8B%E6%A6%82%E6%8B%AC"><span class="article-toc-text">流程概括</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%98%B6%E6%AE%B5"><span class="article-toc-text">初始化阶段</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E7%BC%96%E8%AF%91%E9%98%B6%E6%AE%B5"><span class="article-toc-text">编译阶段</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E8%BE%93%E5%87%BA%E9%98%B6%E6%AE%B5"><span class="article-toc-text">输出阶段</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Loader"><span class="article-toc-text">Loader</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#Loader%E7%9A%84%E7%89%B9%E6%80%A7"><span class="article-toc-text">Loader的特性</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#Loader%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="article-toc-text">Loader的职责</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E8%8E%B7%E5%8F%96options"><span class="article-toc-text">获取options</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E8%BF%94%E5%9B%9E%E5%85%B6%E4%BB%96%E7%BB%93%E6%9E%9C"><span class="article-toc-text">返回其他结果</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5"><span class="article-toc-text">同步与异步</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%A4%84%E7%90%86%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E6%8D%AE"><span class="article-toc-text">处理二进制数据</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E7%BC%93%E5%AD%98%E5%8A%A0%E9%80%9F"><span class="article-toc-text">缓存加速</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%B8%B8%E7%94%A8API"><span class="article-toc-text">常用API</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%AE%9E%E6%88%98"><span class="article-toc-text">实战</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Plugin"><span class="article-toc-text">Plugin</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#plugin%E7%9A%84%E7%89%B9%E6%80%A7"><span class="article-toc-text">plugin的特性</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#Compiler%E5%92%8CCompilation"><span class="article-toc-text">Compiler和Compilation</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="article-toc-text">事件流</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E8%AF%BB%E5%8F%96%E8%BE%93%E5%87%BA%E8%B5%84%E6%BA%90%E3%80%81%E4%BB%A3%E7%A0%81%E5%9D%97%E3%80%81%E6%A8%A1%E5%9D%97%E5%8F%8A%E5%85%B6%E4%BE%9D%E8%B5%96"><span class="article-toc-text">读取输出资源、代码块、模块及其依赖</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E7%9B%91%E5%90%AC%E6%96%87%E4%BB%B6%E5%8F%98%E5%8C%96"><span class="article-toc-text">监听文件变化</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E8%B5%84%E6%BA%90"><span class="article-toc-text">修改文件输出资源</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%9A%84%E6%8F%92%E4%BB%B6"><span class="article-toc-text">判断文件使用的插件</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%AE%9E%E6%88%98-1"><span class="article-toc-text">实战</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
-    <a href="/2022/03/20/websocket%E5%8D%8F%E8%AE%AE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          websocket协议
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/03/20/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">前端性能优化</div>
+    <a href="/2022/03/21/CDN/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CDN</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -507,14 +708,6 @@
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color2">loader</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color2">plugin</a>
-        </li>
-       
-        <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color5">websocket</a>
         </li>
        
@@ -574,9 +767,9 @@
       
         <section class="tools-section tools-section-tags" q-show="tags">
   <div class="tagcloud search-tag">
-    <p style="margin-top: 15px;color: #999;"><i class="icon-price-tags icon"></i><span style="margin-left: 5px;">标签(39)</span></p>
+    <p style="margin-top: 15px;color: #999;"><i class="icon-price-tags icon"></i><span style="margin-left: 5px;">标签(37)</span></p>
     <ul class="article-tag-list tag" q-show="tags">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%9B%AE%E5%BD%95%E6%B1%87%E6%80%BB/" rel="tag">目录汇总</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%B8%83%E5%B1%80/" rel="tag">布局</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/TCP/" rel="tag">TCP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/https/" rel="tag">https</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE/" rel="tag">正则表达</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/BFC/" rel="tag">BFC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/XSS/" rel="tag">XSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/promise/" rel="tag">promise</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/" rel="tag">多进程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F/" rel="tag">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BB%A3%E7%90%86/" rel="tag">代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/" rel="tag">异步编程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" rel="tag">防抖节流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag">生命周期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/OSI/" rel="tag">OSI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/loader/" rel="tag">loader</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/plugin/" rel="tag">plugin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%9B%9E%E6%B5%81/" rel="tag">回流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%87%8D%E7%BB%98/" rel="tag">重绘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CDN/" rel="tag">CDN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" rel="tag">作用域链</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%9B%AE%E5%BD%95%E6%B1%87%E6%80%BB/" rel="tag">目录汇总</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%B8%83%E5%B1%80/" rel="tag">布局</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/TCP/" rel="tag">TCP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/https/" rel="tag">https</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE/" rel="tag">正则表达</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/BFC/" rel="tag">BFC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/XSS/" rel="tag">XSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/promise/" rel="tag">promise</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/" rel="tag">多进程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F/" rel="tag">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BB%A3%E7%90%86/" rel="tag">代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/" rel="tag">异步编程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" rel="tag">防抖节流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag">生命周期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/OSI/" rel="tag">OSI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%9B%9E%E6%B5%81/" rel="tag">回流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%87%8D%E7%BB%98/" rel="tag">重绘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CDN/" rel="tag">CDN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" rel="tag">作用域链</a><span class="tag-list-count">1</span></li></ul>
       <div class="clearfix"></div>
     </ul>
   </div>
