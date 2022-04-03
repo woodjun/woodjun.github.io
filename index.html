@@ -478,6 +478,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+        <p>在websocket协议出现之前，我们经常使用http协议和服务器通信。但是http协议有一个缺陷：<strong>通信只能由客户端发起请求，服务器响应请求</strong>。</p>
+<p>这种单向请求的特点，注定了如果服务器有连续的状态变化，客户端想要接收到状态变化信息就很难了。不过也不是没有办法，可以采用<strong>轮询</strong>：每隔一段时间就发出一个询问，查看服务器数据状态有没有更新。</p>
+<p>但是这种轮询方式效率比较低，很浪费资源。websocket协议出现就是为了解决这种问题。</p>
+        
+          <a class="article-more-a" href="/2022/03/20/websocket%E5%8D%8F%E8%AE%AE/#more">阅读更多 >></a>
         
       
       

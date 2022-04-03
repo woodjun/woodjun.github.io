@@ -16,7 +16,7 @@
 <meta property="og:description" content="模块出现之前出现的问题在使用模块化之前，我们常常使用的是以script标签引入js文件，但是不同的js文件之间会出现相互依赖的情况，以至于script标签需要按正确的顺序摆放。 顺序摆放不正确的话，且你中间又使用到前面的依赖，就会查找不到对应的依赖，就会抛出异常，导致整个应用挂掉。 如果你不清楚不同代码之间的依赖关系，随便删除代码或者删除script标签就会导致致命的错误。 而第二个问题就是这些变">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-25T14:43:42.000Z">
-<meta property="article:modified_time" content="2021-11-28T15:42:32.742Z">
+<meta property="article:modified_time" content="2022-03-31T15:09:02.527Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="模块化">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
 </li>
 <li><p>使用require导出，exports或者module.exports导出。</p>
 </li>
-<li><p>对于加载过的模块不会重新加载一次，而是34会从内存中取出已经被加载过的模块。</p>
+<li><p>对于加载过的模块不会重新加载一次，而是从内存中取出已经被加载过的模块。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// math.js</span></span><br><span class="line"><span class="built_in">exports</span>.add = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">&#x27;math&#x27;</span>)</span><br><span class="line">math.add(<span class="number">1</span>,<span class="number">2</span>)</span><br></pre></td></tr></table></figure></li>
 </ul>
 
