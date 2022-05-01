@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://example.com/2022/04/23/git/reset.gif">
 <meta property="og:image" content="http://example.com/2022/04/23/git/reset_branch.gif">
 <meta property="article:published_time" content="2022-04-23T15:08:29.000Z">
-<meta property="article:modified_time" content="2022-05-01T14:36:01.799Z">
+<meta property="article:modified_time" content="2022-05-01T14:46:21.613Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -253,12 +253,13 @@
 <h4 id="不想要最新的commit"><a href="#不想要最新的commit" class="headerlink" title="不想要最新的commit"></a>不想要最新的commit</h4><p><strong>Git有一个特性：只能回顾历史，不能瞻仰未来。</strong>利用这个特性，如果能够做到HEAD和HEAD指向分支的引用一起往前偏移，就能做到不要最新的commit。</p>
 <p>这个<a href="#reset">reset</a>就可以做到：</p>
 <blockquote>
-<p>git reset –hard HEAD^</p>
+<p>git reset <code>--hard</code> HEAD^</p>
 </blockquote>
 <img src="/2022/04/23/git/reset.gif" style="display:block;margin:0 auto;zoom:80%;">
 
 <h4 id="找茬，我想丢弃的不是最新的"><a href="#找茬，我想丢弃的不是最新的" class="headerlink" title="找茬，我想丢弃的不是最新的"></a>找茬，我想丢弃的不是最新的</h4><img src="/2022/04/23/git/face.png" style="display:block;margin:0 auto;zoom:80%;">
 
+<p>比如我想要删掉倒数第二条commit</p>
 <h3 id="看你都干了什么"><a href="#看你都干了什么" class="headerlink" title="看你都干了什么"></a>看你都干了什么</h3><ol>
 <li>查看历史多个的commit：<code>git log</code><ul>
 <li>改动细节：<code>git log -p</code></li>
@@ -307,12 +308,12 @@
 
 <h3 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h3><p>reset本质是移动HEAD以及它所指向的branch。</p>
 <blockquote>
-<p>git reset –hard HEAD^</p>
+<p>git reset <code>--hard</code> HEAD^</p>
 </blockquote>
 <img src="/2022/04/23/git/reset.gif" style="display:block;margin:0 auto;zoom:60%;">
 
 <blockquote>
-<p>git reset –hard branch2</p>
+<p>git reset <code>--hard</code> branch2</p>
 </blockquote>
 <img src="/2022/04/23/git/reset_branch.gif" style="display:block;margin:0 auto;zoom:60%;">
 
