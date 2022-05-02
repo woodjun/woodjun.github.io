@@ -19,14 +19,16 @@
 <meta property="og:image" content="http://example.com/2022/04/23/git/conflict2.png">
 <meta property="og:image" content="http://example.com/2022/04/23/git/reset.gif">
 <meta property="og:image" content="http://example.com/2022/04/23/git/face.png">
-<meta property="og:image" content="http://example.com/2022/04/23/git/head.png">
+<meta property="og:image" content="http://example.com/2022/04/23/git/reabse_edit.png">
+<meta property="og:image" content="http://example.com/2022/04/23/git/rebase_del.gif">
 <meta property="og:image" content="http://example.com/2022/04/23/git/merge.gif">
 <meta property="og:image" content="http://example.com/2022/04/23/git/rebase.gif">
 <meta property="og:image" content="http://example.com/2022/04/23/git/rebase_back.gif">
 <meta property="og:image" content="http://example.com/2022/04/23/git/reset.gif">
 <meta property="og:image" content="http://example.com/2022/04/23/git/reset_branch.gif">
+<meta property="og:image" content="http://example.com/2022/04/23/git/head.png">
 <meta property="article:published_time" content="2022-04-23T15:08:29.000Z">
-<meta property="article:modified_time" content="2022-05-01T14:46:21.613Z">
+<meta property="article:modified_time" content="2022-05-02T07:12:09.466Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -259,7 +261,30 @@
 
 <h4 id="找茬，我想丢弃的不是最新的"><a href="#找茬，我想丢弃的不是最新的" class="headerlink" title="找茬，我想丢弃的不是最新的"></a>找茬，我想丢弃的不是最新的</h4><img src="/2022/04/23/git/face.png" style="display:block;margin:0 auto;zoom:80%;">
 
-<p>比如我想要删掉倒数第二条commit</p>
+<p>比如我想要删掉倒数第二条commit，使用交互式rebase，这里延伸一个知识点：<a href="#vim">vim</a></p>
+<blockquote>
+<p>git rebase -i HEAD^^</p>
+</blockquote>
+<p>上面命令会使Git进入交互式:</p>
+<img src="/2022/04/23/git/reabse_edit.png" style="display:block;margin:0 auto;zoom:50%;">
+
+<p>按<code>i</code>键进入编辑模式，将第一个pick暴力删除掉，使用<a href="#vim">vim</a>命令保存退出就可以了。</p>
+<img src="/2022/04/23/git/rebase_del.gif" style="display:block;margin:0 auto;zoom:67%;">
+
+<p>还可以使用<code>--onto</code>直接删除对应的commit</p>
+<blockquote>
+<p>git rebase <code>--onto</code> HEAD^^ HEAD^ branch1</p>
+</blockquote>
+<h4 id="已经push到上去了，我想改"><a href="#已经push到上去了，我想改" class="headerlink" title="已经push到上去了，我想改"></a>已经push到上去了，我想改</h4><p>两种情况：<strong>push到自己分支</strong>和<strong>已经合并到master分支</strong></p>
+<p><strong>push到自己分支：</strong>暴力一点，直接强推^_^</p>
+<blockquote>
+<p>git push origin branch -f</p>
+</blockquote>
+<p><strong>合并到master分支：</strong>利用revert反转撤销某个版本，并且不会撤销commit后面的内容</p>
+<p>这种方式会新建一个commit，新建的commit不会包含撤销commit的内容，同时保留后面commit中的内容</p>
+<blockquote>
+<p>git revert HEAD^</p>
+</blockquote>
 <h3 id="看你都干了什么"><a href="#看你都干了什么" class="headerlink" title="看你都干了什么"></a>看你都干了什么</h3><ol>
 <li>查看历史多个的commit：<code>git log</code><ul>
 <li>改动细节：<code>git log -p</code></li>
@@ -278,12 +303,16 @@
 </li>
 <li>查看文件是否修改：<code>git status</code></li>
 </ol>
-<h3 id="偏移commit"><a href="#偏移commit" class="headerlink" title="偏移commit"></a>偏移commit</h3><img src="/2022/04/23/git/head.png" style="display:block;margin:0 auto;zoom:70%;">
-
+<h3 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h3><p>checkout的本质是改变HEAD的指向，可以将HEAD指向某个分支上的commit</p>
 <blockquote>
-<p>Git提供两个偏移符号：^和~</p>
-<p>^：一个^代表一个偏移量，HEAD^^表示上述图片红–&gt;绿。</p>
-<p><del>：</del>后面可以指定偏移数量，例如HEAD~3就是上述图片红–&gt;紫</p>
+<p>git checkout -b 分支</p>
+</blockquote>
+<p>上面命令会查看本地仓库是否有这个分支，没有则新建一个分支，并且把HEAD指向这个分支。</p>
+<h3 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h3><p>能够临时存放工作目录的变动，比如说你不想你还没写完内容，不想commit到本地仓库，就想要切换分支去修改其他分支的代码，可以先将工作目录的变动存下来，切换回去的时候再拿出来</p>
+<blockquote>
+<p>git stash // 存，这个方式只能存被add过的文件</p>
+<p>git stash -u // 存，没有被add过的文件也可以存</p>
+<p>git stash pop // 取</p>
 </blockquote>
 <h3 id="merge和rebase"><a href="#merge和rebase" class="headerlink" title="merge和rebase"></a>merge和rebase</h3><p>两者都是用来合并代码的，不过还是有所区别的：</p>
 <h4 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h4><p>merge会指定一个commit，并将代码合并到当前的commit上，merge奉行的是<strong>拿来主义</strong>，也就是将HEAD指向的分支上将别的分支合并到一个新的commit。</p>
@@ -306,6 +335,11 @@
 
 <img src="/2022/04/23/git/rebase_back.gif" style="display:block;margin:0 auto;zoom:60%;">
 
+<p>rebase的参数：</p>
+<ol>
+<li><code>-i</code>：改变基点的位置，开启交互式rebase能够对基点位置的commit进行相关的操作。</li>
+<li><code>--onto 目标commit起点 当前分支commit起点 当前分支 </code>：能够指定当前分支的起点和目标分支的起点，做到将指定的commit迁移到目标分支。</li>
+</ol>
 <h3 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h3><p>reset本质是移动HEAD以及它所指向的branch。</p>
 <blockquote>
 <p>git reset <code>--hard</code> HEAD^</p>
@@ -322,6 +356,27 @@
 <li><code>--hard</code>：重置位置的同时，会清空工作目录的所有改动。</li>
 <li><code>--soft</code>：重置位置的同时，保留工作目录和暂存区的内容，并把重置HEAD的位置commit中的新文件添加到暂存区。</li>
 <li><code>--mixed</code>(默认)：重置位置的同时，保留工作目录的内容，并清空暂存区的内容（放到工作区）。</li>
+</ol>
+<h3 id="延伸知识"><a href="#延伸知识" class="headerlink" title="延伸知识"></a>延伸知识</h3><h4 id="偏移commit"><a href="#偏移commit" class="headerlink" title="偏移commit"></a>偏移commit</h4><img src="/2022/04/23/git/head.png" style="display:block;margin:0 auto;zoom:70%;">
+
+<blockquote>
+<p>Git提供两个偏移符号：^和~</p>
+<p>^：一个^代表一个偏移量，HEAD^^表示上述图片红–&gt;绿。</p>
+<p><code>~</code>：<code>~</code>后面可以指定偏移数量，例如<code>HEAD~3</code>就是上述图片红–&gt;紫</p>
+</blockquote>
+<h4 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h4><ol>
+<li>保存并退出<ul>
+<li>按Esc退出编辑模式，输入<code>:wq</code>，回车</li>
+<li>按Esc退出编辑模式，输入<code>ZZ</code>，回车</li>
+</ul>
+</li>
+<li>不保存退出<ul>
+<li>按Esc退出编辑模式，输入<code>:q!</code>，回车</li>
+<li>按Esc退出编辑模式，输入<code>:qa!</code>，回车</li>
+</ul>
+</li>
+<li>进入编辑模式：按<code>i</code>键</li>
+<li>退出编辑模式：按<code>Esc</code>键</li>
 </ol>
 
       
@@ -362,7 +417,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">版本控制系统</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%AD%E5%A4%AE%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">中央式版本控制系统</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">分布式版本控制系统</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="article-toc-text">基本工作流程</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%84%8F%E5%A4%96"><span class="article-toc-text">常见的意外</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%90%88%E5%B9%B6%E5%86%B2%E7%AA%81"><span class="article-toc-text">合并冲突</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%9A%E6%8F%90%E4%BA%A4%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%88%91%E6%83%B3%E6%94%B9"><span class="article-toc-text">刚提交的代码，我想改</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%83%B3%E6%94%B9%E5%80%92%E6%95%B0%E7%AC%AC%E4%BA%8C%E4%B8%AA%EF%BC%8C%E4%BB%BB%E6%80%A7"><span class="article-toc-text">想改倒数第二个，任性</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%8D%E6%83%B3%E8%A6%81%E6%9C%80%E6%96%B0%E7%9A%84commit"><span class="article-toc-text">不想要最新的commit</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%89%BE%E8%8C%AC%EF%BC%8C%E6%88%91%E6%83%B3%E4%B8%A2%E5%BC%83%E7%9A%84%E4%B8%8D%E6%98%AF%E6%9C%80%E6%96%B0%E7%9A%84"><span class="article-toc-text">找茬，我想丢弃的不是最新的</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%9C%8B%E4%BD%A0%E9%83%BD%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88"><span class="article-toc-text">看你都干了什么</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%81%8F%E7%A7%BBcommit"><span class="article-toc-text">偏移commit</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#merge%E5%92%8Crebase"><span class="article-toc-text">merge和rebase</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#merge"><span class="article-toc-text">merge</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#rebase"><span class="article-toc-text">rebase</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#reset"><span class="article-toc-text">reset</span></a></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">版本控制系统</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%AD%E5%A4%AE%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">中央式版本控制系统</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">分布式版本控制系统</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="article-toc-text">基本工作流程</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%84%8F%E5%A4%96"><span class="article-toc-text">常见的意外</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%90%88%E5%B9%B6%E5%86%B2%E7%AA%81"><span class="article-toc-text">合并冲突</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%9A%E6%8F%90%E4%BA%A4%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%88%91%E6%83%B3%E6%94%B9"><span class="article-toc-text">刚提交的代码，我想改</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%83%B3%E6%94%B9%E5%80%92%E6%95%B0%E7%AC%AC%E4%BA%8C%E4%B8%AA%EF%BC%8C%E4%BB%BB%E6%80%A7"><span class="article-toc-text">想改倒数第二个，任性</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%8D%E6%83%B3%E8%A6%81%E6%9C%80%E6%96%B0%E7%9A%84commit"><span class="article-toc-text">不想要最新的commit</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%89%BE%E8%8C%AC%EF%BC%8C%E6%88%91%E6%83%B3%E4%B8%A2%E5%BC%83%E7%9A%84%E4%B8%8D%E6%98%AF%E6%9C%80%E6%96%B0%E7%9A%84"><span class="article-toc-text">找茬，我想丢弃的不是最新的</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%B7%B2%E7%BB%8Fpush%E5%88%B0%E4%B8%8A%E5%8E%BB%E4%BA%86%EF%BC%8C%E6%88%91%E6%83%B3%E6%94%B9"><span class="article-toc-text">已经push到上去了，我想改</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%9C%8B%E4%BD%A0%E9%83%BD%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88"><span class="article-toc-text">看你都干了什么</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#checkout"><span class="article-toc-text">checkout</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#stash"><span class="article-toc-text">stash</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#merge%E5%92%8Crebase"><span class="article-toc-text">merge和rebase</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#merge"><span class="article-toc-text">merge</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#rebase"><span class="article-toc-text">rebase</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#reset"><span class="article-toc-text">reset</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86"><span class="article-toc-text">延伸知识</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%81%8F%E7%A7%BBcommit"><span class="article-toc-text">偏移commit</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#vim"><span class="article-toc-text">vim</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
