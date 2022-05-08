@@ -1695,7 +1695,7 @@ function init() {
       showTags: false,
       search: "",
       navType: "",
-      menus: ['innerArchive', 'friends', 'aboutme', 'tags', 'categories', 'collects']
+      menus: ['innerArchive', 'friends', 'aboutme', 'tags', 'categories', 'collects', 'arithmetic']
     },
     methods: {
       stop: function stop(e) {
