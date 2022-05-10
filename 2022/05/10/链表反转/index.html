@@ -17,7 +17,7 @@
 <meta property="og:description" content="反转链表输入一个链表，反转链表后，输出新链表的表头。 1234567891011121314function reverseList(head) &amp;#123;  if (!head || !head.next) &amp;#123;    return head  &amp;#125;  let p &#x3D; head, q &#x3D; head.next  head.next &#x3D; null  while(q) &amp;#123;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-09T16:06:20.000Z">
-<meta property="article:modified_time" content="2022-05-09T16:58:37.838Z">
+<meta property="article:modified_time" content="2022-05-10T15:09:13.249Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="链表">
 <meta name="twitter:card" content="summary">
@@ -216,9 +216,21 @@
         <h3 id="反转链表"><a href="#反转链表" class="headerlink" title="反转链表"></a>反转链表</h3><p>输入一个链表，反转链表后，输出新链表的表头。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseList</span>(<span class="params">head</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!head || !head.next) &#123;</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> p = head, q = head.next</span><br><span class="line">  head.next = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">while</span>(q) &#123;</span><br><span class="line">    p = q</span><br><span class="line">    q = q.next</span><br><span class="line">    p.next = head</span><br><span class="line">    head = p</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> head</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<span id="more"></span>
+
+<h3 id="链表指定区间反转"><a href="#链表指定区间反转" class="headerlink" title="链表指定区间反转"></a>链表指定区间反转</h3><p>将一个链表 <em>m</em> 位置到 <em>n</em> 位置之间的区间反转，要求时间复杂度 O(n)，空间复杂度 O(1)。<br>例如：<br>给出的链表为1→2→3→4→5→NULL, m=2,n=4,<br>返回 1→4→3→2→5→NULL.<br>注意：<br>给出的 m,n 满足以下条件：<br>链表长度1≤<em>m</em>≤<em>n</em>≤链表长度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseBetween</span>(<span class="params">head, m, n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> pHead = <span class="keyword">new</span> ListNode(<span class="number">0</span>)</span><br><span class="line">  pHead.next = head</span><br><span class="line">  <span class="keyword">let</span> p = pHead</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">1</span>; i&lt;m; i++) &#123;</span><br><span class="line">    p = p.next</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> q = p.next</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i=m; i&lt;n; i++) &#123;</span><br><span class="line">    <span class="keyword">let</span> temp = p.next</span><br><span class="line">    p.next = q.next</span><br><span class="line">    q.next = q.next.next</span><br><span class="line">    p.next.next = temp</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> pHead.next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="k个一组反转链表"><a href="#k个一组反转链表" class="headerlink" title="k个一组反转链表"></a>k个一组反转链表</h3><p>给你一个链表，每 k 个节点一组进行翻转，请你返回翻转后的链表。</p>
+<p>k 是一个正整数，它的值小于或等于链表的长度。</p>
+<p>如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。</p>
+<p>进阶：</p>
+<p>你可以设计一个只使用常数额外空间的算法来解决此问题吗？<br>你不能只是单纯的改变节点内部的值，而是需要实际进行节点交换。</p>
+<p>示例 1：</p>
+<p>输入：head = [1,2,3,4,5], k = 2<br>输出：[2,1,4,3,5]</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-<h3 id="链表指定区间反转"><a href="#链表指定区间反转" class="headerlink" title="链表指定区间反转"></a>链表指定区间反转</h3><h3 id="k个一组反转链表"><a href="#k个一组反转链表" class="headerlink" title="k个一组反转链表"></a>k个一组反转链表</h3>
       
       
     </div>
