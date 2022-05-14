@@ -17,7 +17,7 @@
 <meta property="og:description" content="单链表排序给定一个无序单链表，实现单链表的排序(按升序排序)。 输入：[1,3,2,4,5] 输出：{1,2,3,4,5} 12345678910111213141516171819202122232425262728function sortList(head) &amp;#123;  if (!head || !head.next) &amp;#123;    return head  &amp;#125;  let">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-11T15:14:01.000Z">
-<meta property="article:modified_time" content="2022-05-12T17:10:54.890Z">
+<meta property="article:modified_time" content="2022-05-14T15:57:38.562Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="链表">
 <meta name="twitter:card" content="summary">
@@ -227,7 +227,7 @@
 <p>注意是节点的编号而非节点的数值。</p>
 <p>输入：{1,4,6,3,7}</p>
 <p>输出：{1,6,7,4,3}</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">oddEvenList</span>(<span class="params">head</span>) </span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">oddEvenList</span>(<span class="params">head</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!head || !head.next) &#123;</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> odd = head, even = head.next;</span><br><span class="line">  <span class="keyword">let</span> temp = even</span><br><span class="line">  <span class="keyword">while</span> (even &amp;&amp; even.next) &#123;</span><br><span class="line">    odd.next = even.next</span><br><span class="line">    odd = odd.next</span><br><span class="line">    even.next = odd.next</span><br><span class="line">    even = even.next</span><br><span class="line">  &#125;</span><br><span class="line">  odd.next = temp</span><br><span class="line">  <span class="keyword">return</span> head</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
