@@ -1290,7 +1290,7 @@ html, body, #container {
           opacity: 1; }
     .left-col #header .header-author {
       text-align: center;
-      margin: 0.67em 0;
+      margin: 0.4em 0;
       font-family: Roboto, "Roboto", serif;
       font-size: 30px;
       transition: 0.3s; }
@@ -3258,7 +3258,7 @@ pre .css ~ * .id {
     text-align: center; }
   .header-author {
     text-align: center;
-    margin: 0.67em 0;
+    margin: 0.4em 0;
     font-family: Roboto, "Roboto", serif;
     font-size: 30px;
     -webkit-transition: 0.3s;
