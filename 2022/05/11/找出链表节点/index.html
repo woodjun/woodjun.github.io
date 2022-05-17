@@ -9,15 +9,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>找出链表节点 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="链表倒数第k个节点链表中环的入口节点圈圈中最后剩下的数字">
+  <meta name="description" content="链表倒数第k个节点输入一个链表，输出该链表中倒数第k个结点。 1234567891011121314function kthNode(head, k) &amp;#123;  let p &#x3D; q &#x3D; head  while(k-- &amp;&amp; q.next) &amp;#123;    q &#x3D; q.next  &amp;#125;  if (k &gt; 0) &amp;#123;    return null  &amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="找出链表节点">
 <meta property="og:url" content="http://example.com/2022/05/11/%E6%89%BE%E5%87%BA%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="链表倒数第k个节点链表中环的入口节点圈圈中最后剩下的数字">
+<meta property="og:description" content="链表倒数第k个节点输入一个链表，输出该链表中倒数第k个结点。 1234567891011121314function kthNode(head, k) &amp;#123;  let p &#x3D; q &#x3D; head  while(k-- &amp;&amp; q.next) &amp;#123;    q &#x3D; q.next  &amp;#125;  if (k &gt; 0) &amp;#123;    return null  &amp;#">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-11T15:34:08.000Z">
-<meta property="article:modified_time" content="2022-05-12T15:31:22.770Z">
+<meta property="article:modified_time" content="2022-05-17T14:36:57.893Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="链表">
 <meta name="twitter:card" content="summary">
@@ -213,7 +213,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="链表倒数第k个节点"><a href="#链表倒数第k个节点" class="headerlink" title="链表倒数第k个节点"></a>链表倒数第k个节点</h3><h3 id="链表中环的入口节点"><a href="#链表中环的入口节点" class="headerlink" title="链表中环的入口节点"></a>链表中环的入口节点</h3><h3 id="圈圈中最后剩下的数字"><a href="#圈圈中最后剩下的数字" class="headerlink" title="圈圈中最后剩下的数字"></a>圈圈中最后剩下的数字</h3><h3 id><a href="#" class="headerlink" title></a></h3>
+        <h3 id="链表倒数第k个节点"><a href="#链表倒数第k个节点" class="headerlink" title="链表倒数第k个节点"></a>链表倒数第k个节点</h3><p>输入一个链表，输出该链表中倒数第k个结点。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">kthNode</span>(<span class="params">head, k</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> p = q = head</span><br><span class="line">  <span class="keyword">while</span>(k-- &amp;&amp; q.next) &#123;</span><br><span class="line">    q = q.next</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (q) &#123;</span><br><span class="line">    p = p.next</span><br><span class="line">    q = q.next</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="链表中环的入口节点"><a href="#链表中环的入口节点" class="headerlink" title="链表中环的入口节点"></a>链表中环的入口节点</h3><p>给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="两个链表第一个公共节点"><a href="#两个链表第一个公共节点" class="headerlink" title="两个链表第一个公共节点"></a>两个链表第一个公共节点</h3><h3 id="圈圈中最后剩下的数字"><a href="#圈圈中最后剩下的数字" class="headerlink" title="圈圈中最后剩下的数字"></a>圈圈中最后剩下的数字</h3><h3 id><a href="#" class="headerlink" title></a></h3>
       
       
     </div>
@@ -252,7 +260,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%93%BE%E8%A1%A8%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9"><span class="article-toc-text">链表倒数第k个节点</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%8E%AF%E7%9A%84%E5%85%A5%E5%8F%A3%E8%8A%82%E7%82%B9"><span class="article-toc-text">链表中环的入口节点</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%9C%88%E5%9C%88%E4%B8%AD%E6%9C%80%E5%90%8E%E5%89%A9%E4%B8%8B%E7%9A%84%E6%95%B0%E5%AD%97"><span class="article-toc-text">圈圈中最后剩下的数字</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link"><span class="article-toc-text"></span></a></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%93%BE%E8%A1%A8%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9"><span class="article-toc-text">链表倒数第k个节点</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%8E%AF%E7%9A%84%E5%85%A5%E5%8F%A3%E8%8A%82%E7%82%B9"><span class="article-toc-text">链表中环的入口节点</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E8%8A%82%E7%82%B9"><span class="article-toc-text">两个链表第一个公共节点</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%9C%88%E5%9C%88%E4%B8%AD%E6%9C%80%E5%90%8E%E5%89%A9%E4%B8%8B%E7%9A%84%E6%95%B0%E5%AD%97"><span class="article-toc-text">圈圈中最后剩下的数字</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link"><span class="article-toc-text"></span></a></li></ol>
   
 <nav id="article-nav">
   
