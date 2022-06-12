@@ -17,7 +17,7 @@
 <meta property="og:description" content="Partial&lt;T&gt;Partial&lt;T&gt;主要是将T类型中的:转变为?:，并且增加联合类型undefined  源码  123type Partial&lt;T&gt; &#x3D; &amp;#123;    [P in keyof T]?: T[P];&amp;#125;;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-04-09T12:49:15.000Z">
-<meta property="article:modified_time" content="2022-05-04T04:30:40.215Z">
+<meta property="article:modified_time" content="2022-06-12T14:24:18.794Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="高级类型">
 <meta name="twitter:card" content="summary">
@@ -292,6 +292,39 @@
 </blockquote>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> TPerson = <span class="function">(<span class="params">name: <span class="built_in">string</span>, age: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">string</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> params = ReturnType&lt;TPerson&gt; <span class="comment">// ===&gt; type params = string</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="Omit-lt-T-K-gt"><a href="#Omit-lt-T-K-gt" class="headerlink" title="Omit&lt;T, K&gt;"></a>Omit&lt;T, K&gt;</h3><p>Omit会将T中的属性在K出现过的键值剔除。</p>
+<blockquote>
+<p>源码</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Omit&lt;T, K <span class="keyword">extends</span> keyof <span class="built_in">any</span>&gt; = Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>示例</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> ITeacher&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  age: <span class="built_in">number</span>;</span><br><span class="line">  sex: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> TPerson = <span class="string">&#x27;name&#x27;</span> | <span class="string">&#x27;age&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> person = Omit&lt;ITeacher, TPerson&gt; <span class="comment">// typer person = &#123;sex: number&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Exclude-lt-T-U-gt"><a href="#Exclude-lt-T-U-gt" class="headerlink" title="Exclude&lt;T, U&gt;"></a>Exclude&lt;T, U&gt;</h3><p>Exclude能够将T中出现在U的类型剔除，简单一点来说就是<strong>T减去T和U的并值</strong> ，extends参考<a href="/2022/05/02/ts%E5%85%B3%E9%94%AE%E5%AD%97/" title="extends">extends</a></p>
+<blockquote>
+<p>源码</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Exclude&lt;T, U&gt; = T <span class="keyword">extends</span> U ? <span class="built_in">never</span> : T </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>实例</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对象</span></span><br><span class="line"><span class="keyword">interface</span> IPerson &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  age: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> ITeacher &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  age: <span class="built_in">number</span>;</span><br><span class="line">  sex: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> person = Exclude&lt;IPerson, ITeacher&gt; <span class="comment">// type person = IPerson</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> params = Exclude&lt;keyof ITeacher, keyof IPerson&gt; <span class="comment">// type params = &#x27;sex&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Extract-lt-T-U-gt"><a href="#Extract-lt-T-U-gt" class="headerlink" title="Extract&lt;T, U&gt;"></a>Extract&lt;T, U&gt;</h3><p>Extract就是只保留T中出现在U的类型，简单一点来说就是<strong>T和U的并值</strong></p>
+<blockquote>
+<p>源码</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Extract&lt;T, U&gt; = T <span class="keyword">extends</span> U ? T : <span class="built_in">never</span>	</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>示例</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对象</span></span><br><span class="line"><span class="keyword">interface</span> IPerson &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  age: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> ITeacher &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  age: <span class="built_in">number</span>;</span><br><span class="line">  sex: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> person = Extract&lt;ITeacher, IPerson&gt; <span class="comment">// type person = ITeacher</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> params = Extract&lt;keyof ITeacher, keyof IPerson&gt; <span class="comment">// type params = &#x27;name&#x27; | &#x27;age&#x27;</span></span><br></pre></td></tr></table></figure>
+
 
       
       
@@ -331,7 +364,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Partial-lt-T-gt"><span class="article-toc-text">Partial&lt;T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Record-lt-K-T-gt"><span class="article-toc-text">Record&lt;K, T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Pick-lt-T-K-gt"><span class="article-toc-text">Pick&lt;T, K&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Required-lt-T-gt"><span class="article-toc-text">Required&lt;T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Readonly-lt-T-gt"><span class="article-toc-text">Readonly&lt;T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Parameters-lt-T-gt"><span class="article-toc-text">Parameters&lt;T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#ReturnType-lt-T-gt"><span class="article-toc-text">ReturnType&lt;T&gt;</span></a></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Partial-lt-T-gt"><span class="article-toc-text">Partial&lt;T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Record-lt-K-T-gt"><span class="article-toc-text">Record&lt;K, T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Pick-lt-T-K-gt"><span class="article-toc-text">Pick&lt;T, K&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Required-lt-T-gt"><span class="article-toc-text">Required&lt;T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Readonly-lt-T-gt"><span class="article-toc-text">Readonly&lt;T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Parameters-lt-T-gt"><span class="article-toc-text">Parameters&lt;T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#ReturnType-lt-T-gt"><span class="article-toc-text">ReturnType&lt;T&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Omit-lt-T-K-gt"><span class="article-toc-text">Omit&lt;T, K&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Exclude-lt-T-U-gt"><span class="article-toc-text">Exclude&lt;T, U&gt;</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Extract-lt-T-U-gt"><span class="article-toc-text">Extract&lt;T, U&gt;</span></a></li></ol>
   
 <nav id="article-nav">
   
