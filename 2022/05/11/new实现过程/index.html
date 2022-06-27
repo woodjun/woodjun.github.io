@@ -9,13 +9,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>new实现过程 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="new的特性 能够访问函数内部的属性 能够访问原型上的方法和属性 可以接受返回值是基本类型  new的实现过程 创建一个空对象 取出arguments中的第一个参数 将空对象的__proto__指向构造函数的原型 使用apply将构造函数的this指向空对象，并将其余的参数传进去 返回obj  12345678function myNew() &amp;#123;  var obj &#x3D; Object.cr">
+<meta property="og:type" content="article">
 <meta property="og:title" content="new实现过程">
 <meta property="og:url" content="http://example.com/2022/05/11/new%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="new的特性 能够访问函数内部的属性 能够访问原型上的方法和属性 可以接受返回值是基本类型  new的实现过程 创建一个空对象 取出arguments中的第一个参数 将空对象的__proto__指向构造函数的原型 使用apply将构造函数的this指向空对象，并将其余的参数传进去 返回obj  12345678function myNew() &amp;#123;  var obj &#x3D; Object.cr">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-11T15:43:35.000Z">
-<meta property="article:modified_time" content="2022-05-11T15:49:07.374Z">
+<meta property="article:modified_time" content="2022-06-27T15:22:18.834Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="js专题">
 <meta name="twitter:card" content="summary">
@@ -211,7 +213,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="new的特性"><a href="#new的特性" class="headerlink" title="new的特性"></a>new的特性</h3><ul>
+<li>能够访问函数内部的属性</li>
+<li>能够访问原型上的方法和属性</li>
+<li>可以接受返回值是基本类型</li>
+</ul>
+<h3 id="new的实现过程"><a href="#new的实现过程" class="headerlink" title="new的实现过程"></a>new的实现过程</h3><ol>
+<li>创建一个空对象</li>
+<li>取出arguments中的第一个参数</li>
+<li>将空对象的<code>__proto__</code>指向构造函数的原型</li>
+<li>使用apply将构造函数的this指向空对象，并将其余的参数传进去</li>
+<li>返回obj</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myNew</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> obj = <span class="built_in">Object</span>.create(<span class="literal">null</span>)</span><br><span class="line">  <span class="keyword">var</span> Con = [].shift.call(<span class="built_in">arguments</span>)</span><br><span class="line">  obj.__proto__ = Con.prototype</span><br><span class="line">  <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice(<span class="built_in">arguments</span>)</span><br><span class="line">  <span class="keyword">var</span> res = Con.apply(obj, args)</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">typeof</span> res === <span class="string">&#x27;object&#x27;</span> ? res : obj </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
       
     </div>
@@ -250,7 +266,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#new%E7%9A%84%E7%89%B9%E6%80%A7"><span class="article-toc-text">new的特性</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#new%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="article-toc-text">new的实现过程</span></a></li></ol>
   
 <nav id="article-nav">
   
