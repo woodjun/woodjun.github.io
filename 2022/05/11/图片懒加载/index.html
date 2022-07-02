@@ -9,13 +9,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>图片懒加载 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="1234&lt;html&gt;  &lt;img src&#x3D;&quot;loading.gif&quot; data-src&#x3D;&quot;https:&#x2F;&#x2F;cdn.pixabay.com&#x2F;photo&#x2F;2015&#x2F;09&#x2F;09&#x2F;16&#x2F;05&#x2F;forest-931706_1280.jpg&quot; alt&#x3D;&quot;&quot;&gt;  &lt;img src&#x3D;&quot;loading.gif&amp;quo">
+<meta property="og:type" content="article">
 <meta property="og:title" content="图片懒加载">
 <meta property="og:url" content="http://example.com/2022/05/11/%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="1234&lt;html&gt;  &lt;img src&#x3D;&quot;loading.gif&quot; data-src&#x3D;&quot;https:&#x2F;&#x2F;cdn.pixabay.com&#x2F;photo&#x2F;2015&#x2F;09&#x2F;09&#x2F;16&#x2F;05&#x2F;forest-931706_1280.jpg&quot; alt&#x3D;&quot;&quot;&gt;  &lt;img src&#x3D;&quot;loading.gif&amp;quo">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-11T15:47:12.000Z">
-<meta property="article:modified_time" content="2022-05-11T15:48:17.241Z">
+<meta property="article:modified_time" content="2022-07-02T16:59:53.830Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="js专题">
 <meta name="twitter:card" content="summary">
@@ -211,7 +213,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;loading.gif&quot;</span> <span class="attr">data-src</span>=<span class="string">&quot;https://cdn.pixabay.com/photo/2015/09/09/16/05/forest-931706_1280.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;loading.gif&quot;</span> <span class="attr">data-src</span>=<span class="string">&quot;https://cdn.pixabay.com/photo/2014/08/01/00/08/pier-407252_1280.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="图片懒加载和节流"><a href="#图片懒加载和节流" class="headerlink" title="图片懒加载和节流"></a>图片懒加载和节流</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span></span><br><span class="line"><span class="keyword">var</span> imgs = <span class="built_in">document</span>.getElementsByTag(<span class="string">&#x27;img&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&#x27;scroll&#x27;</span>, throttle(lazyLoad, <span class="number">200</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">event, time</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timer = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) <span class="keyword">return</span>;</span><br><span class="line">    timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      event.apply(<span class="built_in">this</span>, args)</span><br><span class="line">      <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">      timer = <span class="literal">null</span></span><br><span class="line">    &#125;, time)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">lazyLoad</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> innerHeight = <span class="built_in">window</span>.innerHeight</span><br><span class="line">  <span class="keyword">var</span> scrollTop = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i=num; i&lt;imgs.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (imgs[i].offsetTop &lt; innerHeight + scrollTop) &#123;</span><br><span class="line">      <span class="keyword">if</span> (imgs[i].getAttribute(<span class="string">&#x27;src&#x27;</span>) === <span class="string">&#x27;loading.gif&#x27;</span>) &#123;</span><br><span class="line">        imgs[i].src = imgs[i].getAttribute(<span class="string">&#x27;data-src&#x27;</span>)</span><br><span class="line">        num = i + <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
       
     </div>
@@ -250,7 +256,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD%E5%92%8C%E8%8A%82%E6%B5%81"><span class="article-toc-text">图片懒加载和节流</span></a></li></ol>
   
 <nav id="article-nav">
   
