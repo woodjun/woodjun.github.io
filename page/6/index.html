@@ -191,6 +191,97 @@
 
 
   
+    <article id="post-nextTick原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/02/17/nextTick%E5%8E%9F%E7%90%86/">
+      nextTick原理
+      
+    </a>
+    </h1>
+  
+
+        
+        <a href="/2022/02/17/nextTick%E5%8E%9F%E7%90%86/" class="archive-article-date">
+  	<time datetime="2022-02-17T15:32:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>nextTick的目的是延迟到当前调用栈执行完毕之后在执行。</p>
+<p>nextTick的触发分为两种方式：<strong>DOM更新数据</strong>和<strong>调用vue.prototype.$nextTick的API</strong>。</p>
+<p>不过nextTick参数里面的回调函数并不会立即执行，而是等到当前调用栈执行完毕之后在执行。</p>
+        
+          <a class="article-more-a" href="/2022/02/17/nextTick%E5%8E%9F%E7%90%86/#more">阅读更多 >></a>
+        
+      
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">底层原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/vue//" class="article-tag-list-link color4">vue</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/02/17/nextTick%E5%8E%9F%E7%90%86/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-keepAlive原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -523,100 +614,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2022/02/13/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-https加密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/02/13/https%E5%8A%A0%E5%AF%86/">
-      https加密
-      
-    </a>
-    </h1>
-  
-
-        
-        <a href="/2022/02/13/https%E5%8A%A0%E5%AF%86/" class="archive-article-date">
-  	<time datetime="2022-02-13T01:47:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>接着<a href="/2022/02/13/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/" title="对称加密和非对称加密">对称加密和非对称加密</a>所提到的对称加密和非对称加密还是会遭受盗取私匙的问题。</p>
-<p>出现上面问题的核心在于如何辨别公匙是不是真正的发送方的。</p>
-<p>hash算法可以将公匙和个人信息生成<strong>消息摘要</strong>。</p>
-<p><img src="/2022/02/13/https%E5%8A%A0%E5%AF%86/hash%E5%8A%A0%E5%AF%86.png"><br></p>
-<p>同时让有公证的认证中心(<strong>CA</strong>)负责将<strong>消息摘要</strong>使用私匙加密形成<strong>数字签名</strong>。</p>
-<p><img src="/2022/02/13/https%E5%8A%A0%E5%AF%86/CA%E5%8A%A0%E5%AF%86.png"><br></p>
-        
-          <a class="article-more-a" href="/2022/02/13/https%E5%8A%A0%E5%AF%86/#more">阅读更多 >></a>
-        
-      
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">https</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机网络//" class="article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/02/13/https%E5%8A%A0%E5%AF%86/">展开全文 >></a>
         </p>
       
 
