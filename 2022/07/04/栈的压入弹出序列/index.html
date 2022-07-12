@@ -9,13 +9,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>栈的压入弹出序列 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的） 123456789101112131415function isPopOrder(pushV,">
+<meta property="og:type" content="article">
 <meta property="og:title" content="栈的压入弹出序列">
 <meta property="og:url" content="http://example.com/2022/07/04/%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的） 123456789101112131415function isPopOrder(pushV,">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-04T13:05:53.000Z">
-<meta property="article:modified_time" content="2022-07-04T13:10:28.089Z">
+<meta property="article:modified_time" content="2022-07-12T16:46:02.874Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="栈和队列">
 <meta name="twitter:card" content="summary">
@@ -211,7 +213,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列<code>1,2,3,4,5</code>是某栈的压入顺序，序列<code>4,5,3,2,1</code>是该压栈序列对应的一个弹出序列，但<code>4,3,5,1,2</code>就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isPopOrder</span>(<span class="params">pushV, popV</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!pushV || !popV || !pushV.length || !popV.length) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> stack = []</span><br><span class="line">  <span class="keyword">const</span> idx = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;pushV.length; i++) &#123;</span><br><span class="line">    stack.push(pushV[i])</span><br><span class="line">    <span class="keyword">while</span> (stack.length &amp;&amp; popV[idx] === stack[stack.length-<span class="number">1</span>]) &#123;</span><br><span class="line">      stack.pop()</span><br><span class="line">      idx++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> stack.length === <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
       
     </div>
