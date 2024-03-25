@@ -16,11 +16,13 @@
 <meta property="og:site_name" content="木头个人博客">
 <meta property="og:description" content="在websocket协议出现之前，我们经常使用http协议和服务器通信。但是http协议有一个缺陷：通信只能由客户端发起请求，服务器响应请求。 这种单向请求的特点，注定了如果服务器有连续的状态变化，客户端想要接收到状态变化信息就很难了。不过也不是没有办法，可以采用轮询：每隔一段时间就发出一个询问，查看服务器数据状态有没有更新。 但是这种轮询方式效率比较低，很浪费资源。websocket协议出现就是">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/03/20/websocket%E5%8D%8F%E8%AE%AE/websocket.png">
 <meta property="article:published_time" content="2022-03-20T15:09:31.000Z">
-<meta property="article:modified_time" content="2022-04-03T15:21:24.000Z">
+<meta property="article:modified_time" content="2024-03-08T02:17:33.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="websocket">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/20/websocket%E5%8D%8F%E8%AE%AE/websocket.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -215,39 +217,23 @@
       
         <p>在websocket协议出现之前，我们经常使用http协议和服务器通信。但是http协议有一个缺陷：<strong>通信只能由客户端发起请求，服务器响应请求</strong>。</p>
 <p>这种单向请求的特点，注定了如果服务器有连续的状态变化，客户端想要接收到状态变化信息就很难了。不过也不是没有办法，可以采用<strong>轮询</strong>：每隔一段时间就发出一个询问，查看服务器数据状态有没有更新。</p>
-<p>但是这种轮询方式效率比较低，很浪费资源。websocket协议出现就是为了解决这种问题。</p>
+<p>但是这种轮询方式效率比较低，很浪费资源。<code>websocket</code>协议出现就是为了解决这种问题。</p>
 <span id="more"></span>
 
 <h3 id="什么是websocket"><a href="#什么是websocket" class="headerlink" title="什么是websocket"></a>什么是websocket</h3><p>html5提供的一种浏览器与服务器进行<strong>全双工通信</strong>的网路技术，属于<strong>应用层协议</strong>，基于<strong>TCP传输协议</strong>，并复用http的握手通道。</p>
-<p>除了上面特点之外，还有其他特点：</p>
-<ol>
-<li>数据格式比较轻量、性能开销小，通信高效</li>
-<li>可以发送文本，也可以发送二进制数据</li>
-<li>没有同源限制，客户端可以与任意服务器通信</li>
-<li>协议标识符是ws（加密就为wss）</li>
+<p>客户端和服务器只需要完成一次握手，两者之间就可以创建持久性连接，并进行双向数据传输。</p>
+<p><img src="/2022/03/20/websocket%E5%8D%8F%E8%AE%AE/websocket.png"></p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><h5 id="全双工"><a href="#全双工" class="headerlink" title="全双工"></a>全双工</h5><p>通信运行数据在两个方向上同时传输，相当于两个相对方向的单工通信方式结合。</p>
+<h5 id="二进制帧"><a href="#二进制帧" class="headerlink" title="二进制帧"></a>二进制帧</h5><p>采用二进制帧结构，语法、语义与HTTP完全不兼容，相比<code>http/2</code>，<code>websocket</code>更侧重于<code>实时通信</code>，而<code>http/2</code>更侧重于提高传输效率，所以两者的帧结构也有很大的区别；</p>
+<p>不像<code>http/2</code>那样定义流，也就不存在多路复用、优先级等特性。详情参考：<a href="/2022/03/05/http%E7%89%88%E6%9C%AC%E7%B3%BB%E5%88%97/" title="http版本系列">http版本系列</a><br></p>
+<p>自身就是全双工，不需要服务器推送。</p>
+<h5 id="协议名"><a href="#协议名" class="headerlink" title="协议名"></a>协议名</h5><p><code>ws</code>和<code>wss</code>分别代表明文和密文的<code>websocket</code>协议，且默认端口为80或443。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>数据包头部协议较小，不同于http每次请求需要携带完整的头部。</li>
+<li>相对于http请求需要等待客户端请求服务器才能响应，延迟明显更少。</li>
+<li>定义二进制帧，更好处理二进制内容。</li>
+<li><code>websocket</code>在适当的扩展支持下，可以沿用之前内容的上下文，在传递类似的数据时，可以显著地提高压缩率。</li>
 </ol>
-<h3 id="常用的API"><a href="#常用的API" class="headerlink" title="常用的API"></a>常用的API</h3><h4 id="readyState"><a href="#readyState" class="headerlink" title="readyState"></a>readyState</h4><blockquote>
-<p>ready属性返回实例对象的当前状态</p>
-<p>CONNECTING：0，表示正在连接</p>
-<p>OPEN：1，表示连接成功</p>
-<p>CLOSING：2，表示正在关闭</p>
-<p>CLOSED：3，连接已经关闭，或者打开连接失败</p>
-</blockquote>
-<h4 id="onopen"><a href="#onopen" class="headerlink" title="onopen"></a>onopen</h4><blockquote>
-<p>用于指定连接成功后的回调函数</p>
-</blockquote>
-<h4 id="onclose"><a href="#onclose" class="headerlink" title="onclose"></a>onclose</h4><blockquote>
-<p>用于指定连接关闭后的回调函数</p>
-</blockquote>
-<h4 id="onmessage"><a href="#onmessage" class="headerlink" title="onmessage"></a>onmessage</h4><blockquote>
-<p>用于指定收到服务器数据后的回调函数</p>
-</blockquote>
-<h4 id="send"><a href="#send" class="headerlink" title="send"></a>send</h4><blockquote>
-<p>用于向服务器发送数据</p>
-</blockquote>
-<h4 id="onerror"><a href="#onerror" class="headerlink" title="onerror"></a>onerror</h4><blockquote>
-<p>用于指定报错时的回调函数</p>
-</blockquote>
 <h3 id="实战实例"><a href="#实战实例" class="headerlink" title="实战实例"></a>实战实例</h3><p><a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/tree/master/Websocket">聊天室</a></p>
 
       
@@ -288,7 +274,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFwebsocket"><span class="article-toc-text">什么是websocket</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84API"><span class="article-toc-text">常用的API</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#readyState"><span class="article-toc-text">readyState</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#onopen"><span class="article-toc-text">onopen</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#onclose"><span class="article-toc-text">onclose</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#onmessage"><span class="article-toc-text">onmessage</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#send"><span class="article-toc-text">send</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#onerror"><span class="article-toc-text">onerror</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AE%9E%E6%88%98%E5%AE%9E%E4%BE%8B"><span class="article-toc-text">实战实例</span></a></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFwebsocket"><span class="article-toc-text">什么是websocket</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E7%89%B9%E7%82%B9"><span class="article-toc-text">特点</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-5"><a class="article-toc-link" href="#%E5%85%A8%E5%8F%8C%E5%B7%A5"><span class="article-toc-text">全双工</span></a></li><li class="article-toc-item article-toc-level-5"><a class="article-toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%B8%A7"><span class="article-toc-text">二进制帧</span></a></li><li class="article-toc-item article-toc-level-5"><a class="article-toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%90%8D"><span class="article-toc-text">协议名</span></a></li></ol></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BC%98%E7%82%B9"><span class="article-toc-text">优点</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AE%9E%E6%88%98%E5%AE%9E%E4%BE%8B"><span class="article-toc-text">实战实例</span></a></li></ol>
   
 <nav id="article-nav">
   
@@ -346,7 +332,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2022 Wood
+    		&copy; 2024 Wood
     	</div>
       	<div class="footer-right">
       		正在风中凌乱的木头~~~~~
@@ -442,123 +428,19 @@
         </li>
        
         <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+        </li>
+       
+        <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color5">CSRF</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">http</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">XSS</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">目录汇总</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color1">https</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">底层原理</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">this</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">webpack</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">作用域</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">博客</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">原型</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">模块化</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">多进程</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">继承</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">类型转换</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">跨域</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">闭包</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">代理</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">布局</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">生命周期</a>
+          <a href="javascript:void(0)" class="js-tag color5">js专题</a>
         </li>
        
         <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color4">OSI</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">排序</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">正则表达</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">websocket</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">回流</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">重绘</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">CDN</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -570,15 +452,23 @@
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">作用域链</a>
+          <a href="javascript:void(0)" class="js-tag color4">XSS</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">装饰器</a>
+          <a href="javascript:void(0)" class="js-tag color5">目录汇总</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">高级类型</a>
+          <a href="javascript:void(0)" class="js-tag color5">底层原理</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color1">https</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">布局</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -586,23 +476,23 @@
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">关键字</a>
+          <a href="javascript:void(0)" class="js-tag color5">http</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">js专题</a>
+          <a href="javascript:void(0)" class="js-tag color3">代理</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">链表</a>
+          <a href="javascript:void(0)" class="js-tag color5">this</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">栈和队列</a>
+          <a href="javascript:void(0)" class="js-tag color5">高级类型</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">滑动窗口</a>
+          <a href="javascript:void(0)" class="js-tag color4">装饰器</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -611,6 +501,102 @@
        
         <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color2">uniapp</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">关键字</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">生命周期</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">websocket</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">作用域</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">作用域链</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">排序</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">博客</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">链表</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">栈和队列</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">原型</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">回流</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">重绘</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">模块化</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">正则表达</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">多进程</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">滑动窗口</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">类型转换</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">继承</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">跨域</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">闭包</a>
         </li>
       
       <div class="clearfix"></div>
@@ -648,7 +634,7 @@
   <div class="tagcloud search-tag">
     <p style="margin-top: 15px;color: #999;"><i class="icon-price-tags icon"></i><span style="margin-left: 5px;">标签(37)</span></p>
     <ul class="article-tag-list tag" q-show="tags">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%B8%83%E5%B1%80/" rel="tag">布局</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/TCP/" rel="tag">TCP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/https/" rel="tag">https</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE/" rel="tag">正则表达</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/BFC/" rel="tag">BFC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/XSS/" rel="tag">XSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/" rel="tag">多进程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F/" rel="tag">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BB%A3%E7%90%86/" rel="tag">代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag">生命周期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/OSI/" rel="tag">OSI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%9B%9E%E6%B5%81/" rel="tag">回流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%87%8D%E7%BB%98/" rel="tag">重绘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CDN/" rel="tag">CDN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" rel="tag">作用域链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%A3%85%E9%A5%B0%E5%99%A8/" rel="tag">装饰器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B/" rel="tag">高级类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/uniapp/" rel="tag">uniapp</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%B8%83%E5%B1%80/" rel="tag">布局</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/TCP/" rel="tag">TCP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/https/" rel="tag">https</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE/" rel="tag">正则表达</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/BFC/" rel="tag">BFC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CDN/" rel="tag">CDN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/OSI/" rel="tag">OSI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/XSS/" rel="tag">XSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BB%A3%E7%90%86/" rel="tag">代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B/" rel="tag">高级类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%A3%85%E9%A5%B0%E5%99%A8/" rel="tag">装饰器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/uniapp/" rel="tag">uniapp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag">生命周期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" rel="tag">作用域链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%9B%9E%E6%B5%81/" rel="tag">回流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%87%8D%E7%BB%98/" rel="tag">重绘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/" rel="tag">多进程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F/" rel="tag">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li></ul>
       <div class="clearfix"></div>
     </ul>
   </div>
@@ -660,7 +646,7 @@
   <div class="widget tagcloud search-tag">
     <p style="margin-top: 15px;color: #999;"><i class="icon-book icon"></i><span style="margin-left: 5px;">分类(12)</span></p>
     <ul class="article-tag-list" q-show="categories">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/js/">js</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/css/">css</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/vue/">vue</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/ts/">ts</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/uniapp/">uniapp</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/js/">js</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/css/">css</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/vue/">vue</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/ts/">ts</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/uniapp/">uniapp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a><span class="tag-list-count">1</span></li></ul>
       <div class="clearfix"></div>
     </ul>
   </div>

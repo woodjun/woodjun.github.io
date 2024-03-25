@@ -18,7 +18,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2022/01/15/%E8%B7%A8%E5%9F%9F/hosts%E8%AE%BE%E7%BD%AE.png">
 <meta property="article:published_time" content="2022-01-15T04:57:38.000Z">
-<meta property="article:modified_time" content="2022-02-16T10:32:20.631Z">
+<meta property="article:modified_time" content="2024-02-29T06:49:26.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="跨域">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
 </ol>
 <h3 id="跨域解决方案"><a href="#跨域解决方案" class="headerlink" title="跨域解决方案"></a>跨域解决方案</h3><p><strong>注意：下面不同域名的实现需要在c盘中的hosts文件设置</strong></p>
 <p><img src="/2022/01/15/%E8%B7%A8%E5%9F%9F/hosts%E8%AE%BE%E7%BD%AE.png"></p>
-<p><strong>完整项目请戳：</strong><a href="%E5%85%B7%E4%BD%93%E4%BB%A3%E7%A0%81%E8%AF%B7%E6%88%B3%EF%BC%9A%5Bjsonp%5D(https://gitee.com/woodjun/demonstration/tree/master/Cross)">跨域示例</a></p>
+<p><strong>完整项目请戳：</strong><a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/tree/master/Cross">跨域示例</a></p>
 <h4 id="jsonp"><a href="#jsonp" class="headerlink" title="jsonp"></a>jsonp</h4><p>通过动态创建script，添加到html页面中，可以加载不同域名下的资源，这种方案只对get方法有效。</p>
 <p><strong>html</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h3</span>&gt;</span>jsonp<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>后台返回的数据是<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;jsonp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">&#x27;script&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    script.src = <span class="string">&#x27;http://localhost:4000/api/jsonp?callback=handleClick&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.body.appendChild(script)</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">handleClick</span>(<span class="params">data</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> jsonp = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;jsonp&#x27;</span>)</span></span><br><span class="line"><span class="javascript">      jsonp.innerText = data</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -297,7 +297,7 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>收到客户端发来的信息：<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;data&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span>user input: <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;content&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;handleClick()&quot;</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--注意socket.io要使用2.2.0版本--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/package/socket.io.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> socket = io(<span class="string">&#x27;http://child.cross.com:8080&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    socket.on(<span class="string">&#x27;connect&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      socket.on(<span class="string">&#x27;message&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">&#x27;data&#x27;</span>).innerText = msg</span></span><br><span class="line"><span class="javascript">      &#125;)</span></span><br><span class="line"><span class="javascript">      socket.on(<span class="string">&#x27;disconnect&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&#x27;服务器已经关闭&#x27;</span>)</span></span><br><span class="line"><span class="javascript">      &#125;)</span></span><br><span class="line"><span class="javascript">    &#125;)</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">handleClick</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> data = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;content&#x27;</span>).value</span></span><br><span class="line"><span class="javascript">      socket.send(data)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>后端</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">&#x27;body-parser&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> cookieParser = <span class="built_in">require</span>(<span class="string">&#x27;cookie-parser&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.urlencoded(&#123;<span class="attr">extended</span>: <span class="literal">true</span>&#125;))</span><br><span class="line">app.use(cookieParser())</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/api/cors&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.header(<span class="string">&#x27;Access-Control-Allow-Credentials&#x27;</span>, <span class="literal">true</span>) <span class="comment">// 后端允许发送cookie信息</span></span><br><span class="line">  res.header(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>, <span class="string">&#x27;http://www.cross.com:3000&#x27;</span>) <span class="comment">// 允许访问的域名</span></span><br><span class="line">  res.cookie(<span class="string">&#x27;cors-status&#x27;</span>, <span class="literal">false</span>, &#123;<span class="attr">domain</span>: <span class="string">&#x27;cross.com&#x27;</span>, <span class="attr">maxAge</span>: <span class="number">100000</span>, <span class="attr">httpOnly</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">  res.send(&#123;<span class="attr">data</span>: <span class="string">&#x27;5000端口发来贺电&#x27;</span>&#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">5000</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&quot;5000端口服务器也打开，可以访问接口&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> server = http.createServer(app)</span><br><span class="line"><span class="keyword">const</span> socket = <span class="built_in">require</span>(<span class="string">&#x27;socket.io&#x27;</span>)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">8080</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;8000端口服务已经打开&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">socket.listen(server).on(<span class="string">&#x27;connection&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">client</span>) </span>&#123;</span><br><span class="line">  client.on(<span class="string">&#x27;message&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">    client.send(<span class="string">&#x27;webSocket发来贺电&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  client.on(<span class="string">&#x27;disconnect&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;客户端已经关闭&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
       
       
@@ -395,7 +395,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2022 Wood
+    		&copy; 2024 Wood
     	</div>
       	<div class="footer-right">
       		正在风中凌乱的木头~~~~~
@@ -491,123 +491,19 @@
         </li>
        
         <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+        </li>
+       
+        <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color5">CSRF</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">http</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">XSS</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">目录汇总</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color1">https</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">底层原理</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">this</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">webpack</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">作用域</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">博客</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">原型</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">模块化</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">多进程</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">继承</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">类型转换</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">跨域</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">闭包</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">代理</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">布局</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">生命周期</a>
+          <a href="javascript:void(0)" class="js-tag color5">js专题</a>
         </li>
        
         <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color4">OSI</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">排序</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">正则表达</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">websocket</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">回流</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">重绘</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">CDN</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -619,15 +515,23 @@
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">作用域链</a>
+          <a href="javascript:void(0)" class="js-tag color4">XSS</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">装饰器</a>
+          <a href="javascript:void(0)" class="js-tag color5">目录汇总</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">高级类型</a>
+          <a href="javascript:void(0)" class="js-tag color5">底层原理</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color1">https</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">布局</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -635,23 +539,23 @@
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">关键字</a>
+          <a href="javascript:void(0)" class="js-tag color5">http</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">js专题</a>
+          <a href="javascript:void(0)" class="js-tag color3">代理</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">链表</a>
+          <a href="javascript:void(0)" class="js-tag color5">this</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">栈和队列</a>
+          <a href="javascript:void(0)" class="js-tag color5">高级类型</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">滑动窗口</a>
+          <a href="javascript:void(0)" class="js-tag color4">装饰器</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -660,6 +564,102 @@
        
         <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color2">uniapp</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">关键字</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">生命周期</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">websocket</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">作用域</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">作用域链</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">排序</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">博客</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">链表</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">栈和队列</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">原型</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">回流</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">重绘</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">模块化</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">正则表达</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color4">多进程</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">滑动窗口</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color5">类型转换</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">继承</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">跨域</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">闭包</a>
         </li>
       
       <div class="clearfix"></div>
@@ -697,7 +697,7 @@
   <div class="tagcloud search-tag">
     <p style="margin-top: 15px;color: #999;"><i class="icon-price-tags icon"></i><span style="margin-left: 5px;">标签(37)</span></p>
     <ul class="article-tag-list tag" q-show="tags">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%B8%83%E5%B1%80/" rel="tag">布局</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/TCP/" rel="tag">TCP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/https/" rel="tag">https</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE/" rel="tag">正则表达</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/BFC/" rel="tag">BFC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/XSS/" rel="tag">XSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/" rel="tag">多进程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F/" rel="tag">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BB%A3%E7%90%86/" rel="tag">代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag">生命周期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/OSI/" rel="tag">OSI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%9B%9E%E6%B5%81/" rel="tag">回流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%87%8D%E7%BB%98/" rel="tag">重绘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CDN/" rel="tag">CDN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" rel="tag">作用域链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%A3%85%E9%A5%B0%E5%99%A8/" rel="tag">装饰器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B/" rel="tag">高级类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/uniapp/" rel="tag">uniapp</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%B8%83%E5%B1%80/" rel="tag">布局</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/TCP/" rel="tag">TCP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/https/" rel="tag">https</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE/" rel="tag">正则表达</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/BFC/" rel="tag">BFC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CDN/" rel="tag">CDN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/OSI/" rel="tag">OSI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/XSS/" rel="tag">XSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BB%A3%E7%90%86/" rel="tag">代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B/" rel="tag">高级类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%A3%85%E9%A5%B0%E5%99%A8/" rel="tag">装饰器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/uniapp/" rel="tag">uniapp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag">生命周期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" rel="tag">作用域链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%9B%9E%E6%B5%81/" rel="tag">回流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%87%8D%E7%BB%98/" rel="tag">重绘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/" rel="tag">多进程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F/" rel="tag">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li></ul>
       <div class="clearfix"></div>
     </ul>
   </div>
@@ -709,7 +709,7 @@
   <div class="widget tagcloud search-tag">
     <p style="margin-top: 15px;color: #999;"><i class="icon-book icon"></i><span style="margin-left: 5px;">分类(12)</span></p>
     <ul class="article-tag-list" q-show="categories">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/js/">js</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/css/">css</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/vue/">vue</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/ts/">ts</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/uniapp/">uniapp</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/js/">js</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/css/">css</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/vue/">vue</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/ts/">ts</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/uniapp/">uniapp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a><span class="tag-list-count">1</span></li></ul>
       <div class="clearfix"></div>
     </ul>
   </div>
