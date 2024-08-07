@@ -16,18 +16,18 @@
 <meta property="og:site_name" content="木头个人博客">
 <meta property="og:description" content="props和$emit这是一种最基本的父子组件通信方式，也就是父组件传递属性，子组件的props声明接收的属性，同时通过$emit可以向父组件通信。 不过这种类型是针对于父子组件的通信。  代码参考请戳props和$emit">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/props_emit.png">
-<meta property="og:image" content="http://example.com/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/attrs_listeners.png">
-<meta property="og:image" content="http://example.com/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/eventbus.png">
-<meta property="og:image" content="http://example.com/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/provide_inject.png">
-<meta property="og:image" content="http://example.com/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/parent_children.png">
-<meta property="og:image" content="http://example.com/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/v_model.png">
+<meta property="og:image" content="http://example.com/.com//props_emit.png">
+<meta property="og:image" content="http://example.com/.com//attrs_listeners.png">
+<meta property="og:image" content="http://example.com/.com//eventbus.png">
+<meta property="og:image" content="http://example.com/.com//provide_inject.png">
+<meta property="og:image" content="http://example.com/.com//parent_children.png">
+<meta property="og:image" content="http://example.com/.com//v_model.png">
 <meta property="article:published_time" content="2022-02-26T12:59:01.000Z">
 <meta property="article:modified_time" content="2022-03-18T05:44:34.010Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="底层原理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/props_emit.png">
+<meta name="twitter:image" content="http://example.com/.com//props_emit.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -45,7 +45,7 @@
 
   
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -222,28 +222,28 @@
       
         <h3 id="props和-emit"><a href="#props和-emit" class="headerlink" title="props和$emit"></a>props和$emit</h3><p>这是一种最基本的父子组件通信方式，也就是父组件传递属性，子组件的props声明接收的属性，同时通过$emit可以向父组件通信。</p>
 <p>不过这种类型是针对于父子组件的通信。</p>
-<p><img src="/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/props_emit.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
+<p><img src="/.com//props_emit.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
 <p>代码参考请戳<a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/blob/master/Vue/Communication/src/props_emit.html">props和$emit</a></p>
 <span id="more"></span>
 
 <h3 id="attrs和-listeners"><a href="#attrs和-listeners" class="headerlink" title="$attrs和$listeners"></a><code>$attrs和$listeners</code></h3><p><code>$attrs</code>可以将父组件传递过来的属性全部传递给子孙组件，不过并不包括子组件props声明的属性。</p>
 <p>同理，$listeners可以把事件全部传给子孙组件。</p>
 <p>这种类型适用于需要传递属性和方法比较多的情况。</p>
-<p><img src="/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/attrs_listeners.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
+<p><img src="/.com//attrs_listeners.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
 <p>代码参考请戳<a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/blob/master/Vue/Communication/src/attrs_listeners.html"><code>$attrs和$listeners</code></a></p>
 <h3 id="eventbus"><a href="#eventbus" class="headerlink" title="eventbus"></a>eventbus</h3><p><strong>eventbus</strong>其实就是利用vue的事件机制来进行通信，这个事件机制采用<strong>发布-订阅模式</strong>，也就是说<code>$on</code>专门负责订阅相同的类型事件到同一队列，$emit用于发布某种类型事件，触发这种类型事件的队列中的所有任务。</p>
 <p>这种模式使用所有类型之间的通信。</p>
-<p><img src="/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/eventbus.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
+<p><img src="/.com//eventbus.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
 <p>代码参考请戳<a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/blob/master/Vue/Communication/src/event_bus.html">eventbus</a></p>
 <h3 id="provide和inject"><a href="#provide和inject" class="headerlink" title="provide和inject"></a>provide和inject</h3><p>父组件可以通过provide暴露出共享属性，这些共享属性只能够给后代组件使用，后端组件使用inject注入的方式所要使用的共享属性。</p>
-<p><img src="/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/provide_inject.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
+<p><img src="/.com//provide_inject.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
 <p>代码参考请戳<a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/blob/master/Vue/Communication/src/provide_inject.html">provide和inject</a></p>
 <h3 id="parent和-children"><a href="#parent和-children" class="headerlink" title="$parent和$children"></a><code>$parent和$children</code></h3><p>子组件可以通过<code>$parent</code>访问到父组件的属性和方法。</p>
 <p>父组件使用<code>$children</code>可以访问子组件的属性和方法，不过<code>$children</code>得到的是一个数组，里面存储着所有的子组件。</p>
-<p><img src="/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/parent_children.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
+<p><img src="/.com//parent_children.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
 <p>代码参考请戳<a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/blob/master/Vue/Communication/src/parent_children.html">[<code>$parent和$children</code>]</a></p>
 <h3 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h3><p>v-model传递的属性看似可以进行修改，不过是props和<code>$emit</code>的语法糖罢了，子组件通过props.value接收传递过来的值，通过<code>$emit(&#39;input&#39;, data)</code>的input将值传递给v-model属性。</p>
-<p><img src="/2022/02/26/%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/v_model.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
+<p><img src="/.com//v_model.png" style="display:block;margin:0 auto;zoom:80%;"><br></p>
 <p>代码参考请戳<a target="_blank" rel="noopener" href="https://gitee.com/woodjun/demonstration/blob/master/Vue/Communication/src/v_model.html">[v-model]</a></p>
 
       
@@ -438,10 +438,6 @@
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">BFC</a>
-        </li>
-       
-        <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color5">CSRF</a>
         </li>
        
@@ -450,7 +446,7 @@
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">OSI</a>
+          <a href="javascript:void(0)" class="js-tag color4">BFC</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -466,7 +462,7 @@
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">目录汇总</a>
+          <a href="javascript:void(0)" class="js-tag color4">OSI</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -474,11 +470,15 @@
         </li>
        
         <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">布局</a>
+        </li>
+       
+        <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color4">Git</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">布局</a>
+          <a href="javascript:void(0)" class="js-tag color5">目录汇总</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -494,15 +494,19 @@
         </li>
        
         <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">配置</a>
+        </li>
+       
+        <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color1">proxy</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color4">关键字</a>
+          <a href="javascript:void(0)" class="js-tag color5">this</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">this</a>
+          <a href="javascript:void(0)" class="js-tag color4">关键字</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -530,7 +534,15 @@
         </li>
        
         <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">排序</a>
+        </li>
+       
+        <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+        </li>
+       
+        <li class="article-tag-list-item">
+          <a href="javascript:void(0)" class="js-tag color3">博客</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -542,23 +554,15 @@
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">排序</a>
-        </li>
-       
-        <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color3">链表</a>
         </li>
        
         <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color3">博客</a>
+          <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
         </li>
        
         <li class="article-tag-list-item">
           <a href="javascript:void(0)" class="js-tag color5">栈和队列</a>
-        </li>
-       
-        <li class="article-tag-list-item">
-          <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
         </li>
        
         <li class="article-tag-list-item">
@@ -638,9 +642,9 @@
         
 <section class="tools-section tools-section-tags" q-show="tags">
   <div class="tagcloud search-tag">
-    <p style="margin-top: 15px;color: #999;"><i class="icon-price-tags icon"></i><span style="margin-left: 5px;">标签(36)</span></p>
+    <p style="margin-top: 15px;color: #999;"><i class="icon-price-tags icon"></i><span style="margin-left: 5px;">标签(37)</span></p>
     <ul class="article-tag-list tag" q-show="tags">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%B8%83%E5%B1%80/" rel="tag">布局</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/TCP/" rel="tag">TCP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/https/" rel="tag">https</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE/" rel="tag">正则表达</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CDN/" rel="tag">CDN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/BFC/" rel="tag">BFC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/OSI/" rel="tag">OSI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/XSS/" rel="tag">XSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BB%A3%E7%90%86/" rel="tag">代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%A3%85%E9%A5%B0%E5%99%A8/" rel="tag">装饰器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B/" rel="tag">高级类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag">生命周期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" rel="tag">作用域链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%9B%9E%E6%B5%81/" rel="tag">回流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%87%8D%E7%BB%98/" rel="tag">重绘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/" rel="tag">多进程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F/" rel="tag">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" rel="tag">底层原理</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/http/" rel="tag">http</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%B8%83%E5%B1%80/" rel="tag">布局</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/TCP/" rel="tag">TCP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/UDP/" rel="tag">UDP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/https/" rel="tag">https</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE/" rel="tag">正则表达</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CDN/" rel="tag">CDN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/BFC/" rel="tag">BFC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/XSS/" rel="tag">XSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/OSI/" rel="tag">OSI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BB%A3%E7%90%86/" rel="tag">代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%85%8D%E7%BD%AE/" rel="tag">配置</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%A3%85%E9%A5%B0%E5%99%A8/" rel="tag">装饰器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B/" rel="tag">高级类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag">生命周期</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/websocket/" rel="tag">websocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/" rel="tag">作用域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" rel="tag">作用域链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B/" rel="tag">原型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%9B%9E%E6%B5%81/" rel="tag">回流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%87%8D%E7%BB%98/" rel="tag">重绘</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/" rel="tag">多进程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E7%BB%A7%E6%89%BF/" rel="tag">继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F/" rel="tag">跨域</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="color3 tag-list-link" href="/tags/%E9%97%AD%E5%8C%85/" rel="tag">闭包</a><span class="tag-list-count">1</span></li></ul>
       <div class="clearfix"></div>
     </ul>
   </div>
@@ -650,9 +654,9 @@
       
         <section class="tools-section tools-section-categories" q-show="categories">
   <div class="widget tagcloud search-tag">
-    <p style="margin-top: 15px;color: #999;"><i class="icon-book icon"></i><span style="margin-left: 5px;">分类(11)</span></p>
+    <p style="margin-top: 15px;color: #999;"><i class="icon-book icon"></i><span style="margin-left: 5px;">分类(12)</span></p>
     <ul class="article-tag-list" q-show="categories">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/js/">js</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/css/">css</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/vue/">vue</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/ts/">ts</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/js/">js</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/css/">css</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/vue/">vue</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/ts/">ts</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/nvm/">nvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a><span class="tag-list-count">1</span></li></ul>
       <div class="clearfix"></div>
     </ul>
   </div>
