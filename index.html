@@ -219,21 +219,9 @@
 <h3 id="暂时性死区"><a href="#暂时性死区" class="headerlink" title="暂时性死区"></a>暂时性死区</h3><p>暂时性死区是指变量在其声明之前不能被访问或者使用的特性。</p>
 <p><code>var</code>不存在暂时性死区。</p>
 <p><code>let</code>和<code>const</code>存在暂时性死区，只有等到声明变量之后，才可以获取或使用变量。</p>
-<h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p><code>var</code>不存在块级作用域。</p>
-<p><code>let</code>和<code>const</code>存在块级作用域。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a) <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> b = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> c = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// Uncaught ReferenceError: b is not defined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c); <span class="comment">// Uncaught ReferenceError: c is not defined</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="重复声明"><a href="#重复声明" class="headerlink" title="重复声明"></a>重复声明</h3><p><code>var</code>可以重复声明变量。</p>
-<p><code>let</code>和<code>const</code>在同一个作用域下不允许重复声明变量。</p>
-<h3 id="修改声明的变量"><a href="#修改声明的变量" class="headerlink" title="修改声明的变量"></a>修改声明的变量</h3><p><code>var</code>和<code>let</code>声明的变量的值是可以进行修改的。</p>
-<p><code>const</code>声明的变量不可以改动。这个改动并不是指变量的值不得改动，而是变量指向的按个内存地址所保存的数据不得改动。</p>
-<p><code>const</code>对于简单类型的数据不可改动，其值保存在变量所指向的那个地址。</p>
-<p>对于复杂类型，不可以改动保存变量的地址，但是可以改变地址所指向里面的值。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="number">1</span>; <span class="comment">// 声明之后不可改动，否则会报错</span></span><br><span class="line"><span class="keyword">const</span> b = [<span class="number">0</span>, <span class="number">1</span>];</span><br><span class="line">b[<span class="number">1</span>] = <span class="number">2</span>; <span class="comment">// 可以改变地址所指向的值</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// [0, 2] </span></span><br><span class="line"><span class="keyword">const</span> c = [<span class="number">0</span>];</span><br><span class="line"><span class="comment">// 不可改变变量指向的地址</span></span><br><span class="line">c = [<span class="number">1</span>]; <span class="comment">// Uncaught TypeError: Assignment to constant variable</span></span><br></pre></td></tr></table></figure>
-
-
-
-
+        
+          <a class="article-more-a" href="/2024/08/19/var%E5%92%8Clet%E5%92%8Cconst%E7%9A%84%E5%8C%BA%E5%88%AB/#more">阅读更多 >></a>
+        
       
       
     </div>
