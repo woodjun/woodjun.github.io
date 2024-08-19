@@ -7,19 +7,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>ts关键字 | 木头个人博客</title>
+  <title>Tag: 定义变量 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="keyofkeyof取出对象或接口的键形成一个联合类型。keyof后面一般是接上interface、type 12345678910&#x2F;&#x2F; keyof T目的是取出T中的键形成联合类型&#x2F;&#x2F; keyof IUser &#x3D;&#x3D;&gt; type user &#x3D; &amp;#x27;name&amp;#x27; | &amp;#x27;age&amp;#x27;interface IUser&amp;#123;  name: string;  age">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ts关键字">
-<meta property="og:url" content="http://example.com/2022/05/02/ts%E5%85%B3%E9%94%AE%E5%AD%97/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="木头个人博客">
+<meta property="og:url" content="http://example.com/tags/%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="keyofkeyof取出对象或接口的键形成一个联合类型。keyof后面一般是接上interface、type 12345678910&#x2F;&#x2F; keyof T目的是取出T中的键形成联合类型&#x2F;&#x2F; keyof IUser &#x3D;&#x3D;&gt; type user &#x3D; &amp;#x27;name&amp;#x27; | &amp;#x27;age&amp;#x27;interface IUser&amp;#123;  name: string;  age">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-05-02T07:25:55.000Z">
-<meta property="article:modified_time" content="2022-06-12T13:45:16.564Z">
 <meta property="article:author" content="Wood">
-<meta property="article:tag" content="关键字">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
@@ -193,143 +188,75 @@
           </div>
           <div id="js-content" class="content-ll">
             
-<article id="post-ts关键字" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+
+
   
-    <h1 class="article-title" itemprop="name">
-      ts关键字
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2024" class="archive-year">2024</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2024/08/19/var%E5%92%8Clet%E5%92%8Cconst%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
+  	<time datetime="2024-08-19T10:41:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-19</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2024/08/19/var%E5%92%8Clet%E5%92%8Cconst%E7%9A%84%E5%8C%BA%E5%88%AB/">
+      var和let和const的区别
+      
+    </a>
     </h1>
   
 
-        
-        <a href="/2022/05/02/ts%E5%85%B3%E9%94%AE%E5%AD%97/" class="archive-article-date">
-  	<time datetime="2022-05-02T07:25:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="keyof"><a href="#keyof" class="headerlink" title="keyof"></a>keyof</h3><p>keyof取出对象或接口的键形成一个联合类型。keyof后面一般是接上interface、type</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// keyof T目的是取出T中的键形成联合类型</span></span><br><span class="line"><span class="comment">// keyof IUser ==&gt; type user = &#x27;name&#x27; | &#x27;age&#x27;</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">IUser</span>&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// K extends user ==&gt; K取值只能是name或age  </span></span><br><span class="line"><span class="keyword">function</span> getValue&lt;T <span class="keyword">extends</span> <span class="title class_">Object</span>, K <span class="keyword">extends</span> keyof T&gt;(<span class="attr">obj</span>: T, <span class="attr">key</span>: K): T[K] &#123;</span><br><span class="line">  <span class="keyword">return</span> obj[key]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h3 id="extends"><a href="#extends" class="headerlink" title="extends"></a>extends</h3><p>extends在泛型上的使用更像是一种<strong>包含关系</strong>，例如X extends Y，实际上就是<strong>Y包含X（any类型除外）</strong>。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 联合类型</span></span><br><span class="line"><span class="keyword">function</span> getValue&lt;T <span class="keyword">extends</span> <span class="title class_">Object</span>, K <span class="keyword">extends</span> keyof T&gt;(<span class="attr">obj</span>: T, <span class="attr">key</span>: K): T[K] &#123;</span><br><span class="line">  <span class="keyword">return</span> obj[key]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面所说的包含关系，<code>T extends Object</code>说明T的取值必须是一个Object类型，而<code>K extends keyof T</code>可以理解成<code>K extends (keyof T)</code>，也就是先求出<code>keyof T</code>（T的键值形成联合类型），K的取值必须是联合类型中的某一个。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数</span></span><br><span class="line"><span class="keyword">function</span> ajax&lt;T <span class="title function_">extends</span> (...<span class="attr">args</span>: <span class="built_in">any</span>) =&gt; <span class="built_in">any</span>&gt;(<span class="attr">success</span>: T) &#123;</span><br><span class="line">  <span class="title function_">success</span>(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">ajax</span>(<span class="function">(<span class="params">val</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;val:&#x27;</span>, val)) <span class="comment">// val: 1</span></span><br></pre></td></tr></table></figure>
-
-<p>和上面的理解一样<code>T extends (...args: any) =&gt; any</code>可以理解成<code>T extends ((...args: any) =&gt; any)</code>，依据包含关系：T必须是一个函数。</p>
-<p>上面那种方式针对于联合类型，例如<code>type params = &#39;a&#39; | &#39;b&#39;</code>，接下来这部分是针对于对象。</p>
-<p>对于对象继承来说，<strong>父级有的，子级一定要有。</strong>举个栗子：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">IPerson</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ITeacher</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">sex</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ITeacher extends IPerson也就是说IPerson中的属性值一定要全部出现在ITeacher中，才算继承</span></span><br><span class="line"><span class="keyword">type</span> isPerson = <span class="title class_">ITeacher</span> <span class="keyword">extends</span> <span class="title class_">IPerson</span> ? <span class="literal">true</span> : <span class="literal">false</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="infer"><a href="#infer" class="headerlink" title="infer"></a>infer</h3><p>infer在泛型上的使用更像是用来<strong>定义变量</strong>，在符合约定的<strong>条件</strong>之后，根据<strong>对应的位置来进行赋值</strong>。不知所云~~</p>
-<p>举栗子：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TArea</span> = <span class="function">(<span class="params"><span class="attr">width</span>: <span class="built_in">number</span>, <span class="attr">height</span>: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">number</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">ReturnType</span>&lt;T <span class="title function_">extends</span> (...<span class="attr">args</span>: <span class="built_in">any</span>) =&gt; <span class="built_in">any</span>&gt; = T <span class="title function_">extends</span> (</span><br><span class="line">  ...<span class="attr">args</span>: <span class="built_in">any</span></span><br><span class="line">) =&gt; infer P</span><br><span class="line">  ? P</span><br><span class="line">  : <span class="built_in">any</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> area = <span class="title class_">ReturnType</span>&lt;<span class="title class_">TArea</span>&gt; <span class="comment">// ===&gt; type area = number</span></span><br></pre></td></tr></table></figure>
-
-<p>理解上面代码的infer抓住三个关键：<strong>变量</strong>、<strong>条件</strong>和<strong>位置并赋值</strong>。</p>
-<p>根据extends的包含关系：T为一个函数类型。</p>
-<p><strong>条件：</strong><code>T extends (...args: any) =&gt; infer P</code>，首先不用理会infer P，可以当成any，意思就是如果T<strong>满足函数类型</strong>的条件，ReturnType就可以得到P。</p>
-<p><strong>变量：</strong>infer P可以看成var P，赋值在于找到传入T和条件比较找到对应的P位置</p>
-<p><strong>位置并赋值：</strong>条件<code>T extends (...args: any) =&gt; infer P</code>和<code>ReturnType&lt;TArea&gt;</code>中的TArea类型一一对应位置<code>(width: number, height: number) =&gt; number</code>。可以知道infer P对应number，所以P的取值为number。</p>
-<p>也就是说<code>ReturnType&lt;T&gt;</code>满足T是函数类型后，就输出P，否则为any，P的取值根据传入T的类型位置一一对应关系，找到P的值</p>
-<h3 id="in"><a href="#in" class="headerlink" title="in"></a>in</h3><p>in用于取出联合类型的值，一般用于对象构建。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TUser</span> = <span class="string">&#x27;name&#x27;</span> | <span class="string">&#x27;age&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> person = &#123;</span><br><span class="line">  [k <span class="keyword">in</span> <span class="title class_">TUser</span>]: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 等价于</span></span><br><span class="line"><span class="keyword">type</span> p = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">关键字</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">定义变量</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/ts//" class="article-tag-list-link color3">ts</a>
+        			<a href="/categories/js//" class="article-tag-list-link color3">js</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#keyof"><span class="article-toc-text">keyof</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#extends"><span class="article-toc-text">extends</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#infer"><span class="article-toc-text">infer</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#in"><span class="article-toc-text">in</span></a></li></ol>
-  
-<nav id="article-nav">
-  
-    <a href="/2022/05/03/ts%E7%9F%A5%E8%AF%86%E7%9B%AE%E5%BD%95%E6%B1%87%E6%80%BB/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          ts知识目录汇总
-        
-      </div>
-    </a>
   
   
-    <a href="/2022/04/23/git/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Git</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -352,9 +279,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
