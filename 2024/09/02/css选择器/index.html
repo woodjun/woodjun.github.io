@@ -7,14 +7,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: overflow | 木头个人博客</title>
+  <title>css选择器 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="木头个人博客">
-<meta property="og:url" content="http://example.com/tags/overflow/index.html">
+  <meta name="description" content="特性css选择器的特性主要包括层叠性、继承性和优先性。 层叠性当两个选择器（选择器相同的情况）都对一个元素修饰了相同的样式，后面选择器的样式会覆盖掉前面的样式。 1234567p &amp;#123;	color: red;&amp;#125;p &amp;#123;	color: blue; &#x2F;&#x2F; 后面这个样式会覆盖掉前面的&amp;#125;  继承性在css中，子标签会继承父标签的某些样式，一般来说，以text-、font">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css选择器">
+<meta property="og:url" content="http://example.com/2024/09/02/css%E9%80%89%E6%8B%A9%E5%99%A8/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="特性css选择器的特性主要包括层叠性、继承性和优先性。 层叠性当两个选择器（选择器相同的情况）都对一个元素修饰了相同的样式，后面选择器的样式会覆盖掉前面的样式。 1234567p &amp;#123;	color: red;&amp;#125;p &amp;#123;	color: blue; &#x2F;&#x2F; 后面这个样式会覆盖掉前面的&amp;#125;  继承性在css中，子标签会继承父标签的某些样式，一般来说，以text-、font">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-02T13:59:19.000Z">
+<meta property="article:modified_time" content="2024-09-13T10:08:07.952Z">
 <meta property="article:author" content="Wood">
+<meta property="article:tag" content="css选择器">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
@@ -188,56 +193,126 @@
           </div>
           <div id="js-content" class="content-ll">
             
-
-
-  
-  
+<article id="post-css选择器" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/08/30/overflow%E5%92%8Cfloat/" class="archive-article-date">
-  	<time datetime="2024-08-30T10:37:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/08/30/overflow%E5%92%8Cfloat/">
-      overflow和float
-      
-    </a>
+    <h1 class="article-title" itemprop="name">
+      css选择器
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2024/09/02/css%E9%80%89%E6%8B%A9%E5%99%A8/" class="archive-article-date">
+  	<time datetime="2024-09-02T13:59:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>css选择器的特性主要包括<strong>层叠性</strong>、<strong>继承性</strong>和<strong>优先性</strong>。</p>
+<h4 id="层叠性"><a href="#层叠性" class="headerlink" title="层叠性"></a>层叠性</h4><p>当两个选择器（<strong>选择器相同的情况</strong>）都对一个元素修饰了相同的样式，后面选择器的样式会覆盖掉前面的样式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">p &#123;</span><br><span class="line">	color: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">p &#123;</span><br><span class="line">	color: blue; // 后面这个样式会覆盖掉前面的</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="继承性"><a href="#继承性" class="headerlink" title="继承性"></a>继承性</h4><p>在css中，子标签会继承父标签的某些样式，一般来说，以<code>text-</code>、<code>font-</code>、<code>line-</code>开头的属性以及<code>color</code>样式具有继承性。</p>
+<span id="more"></span>
+
+<h4 id="优先性"><a href="#优先性" class="headerlink" title="优先性"></a>优先性</h4><p>当一个元素被多个选择器（<strong>选择器不同</strong>）选中的情况下，元素展示的样式取决于选择器的<strong>优先级</strong>，选择器的优先级依赖于<strong>选择器权重的累和</strong>，选择器权重大的样式会覆盖掉权重小的样式。</p>
+<p><strong>优先级规则：!important&gt;内联样式&gt;ID选择器&gt;类选择器、属性选择器、伪类选择器&gt;标签选择器、伪元素选择器&gt;通配符选择器。</strong></p>
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>用法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id选择器</td>
+<td>#myid</td>
+<td>选择特定id的元素</td>
+</tr>
+<tr>
+<td>类选择器</td>
+<td>.myclass</td>
+<td>选择所有具有class的元素</td>
+</tr>
+<tr>
+<td>标签选择器</td>
+<td>div</td>
+<td>选择特定类型的元素</td>
+</tr>
+<tr>
+<td>相邻选择器</td>
+<td>h1+p</td>
+<td>选择紧接在另一个元素后的元素</td>
+</tr>
+<tr>
+<td>子选择器</td>
+<td>ul&gt;li</td>
+<td>选择特定父元素的子元素</td>
+</tr>
+<tr>
+<td>后代选择器</td>
+<td>li a</td>
+<td>选择特定父元素的后代元素</td>
+</tr>
+<tr>
+<td>通配符选择器</td>
+<td>*</td>
+<td>选择所有元素</td>
+</tr>
+<tr>
+<td>属性选择器</td>
+<td>a[rel=”external”]</td>
+<td>选择包含特定属性的元素</td>
+</tr>
+<tr>
+<td>伪类选择器</td>
+<td>a:hover</td>
+<td>选择特定状态的元素</td>
+</tr>
+<tr>
+<td>伪元素选择器</td>
+<td>a::before</td>
+<td>选择特定位置的元素</td>
+</tr>
+</tbody></table>
+<h3 id="权重"><a href="#权重" class="headerlink" title="权重"></a>权重</h3><p>css选择器权重决定了规则应用于元素的优先程度，主要有以下几个级别进行计算：</p>
+<ol>
+<li>!important：∞无穷大</li>
+<li>内联样式：1000</li>
+<li>ID选择器：100</li>
+<li>类选择器、属性选择器和伪类选择器：10</li>
+<li>标签选择器、伪元素选择器：1</li>
+<li>通配符选择器：0</li>
+</ol>
+<p>每一个级别的数字越大，权重越高。<strong>如果两个规则的权重相同，那么最后的规则会被应用</strong>。</p>
+<h3 id="解析规则"><a href="#解析规则" class="headerlink" title="解析规则"></a>解析规则</h3><p>在开发过程中，为了保证样式应用的准确性，常常会使用多种选择器组合形式，就会出现尽可能使用更多层级的选择器组合。</p>
+<p>从准确性的角度来看是没有问题的，但是从性能上来看就会出现一些问题，这个涉及到css解析规则。</p>
+<p>css选择器的匹配规则：<strong>从右到左进行匹配</strong>。</p>
+
+      
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">overflow</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">float</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">css选择器</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -250,17 +325,54 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%89%B9%E6%80%A7"><span class="article-toc-text">特性</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%B1%82%E5%8F%A0%E6%80%A7"><span class="article-toc-text">层叠性</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E7%BB%A7%E6%89%BF%E6%80%A7"><span class="article-toc-text">继承性</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BC%98%E5%85%88%E6%80%A7"><span class="article-toc-text">优先性</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%B1%BB%E5%9E%8B"><span class="article-toc-text">类型</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%9D%83%E9%87%8D"><span class="article-toc-text">权重</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E8%A7%A3%E6%9E%90%E8%A7%84%E5%88%99"><span class="article-toc-text">解析规则</span></a></li></ol>
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2024/09/02/css%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">css盒子模型</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -283,9 +395,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
