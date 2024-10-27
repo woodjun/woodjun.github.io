@@ -543,6 +543,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+        <p>在说脚本加载之前，我们首先需要了解浏览器渲染解析过程，以便于解决浏览器渲染过程中出现的css阻塞、js脚本阻塞问题。</p>
+<h3 id="浏览器渲染解析过程"><a href="#浏览器渲染解析过程" class="headerlink" title="浏览器渲染解析过程"></a>浏览器渲染解析过程</h3><p><img src="/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/render.png"></p>
+<ul>
+<li>DOM树：渲染引擎从上到下开始解析HTML文档，将标签转换DOM树的DOM节点上。<strong>如果遇到外部引用css文件，浏览器会去服务器请求这些文件，并构建CSSOM树。</strong></li>
+<li>CSSOM树：解析css（包括外部css文件和样式元素）来创建CSSOM树。<strong>DOM树和CSSOM树的构建过程是并行的，但是CSSOM的加载和解析过程会阻塞DOM的渲染</strong>。</li>
+<li>渲染树：DOM树和CSSOM树结合可以得到渲染树（Render tree）。</li>
+<li>布局渲染树：从根节点递归调用，计算每一个元素的大小和位置，给每个节点所在位置给出屏幕上的精确坐标，以便于绘制渲染树。</li>
+<li>绘制渲染树：遍历渲染树，合并各个图层，将数据由CPU输出给GPU最终绘制在屏幕上。</li>
+</ul>
+        
+          <a class="article-more-a" href="/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/#more">阅读更多 >></a>
         
       
       
