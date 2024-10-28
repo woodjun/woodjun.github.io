@@ -10,13 +10,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>本地存储 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="HTTP协议是一个无状态协议，即服务器接收客户端的请求，返回一个响应，这一次的请求就算完结了，服务器并没有记录下关于客户端的任何信息，因私，想要知道让服务器知道客户端是谁？ Cookie就在这种情况下应运而生了。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="本地存储">
 <meta property="og:url" content="http://example.com/2024/10/27/%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="HTTP协议是一个无状态协议，即服务器接收客户端的请求，返回一个响应，这一次的请求就算完结了，服务器并没有记录下关于客户端的任何信息，因私，想要知道让服务器知道客户端是谁？ Cookie就在这种情况下应运而生了。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-10-27T12:11:11.000Z">
-<meta property="article:modified_time" content="2024-10-27T12:11:11.000Z">
+<meta property="article:modified_time" content="2024-10-28T15:24:39.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="存储">
 <meta name="twitter:card" content="summary">
@@ -228,7 +230,40 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><strong>HTTP协议是一个无状态协议</strong>，即服务器接收客户端的请求，返回一个响应，这一次的请求就算完结了，服务器并没有记录下关于客户端的任何信息，因私，想要知道让服务器知道客户端是谁？</p>
+<p>Cookie就在这种情况下应运而生了。</p>
+<span id="more"></span>
+
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>Cookie充当服务器和客户端之间的桥梁，本职工作并非是本地存储，而是维持状态。</p>
+<p>说白了就是存储在浏览器里的一个个小小的文本文件，依附在HTTP请求上，在服务器和客户端跑来跑去的。它可以携带用户信息，服务器可以通过Cookie来了解到客户端的状态。</p>
+<p><strong>Cookie是以键值对的形式存在的</strong>。不过它的体积是有上限的，<strong>最大只能有4KB</strong>，当超过4KB时，就会面临被裁切的命运，因此只能够存储少量的信息。</p>
+<p><strong>同一个域名下的所有请求，都会携带Cookie</strong>。这也就造成一个问题：前端请求一张图片、一个脚本也会携带Cookie，未免太浪费了。</p>
+<p>由于容量小，不能更好充当本地存储的角色，Web Storage也就出现了。</p>
+<h3 id="Web-Storage"><a href="#Web-Storage" class="headerlink" title="Web Storage"></a>Web Storage</h3><p>Web Storage是<code>HTML5</code>专门为浏览器存储提供的数据存储机制。它们又分为<strong>Local Storage</strong>和<strong>Session Storage</strong>。两者根据浏览器的不同，容量可达到<code>5M-10M</code>。</p>
+<h4 id="Session-Storage"><a href="#Session-Storage" class="headerlink" title="Session Storage"></a>Session Storage</h4><p>Session Storage是临时性的本地存储，它是会话级别的存储，当会话结束（页面被关闭）时，存储内容也会被释放。</p>
+<p>Session Storage特别的一点是：即使是相同域名下的两个页面，只要它们<strong>不在同一个浏览器窗口</strong>打开，那么它们之间便无法被共享。</p>
+<h4 id="Local-Storage"><a href="#Local-Storage" class="headerlink" title="Local Storage"></a>Local Storage</h4><p>Local Storage是持久化的本地存储，存储在其中的数据是永远不会过期的，唯一的方法就是手动删除。</p>
+<p>由于它的持久化存储，经常会被用来存储一些内容稳定的值，比如常用的区域树数据、base64图片内容等等。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这三种方式都是保存在浏览器，并且都遵循同源政策，但是三者之间还是存在一些差异的。</p>
+<h4 id="传递方式"><a href="#传递方式" class="headerlink" title="传递方式"></a>传递方式</h4><ul>
+<li>Cookie在同源的HTTP请求中都会被携带，即cookie会在浏览器和服务器之间来回传递。</li>
+<li>Web Storage不会自动把数据发送给服务器，仅在本地保存。</li>
+</ul>
+<h4 id="数据大小"><a href="#数据大小" class="headerlink" title="数据大小"></a>数据大小</h4><ul>
+<li>Cookie存储大小不能超过4KB，否则面临着被裁切的命运。</li>
+<li>Web Storage根据浏览器的不同，存储容量可以达到<code>5M-10M</code>。</li>
+</ul>
+<h4 id="数据有效期"><a href="#数据有效期" class="headerlink" title="数据有效期"></a>数据有效期</h4><ul>
+<li>sessionStorage仅在当前浏览器窗口关闭前有效，自然不能够保持持久。</li>
+<li>localStorage始终有效，窗口或浏览器关闭时也会一直存在，即持久数据。</li>
+<li>cookie未设置过期时间时，窗口或浏览器关闭就会失效；而设置了过期时间时，只有达到那个过期时间才会失效。</li>
+</ul>
+<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><ul>
+<li>sessionStorage只在同一个页面生效，或者从当前页面打开另一个页面时才会生效。</li>
+<li>localStorage在所有同源窗口中都是共享的。</li>
+<li>cookie在所有同源窗口也都是共享的。</li>
+</ul>
+
       
       
     </div>
@@ -262,7 +297,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2024-10-27T12:11:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-10-27 20:11:11</time>
+    更新时间：<time datetime="2024-10-28T15:24:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-10-28 23:24:39</time>
   </p>
 
 
@@ -275,7 +310,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Cookie"><span class="article-toc-text">Cookie</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Web-Storage"><span class="article-toc-text">Web Storage</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#Session-Storage"><span class="article-toc-text">Session Storage</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#Local-Storage"><span class="article-toc-text">Local Storage</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%80%BB%E7%BB%93"><span class="article-toc-text">总结</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F"><span class="article-toc-text">传递方式</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%A7%E5%B0%8F"><span class="article-toc-text">数据大小</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9C%89%E6%95%88%E6%9C%9F"><span class="article-toc-text">数据有效期</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="article-toc-text">作用域</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
