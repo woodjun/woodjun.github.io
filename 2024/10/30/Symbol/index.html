@@ -10,13 +10,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>Symbol | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="ES6引入了一种新的基本数据类型：Symbol。用来表示独一无二的值。在这个数据类型没有出来之前，对象的属性名只能够使用字符串来表示。Symbol值现在也能够作为对象的属性名。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Symbol">
 <meta property="og:url" content="http://example.com/2024/10/30/Symbol/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="ES6引入了一种新的基本数据类型：Symbol。用来表示独一无二的值。在这个数据类型没有出来之前，对象的属性名只能够使用字符串来表示。Symbol值现在也能够作为对象的属性名。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-10-30T12:04:53.000Z">
-<meta property="article:modified_time" content="2024-10-30T12:10:04.000Z">
+<meta property="article:modified_time" content="2024-11-03T16:54:24.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="Symbol">
 <meta name="twitter:card" content="summary">
@@ -228,7 +230,80 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>ES6引入了一种新的基本数据类型：<strong>Symbol</strong>。用来表示独一无二的值。在这个数据类型没有出来之前，对象的属性名只能够使用字符串来表示。Symbol值现在也能够作为对象的属性名。</p>
+<span id="more"></span>
+
+<h3 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol()"></a>Symbol()</h3><p>Symbol()函数能够创建一个独一无二的值，即无论重复调用多少次，得到的值都不会重复。不过这种方式不会将其注册到全局中，也就意味着无法使用<code>Symbol.keyFor()</code>拿到对应的key。</p>
+<p>Symbol()函数前不能使用关键字new，否则会报错。因为生成的Symbol是一种基本数据类型，不是对象。由于不是对象，也就意味着不能够添加属性，它类似于字符串的数据类型。</p>
+<p>Symbol()能够接收一个字符串作为参数，表示对Symbol值的描述，方便用户区别不同的Symbol值。Symbol()即使使用相同的描述创建，也不会得到相同的Symbol值。</p>
+<p>使用<code>Symbol.prototypeof.description</code>能够得到描述内容的值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="title class_">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="title class_">Symbol</span>(<span class="string">&#x27;bar&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> s3 = <span class="title class_">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> s1; <span class="comment">// &quot;symbol&quot;</span></span><br><span class="line"></span><br><span class="line">s1 <span class="comment">// Symbol(foo)</span></span><br><span class="line">s2 <span class="comment">// Symbol(foo)</span></span><br><span class="line">s1 === s3 <span class="comment">// false</span></span><br><span class="line">s1.<span class="property">description</span>; <span class="comment">// &quot;foo&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="属性名的遍历"><a href="#属性名的遍历" class="headerlink" title="属性名的遍历"></a>属性名的遍历</h3><p>如果想要遍历对象中的属性名为Symbol值的键，只能够使用<code>Object.getOwnPropertySymbols()</code>或<code>Reflect.ownKeys()</code>方法来获取。其他方式是无法得到Symbol值的键名的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    <span class="attr">a</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">b</span>: <span class="number">2</span>,</span><br><span class="line">    [<span class="title class_">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>)]: <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">getOwnPropertySymbols</span>(obj); <span class="comment">// [Symbol(foo)]</span></span><br><span class="line"><span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(obj); <span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;, Symbol(foo)]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Symbol-for"><a href="#Symbol-for" class="headerlink" title="Symbol.for()"></a>Symbol.for()</h3><p>Symbol()生成的都是独一无二的Symbol值，不过有时候我们也会想要使用同一个Symbol值，可以使用Symbol.for()来创建一个Symbol值。</p>
+<p>这种方法接收一个字符串作为参数，然后会搜索有没有以该参数作为名称的Symbol值。如果有，就返回Symbol值，否则就会创建一个以该字符为名称的Symbol值，并将其注册到全局登记。</p>
+<p>全局登记可以使不同的iframe或者Service worker中都可以取到相同的值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s1 = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> s2 = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"></span><br><span class="line">s1 === s2; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> iframe = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;iframe&#x27;</span>);</span><br><span class="line">iframe.<span class="property">src</span> = <span class="title class_">String</span>(<span class="variable language_">window</span>.<span class="property">location</span>);</span><br><span class="line"><span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(iframe);</span><br><span class="line"></span><br><span class="line">iframe.<span class="property">contentWindow</span>.<span class="property">Symbol</span>.<span class="title function_">for</span>(<span class="string">&#x27;foo&#x27;</span>) === s1; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Symbol-keyFor"><a href="#Symbol-keyFor" class="headerlink" title="Symbol.keyFor()"></a>Symbol.keyFor()</h3><p>这种方法能够返回一个已登记的Symbol类型值的key。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s1 = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="title class_">Symbol</span>.<span class="title function_">keyFor</span>(s1); <span class="comment">// &quot;foo&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> s2 = <span class="title class_">Symbol</span>(<span class="string">&#x27;bar&#x27;</span>);</span><br><span class="line"><span class="title class_">Symbol</span>.<span class="title function_">keyFor</span>(s2); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="内置的Symbol值"><a href="#内置的Symbol值" class="headerlink" title="内置的Symbol值"></a>内置的Symbol值</h3><p>除了定义自己使用的Symbol值以外，ES6还提供了11个内置的Symbol值，指向语言内部使用方法，使用<code>Symbol.xxxx</code>进行访问。</p>
+<table>
+<thead>
+<tr>
+<th>Symbol值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>hasInstance</td>
+<td>当其他对象使用<code>instanceof</code>运算符，判断是否为该对象的实力时，会调用这个方法。</td>
+</tr>
+<tr>
+<td>isConcatSpreadable</td>
+<td>布尔值，表示该对象用于<code>Array.prototype.concat()</code>时，是否可以展开里面的内容。</td>
+</tr>
+<tr>
+<td>species</td>
+<td>创建衍生对象时，会使用属性。</td>
+</tr>
+<tr>
+<td>match</td>
+<td>当执行<code>str.match()</code>时，如果该属性存在，就会调用它，返回该方法的返回值。</td>
+</tr>
+<tr>
+<td>replace</td>
+<td>当执行str.replace方法时，会返回该方法的返回值。</td>
+</tr>
+<tr>
+<td>search</td>
+<td>当执行str.search方法时，会返回该方法的返回值。</td>
+</tr>
+<tr>
+<td>split</td>
+<td>当执行str.split方法时，会返回该方法的返回值。</td>
+</tr>
+<tr>
+<td>iterator</td>
+<td>对象调用<code>for...of</code>循环时，会调用该方法，返回该对象的默认遍历器。</td>
+</tr>
+<tr>
+<td>toPrimitive</td>
+<td>该对象被转为原始类型的值时，会调用这个方法，返回该对象对应的原始类型值。</td>
+</tr>
+<tr>
+<td>toStringTag</td>
+<td>调用<code>Object.prototype.toString</code>方法时，返回对象的类型值，也可以定制<code>[object xxx]</code>中xxx值。</td>
+</tr>
+<tr>
+<td>unscopabels</td>
+<td>该对象指定了使用<code>with</code>关键字时，哪些属性会被<code>with</code>环境排除。</td>
+</tr>
+</tbody></table>
+
       
       
     </div>
@@ -262,7 +337,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2024-10-30T12:10:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-10-30 20:10:04</time>
+    更新时间：<time datetime="2024-11-03T16:54:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-11-04 00:54:24</time>
   </p>
 
 
@@ -275,7 +350,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Symbol"><span class="article-toc-text">Symbol()</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B1%9E%E6%80%A7%E5%90%8D%E7%9A%84%E9%81%8D%E5%8E%86"><span class="article-toc-text">属性名的遍历</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Symbol-for"><span class="article-toc-text">Symbol.for()</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Symbol-keyFor"><span class="article-toc-text">Symbol.keyFor()</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%86%85%E7%BD%AE%E7%9A%84Symbol%E5%80%BC"><span class="article-toc-text">内置的Symbol值</span></a></li></ol>
   
 <nav id="article-nav">
   
