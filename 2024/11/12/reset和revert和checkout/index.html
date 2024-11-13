@@ -10,12 +10,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>reset和revert和checkout | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="resetreset本质是移动HEAD以及它所指向的branch。  git reset --hard HEAD^     git reset --hard branch2    reset有三个参数：  --hard：重置位置的同时，会清空工作目录的所有改动。 --soft：重置位置的同时，保留工作目录和暂存区的内容，并把重置HEAD的位置commit中的新文件添加到暂存区。 --mixed">
+  <meta name="description" content="在日常工作中，常常会遇到某个版本发布的代码存在着严重中的bug，由于时间关系，来不及马上修复，常见的做法就是回退到上一个稳定的版本，以免影响到用户的使用体验。 git中的reset、revert和checkout命令都可以用用来撤销代码仓库中的某些更改。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="reset和revert和checkout">
 <meta property="og:url" content="http://example.com/2024/11/12/reset%E5%92%8Crevert%E5%92%8Ccheckout/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="resetreset本质是移动HEAD以及它所指向的branch。  git reset --hard HEAD^     git reset --hard branch2    reset有三个参数：  --hard：重置位置的同时，会清空工作目录的所有改动。 --soft：重置位置的同时，保留工作目录和暂存区的内容，并把重置HEAD的位置commit中的新文件添加到暂存区。 --mixed">
+<meta property="og:description" content="在日常工作中，常常会遇到某个版本发布的代码存在着严重中的bug，由于时间关系，来不及马上修复，常见的做法就是回退到上一个稳定的版本，以免影响到用户的使用体验。 git中的reset、revert和checkout命令都可以用用来撤销代码仓库中的某些更改。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2024/11/12/reset%E5%92%8Crevert%E5%92%8Ccheckout/reset.gif">
 <meta property="og:image" content="http://example.com/2024/11/12/reset%E5%92%8Crevert%E5%92%8Ccheckout/reset_branch.gif">
@@ -235,40 +235,43 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <span id="more"></span>
+        <p>在日常工作中，常常会遇到某个版本发布的代码存在着严重中的bug，由于时间关系，来不及马上修复，常见的做法就是回退到上一个稳定的版本，以免影响到用户的使用体验。</p>
+<p>git中的reset、revert和checkout命令都可以用用来撤销代码仓库中的某些更改。</p>
+<span id="more"></span>
 
-<h3 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h3><p>reset本质是移动HEAD以及它所指向的branch。</p>
+<h3 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h3><p>reset本质是移动HEAD以及它所指向的branch，可以将一个分支的末端指向之前的一个commit，等到git执行垃圾回收的时候，会将丢掉的commit进行回收。</p>
+<p>reset有三个参数：</p>
+<ol>
+<li><code>--hard</code>：会清空工作目录的所有改动，影响工作目录、暂存区和历史提交记录。(这几个分区详情可参考<a href="/2022/04/23/git/" title="git仓库组成结构">git仓库组成结构</a>)</li>
+<li><code>--soft</code>：保留工作目录和暂存区的内容，并把重置HEAD所带来的新的差异放进暂存区，也就是说会把所要撤销掉commit里面的文件放回暂存区。</li>
+<li><code>--mixed</code>(默认)：保留工作目录的内容，并清空暂存区的内容（放到工作区）。</li>
+</ol>
 <blockquote>
 <p>git reset <code>--hard</code> HEAD^</p>
 </blockquote>
 <img src="/2024/11/12/reset%E5%92%8Crevert%E5%92%8Ccheckout/reset.gif" style="display:block;margin:0 auto;zoom:60%;">
 
+<p><code>reset --hard</code>不仅可以用于撤销提交，还可以用来把HEAD和<code>branch1</code>移动到其他分支，如下图所示：</p>
 <blockquote>
 <p>git reset <code>--hard</code> branch2</p>
 </blockquote>
 <img src="/2024/11/12/reset%E5%92%8Crevert%E5%92%8Ccheckout/reset_branch.gif" style="display:block;margin:0 auto;zoom:60%;">
 
-<p>reset有三个参数：</p>
-<ol>
-<li><code>--hard</code>：重置位置的同时，会清空工作目录的所有改动。</li>
-<li><code>--soft</code>：重置位置的同时，保留工作目录和暂存区的内容，并把重置HEAD的位置commit中的新文件添加到暂存区。</li>
-<li><code>--mixed</code>(默认)：重置位置的同时，保留工作目录的内容，并清空暂存区的内容（放到工作区）。</li>
-</ol>
-<h3 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h3><p>checkout的本质是改变HEAD的指向，可以将HEAD指向某个分支上的commit</p>
-<blockquote>
-<p>git checkout -b 分支</p>
-</blockquote>
-<p>上面命令会查看本地仓库是否有这个分支，没有则新建一个分支，并且把HEAD指向这个分支。</p>
-<h4 id="已经push到上去了，我想改"><a href="#已经push到上去了，我想改" class="headerlink" title="已经push到上去了，我想改"></a>已经push到上去了，我想改</h4><p>两种情况：<strong>push到自己分支</strong>和<strong>已经合并到master分支</strong></p>
-<p><strong>push到自己分支：</strong>暴力一点，直接强推^_^</p>
-<blockquote>
-<p>git push origin branch -f</p>
-</blockquote>
+<h3 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h3><p>revert会通过创建一次新的commit来撤销指定位置commit所作出的修改，这种撤销的方式是安全的，不会影响到历史提交记录，只会把要撤销的commit标记为<strong>已撤销</strong>。</p>
+<p>这个命令不同于reset的是：reset会将指定的commit之后的所有commit删除，彻底回退到指定的commit版本，导致被删除的的commit不再存在于历史记录中。</p>
 <p><strong>合并到master分支：</strong>利用revert反转撤销某个版本，并且不会撤销commit后面的内容</p>
 <p>这种方式会新建一个commit，新建的commit不会包含撤销commit的内容，同时保留后面commit中的内容</p>
 <blockquote>
 <p>git revert HEAD^</p>
 </blockquote>
+<h3 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h3><p>checkout的本质是改变HEAD的指向，可以将HEAD指向某个分支上的commit，并且会更新工作目录，以至于有可能会覆盖掉本地的修改，所以最好将当前分支上的更改先保存起来<code>stash</code>，再切换分支。</p>
+<blockquote>
+<p>git checkout 分支</p>
+</blockquote>
+<p>checkout的参数：</p>
+<ol>
+<li><code>-b</code>：首先查看本地仓库是否有这个分支，没有则新建一个分支，并且把HEAD指向这个分支。</li>
+</ol>
 
       
       
@@ -324,7 +327,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#reset"><span class="article-toc-text">reset</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#checkout"><span class="article-toc-text">checkout</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%B7%B2%E7%BB%8Fpush%E5%88%B0%E4%B8%8A%E5%8E%BB%E4%BA%86%EF%BC%8C%E6%88%91%E6%83%B3%E6%94%B9"><span class="article-toc-text">已经push到上去了，我想改</span></a></li></ol></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#reset"><span class="article-toc-text">reset</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#revert"><span class="article-toc-text">revert</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#checkout"><span class="article-toc-text">checkout</span></a></li></ol>
   
 <nav id="article-nav">
   
