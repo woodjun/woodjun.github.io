@@ -17,16 +17,14 @@
 <meta property="og:site_name" content="木头个人博客">
 <meta property="og:description" content="Git就是一个分布式版本控制系统（DVCS）。 版本控制系统版本控制、主动提交、中央仓库是VCS的核心，开发团队中的每个人向中央仓库主动提交自己的改动和同步别人的改动，在需要的时候查看和操作历史版本。  所谓的版本控制就是在文件修改过程中保留修改历史，可以方便撤销文件修改操作和回退到之前保留的文件修改历史的版本。  版本控制系统可以分为中央式版本控制系统和分布式版本控制系统。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/04/23/git/reset.gif">
-<meta property="og:image" content="http://example.com/2022/04/23/git/reset.gif">
-<meta property="og:image" content="http://example.com/2022/04/23/git/reset_branch.gif">
+<meta property="og:image" content="http://example.com/2022/04/23/git/area.png">
 <meta property="og:image" content="http://example.com/2022/04/23/git/head.png">
 <meta property="article:published_time" content="2022-04-23T15:08:29.000Z">
 <meta property="article:modified_time" content="2024-11-11T14:08:55.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/04/23/git/reset.gif">
+<meta name="twitter:image" content="http://example.com/2022/04/23/git/area.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -236,7 +234,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong>Git就是一个分布式版本控制系统（DVCS）。</strong></p>
-<h3 id="版本控制系统"><a href="#版本控制系统" class="headerlink" title="版本控制系统"></a>版本控制系统</h3><p><strong>版本控制、主动提交、中央仓库</strong>是VCS的核心，开发团队中的每个人向中央仓库主动提交自己的改动和同步别人的改动，在需要的时候查看和操作历史版本。</p>
+<h3 id="版本控制系统"><a href="#版本控制系统" class="headerlink" title="版本控制系统"></a>版本控制系统</h3><p><strong>版本控制、主动提交、中央仓库</strong>是<code>VCS</code>的核心，开发团队中的每个人向中央仓库主动提交自己的改动和同步别人的改动，在需要的时候查看和操作历史版本。</p>
 <blockquote>
 <p>所谓的版本控制就是在文件修改过程中保留修改历史，可以方便撤销文件修改操作和回退到之前保留的文件修改历史的版本。</p>
 </blockquote>
@@ -246,6 +244,13 @@
 <h4 id="中央式版本控制系统"><a href="#中央式版本控制系统" class="headerlink" title="中央式版本控制系统"></a>中央式版本控制系统</h4><p>在服务器上创建中央仓库，队友可以将新的代码提交到中央仓库或者拉取最新的代码到自己的机器上。在此功能的基础之上，还具备版本控制系统的查看和操作历史版本功能。</p>
 <h4 id="分布式版本控制系统"><a href="#分布式版本控制系统" class="headerlink" title="分布式版本控制系统"></a>分布式版本控制系统</h4><p>与中央式的区别在于分布式除了中央仓库之外，还存在着本地仓库：即团队中每一个成员都有一个本地仓库，可以在此基础之上提交代码、查看和操作历史版本，无需联网和中央仓库交互。</p>
 <p>中央式的中央仓库有两个主要功能：<strong>保存版本历史</strong>和<strong>同步代码</strong>。分布式本地仓库就掌管着保存版本历史功能，中央仓库的主要职责是<strong>同步团队代码</strong>。</p>
+<h3 id="仓库组成结构"><a href="#仓库组成结构" class="headerlink" title="仓库组成结构"></a>仓库组成结构</h3><p>git仓库结构主要由<strong>工作目录（working directory）、暂存区（staging area）和git仓库（repository）</strong>组成。</p>
+<blockquote>
+<p>工作目录：包括实际文件的目录，这些文件可以是文本文件、图片、视频等，我们平常编辑工作就是在工作目录完成的。</p>
+<p>暂存区：一个临时区域。在提交进入仓库之前，暂存区提供了一个预览并确认更改的机会。</p>
+<p>git仓库：git的核心部分，存储了项目的所有历史版本，包括文件的当前状态。</p>
+</blockquote>
+<p><img src="/2022/04/23/git/area.png"></p>
 <h3 id="基本工作流程"><a href="#基本工作流程" class="headerlink" title="基本工作流程"></a>基本工作流程</h3><ol>
 <li>克隆：<code>git clone 远程仓库的url</code></li>
 <li>切换分支：<code>git checkout 分支</code> </li>
@@ -258,23 +263,6 @@
 <h3 id="常见的意外"><a href="#常见的意外" class="headerlink" title="常见的意外"></a>常见的意外</h3><h4 id="刚提交的代码，我想改"><a href="#刚提交的代码，我想改" class="headerlink" title="刚提交的代码，我想改"></a>刚提交的代码，我想改</h4><p>摊牌了，我想要改刚刚提交的代码，但是我不想重新commit~~，下面的命令能够使Git把当前的commit里的内容和暂存区里面的内容合并起来创建一个新的commit，新的commit会替换掉当前commit。</p>
 <blockquote>
 <p>git commit <code>--amend</code></p>
-</blockquote>
-<h4 id="不想要最新的commit"><a href="#不想要最新的commit" class="headerlink" title="不想要最新的commit"></a>不想要最新的commit</h4><p><strong>Git有一个特性：只能回顾历史，不能瞻仰未来。</strong>利用这个特性，如果能够做到HEAD和HEAD指向分支的引用一起往前偏移，就能做到不要最新的commit。</p>
-<p>这个<a href="#reset">reset</a>就可以做到：</p>
-<blockquote>
-<p>git reset <code>--hard</code> HEAD^</p>
-</blockquote>
-<img src="/2022/04/23/git/reset.gif" style="display:block;margin:0 auto;zoom:80%;">
-
-<h4 id="已经push到上去了，我想改"><a href="#已经push到上去了，我想改" class="headerlink" title="已经push到上去了，我想改"></a>已经push到上去了，我想改</h4><p>两种情况：<strong>push到自己分支</strong>和<strong>已经合并到master分支</strong></p>
-<p><strong>push到自己分支：</strong>暴力一点，直接强推^_^</p>
-<blockquote>
-<p>git push origin branch -f</p>
-</blockquote>
-<p><strong>合并到master分支：</strong>利用revert反转撤销某个版本，并且不会撤销commit后面的内容</p>
-<p>这种方式会新建一个commit，新建的commit不会包含撤销commit的内容，同时保留后面commit中的内容</p>
-<blockquote>
-<p>git revert HEAD^</p>
 </blockquote>
 <h3 id="看你都干了什么"><a href="#看你都干了什么" class="headerlink" title="看你都干了什么"></a>看你都干了什么</h3><ol>
 <li>查看历史多个的commit：<code>git log</code><ul>
@@ -294,34 +282,12 @@
 </li>
 <li>查看文件是否修改：<code>git status</code></li>
 </ol>
-<h3 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h3><p>checkout的本质是改变HEAD的指向，可以将HEAD指向某个分支上的commit</p>
-<blockquote>
-<p>git checkout -b 分支</p>
-</blockquote>
-<p>上面命令会查看本地仓库是否有这个分支，没有则新建一个分支，并且把HEAD指向这个分支。</p>
 <h3 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h3><p>能够临时存放工作目录的变动，比如说你不想你还没写完内容，不想commit到本地仓库，就想要切换分支去修改其他分支的代码，可以先将工作目录的变动存下来，切换回去的时候再拿出来</p>
 <blockquote>
 <p>git stash // 存，这个方式只能存被add过的文件</p>
 <p>git stash -u // 存，没有被add过的文件也可以存</p>
 <p>git stash pop // 取</p>
 </blockquote>
-<h3 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h3><p>reset本质是移动HEAD以及它所指向的branch。</p>
-<blockquote>
-<p>git reset <code>--hard</code> HEAD^</p>
-</blockquote>
-<img src="/2022/04/23/git/reset.gif" style="display:block;margin:0 auto;zoom:60%;">
-
-<blockquote>
-<p>git reset <code>--hard</code> branch2</p>
-</blockquote>
-<img src="/2022/04/23/git/reset_branch.gif" style="display:block;margin:0 auto;zoom:60%;">
-
-<p>reset有三个参数：</p>
-<ol>
-<li><code>--hard</code>：重置位置的同时，会清空工作目录的所有改动。</li>
-<li><code>--soft</code>：重置位置的同时，保留工作目录和暂存区的内容，并把重置HEAD的位置commit中的新文件添加到暂存区。</li>
-<li><code>--mixed</code>(默认)：重置位置的同时，保留工作目录的内容，并清空暂存区的内容（放到工作区）。</li>
-</ol>
 <h3 id="延伸知识"><a href="#延伸知识" class="headerlink" title="延伸知识"></a>延伸知识</h3><h4 id="偏移commit"><a href="#偏移commit" class="headerlink" title="偏移commit"></a>偏移commit</h4><img src="/2022/04/23/git/head.png" style="display:block;margin:0 auto;zoom:70%;">
 
 <blockquote>
@@ -390,7 +356,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">版本控制系统</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%AD%E5%A4%AE%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">中央式版本控制系统</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">分布式版本控制系统</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="article-toc-text">基本工作流程</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%84%8F%E5%A4%96"><span class="article-toc-text">常见的意外</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%9A%E6%8F%90%E4%BA%A4%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%88%91%E6%83%B3%E6%94%B9"><span class="article-toc-text">刚提交的代码，我想改</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%8D%E6%83%B3%E8%A6%81%E6%9C%80%E6%96%B0%E7%9A%84commit"><span class="article-toc-text">不想要最新的commit</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%B7%B2%E7%BB%8Fpush%E5%88%B0%E4%B8%8A%E5%8E%BB%E4%BA%86%EF%BC%8C%E6%88%91%E6%83%B3%E6%94%B9"><span class="article-toc-text">已经push到上去了，我想改</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%9C%8B%E4%BD%A0%E9%83%BD%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88"><span class="article-toc-text">看你都干了什么</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#checkout"><span class="article-toc-text">checkout</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#stash"><span class="article-toc-text">stash</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#reset"><span class="article-toc-text">reset</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86"><span class="article-toc-text">延伸知识</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%81%8F%E7%A7%BBcommit"><span class="article-toc-text">偏移commit</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#vim"><span class="article-toc-text">vim</span></a></li></ol></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">版本控制系统</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%AD%E5%A4%AE%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">中央式版本控制系统</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">分布式版本控制系统</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E4%BB%93%E5%BA%93%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84"><span class="article-toc-text">仓库组成结构</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="article-toc-text">基本工作流程</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%84%8F%E5%A4%96"><span class="article-toc-text">常见的意外</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%9A%E6%8F%90%E4%BA%A4%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%88%91%E6%83%B3%E6%94%B9"><span class="article-toc-text">刚提交的代码，我想改</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%9C%8B%E4%BD%A0%E9%83%BD%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88"><span class="article-toc-text">看你都干了什么</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#stash"><span class="article-toc-text">stash</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86"><span class="article-toc-text">延伸知识</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%81%8F%E7%A7%BBcommit"><span class="article-toc-text">偏移commit</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#vim"><span class="article-toc-text">vim</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
