@@ -18,9 +18,9 @@
 <meta property="og:description" content="事件循环js是一门单线程语言，这也就意味着同一个时刻只能执行一个任务，如果一个任务耗时过长，那么其他任务就只能等着，直到这个任务执行完毕。如果文章中超清图片加载很慢，网页一直卡着直到图片加载出来，势必会影响用户体验，为了解决这个问题，将执行任务分为两类。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.jpg">
-<meta property="og:image" content="http://example.com/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%AE%8F%E4%BB%BB%E5%8A%A1.jpg">
+<meta property="og:image" content="http://example.com/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/微任务和宏任务.jpg">
 <meta property="article:published_time" content="2021-11-28T16:09:37.000Z">
-<meta property="article:modified_time" content="2021-11-29T16:41:04.000Z">
+<meta property="article:modified_time" content="2024-11-17T15:35:25.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="底层原理">
 <meta name="twitter:card" content="summary">
@@ -249,12 +249,27 @@
 <h4 id="微任务和宏任务"><a href="#微任务和宏任务" class="headerlink" title="微任务和宏任务"></a>微任务和宏任务</h4><p>异步任务可以再细分为微任务(microtask)和宏任务(macrotask)；</p>
 <p><strong>微任务：</strong>遇到相同任务，也能够在一次事件循环中全部执行完毕的任务，例如：promise、process.nextTick、MutationObserver</p>
 <p><strong>宏任务：</strong>遇到相同任务，不能够在一次事件循环中全部执行，必须进入下一次事件循环中继续执行的任务，例如：代码块、setTimeout、setInterval、ajax请求等</p>
-<p><img src="/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%AE%8F%E4%BB%BB%E5%8A%A1.jpg"></p>
+<img src="/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/微任务和宏任务.jpg" style="zoom:50%;">
+
 <h4 id="执行流程-1"><a href="#执行流程-1" class="headerlink" title="执行流程"></a>执行流程</h4><ol>
 <li>首先进入一个代码块（宏任务），遇到微任务的话就将其放入microtask queue(微任务队列)中，如果遇到宏任务就放入macrotask queue(宏任务队列)中。</li>
 <li>接下来就会从microtask queue(微任务队列)中的任务逐个取出执行，待到所有队列当中的任务执行完毕，才会从macrotask queue(宏任务队列)取出另一个宏任务。</li>
 <li>不断重复以上的流程，直到所有任务执行完毕。</li>
 </ol>
+<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">async1</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>); <span class="comment">//(2)</span></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">async2</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>); <span class="comment">// (6)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">async2</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>); <span class="comment">// (3)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>); <span class="comment">// (1)</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">5</span>); <span class="comment">// (8)</span></span><br><span class="line">    <span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">6</span>); <span class="comment">// (9)</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">7</span>); <span class="comment">// (10)</span></span><br><span class="line">    <span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">8</span>); <span class="comment">// (11)</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="title function_">async1</span>();</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">9</span>); <span class="comment">// (4)</span></span><br><span class="line">    <span class="title function_">resolve</span>();</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">10</span>); <span class="comment">// (7)</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">11</span>); <span class="comment">// (5)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出：4-&gt;1-&gt;3-&gt;9-&gt;11-&gt;2-&gt;10-&gt;5-&gt;6-&gt;7-&gt;8</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第一遍循环：</strong>首先执行完所有同步任务，再到微任务，直到所有微任务执行完毕，再放入另一个宏任务。</p>
+<p>同步任务：4 =&gt;  1 =&gt; 3 =&gt; 9 =&gt; 11</p>
+<p>微任务栈：<code>await</code>后面代码、<code>new Promise</code>中的<code>then</code>，得到结果2 =&gt; 10</p>
+<p>宏任务栈：两个<code>setTimeout</code></p>
+<p><strong>第二遍循环：</strong>上一次循环执行完所有的同步任务和微任务，这一步需要拿出另外一个宏任务<code>setTimeout</code>。</p>
+<p>同步任务：5</p>
+<p>微任务栈：<code>Promise.resolve</code>中的<code>then</code>，得到结果6</p>
+<p>宏任务栈：最后一个<code>setTimeout</code></p>
+<p><strong>第三遍循环：</strong>将最后一个宏任务放入执行队列。</p>
+<p>同步任务：7</p>
+<p>微任务栈：<code>Promise.resolve</code>中的<code>then</code>，得到结果8</p>
+<p>最后总结可以得到结果：<code>4-&gt;1-&gt;3-&gt;9-&gt;11-&gt;2-&gt;10-&gt;5-&gt;6-&gt;7-&gt;8</code>。</p>
 
       
       
@@ -289,7 +304,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2021-11-29T16:41:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-30 00:41:04</time>
+    更新时间：<time datetime="2024-11-17T15:35:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-11-17 23:35:25</time>
   </p>
 
 
@@ -302,7 +317,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="article-toc-text">事件循环</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="article-toc-text">执行流程</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%BE%AE%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%AE%8F%E4%BB%BB%E5%8A%A1"><span class="article-toc-text">微任务和宏任务</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B-1"><span class="article-toc-text">执行流程</span></a></li></ol></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="article-toc-text">事件循环</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="article-toc-text">执行流程</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%BE%AE%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%AE%8F%E4%BB%BB%E5%8A%A1"><span class="article-toc-text">微任务和宏任务</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B-1"><span class="article-toc-text">执行流程</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E4%B8%BE%E4%B8%AA%E6%A0%97%E5%AD%90"><span class="article-toc-text">举个栗子</span></a></li></ol>
   
 <nav id="article-nav">
   
