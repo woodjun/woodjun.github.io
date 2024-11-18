@@ -18,7 +18,7 @@
 <meta property="og:description" content="Set类似于数组，但是成员是唯一的，没有重复的值，可以接受一个数组或具有iterable接口的伪数组。 特点1.没有下标，不是按照下标存储，但是是有序的，因此不能使用下标循环遍历。2.没有重复元素，任何元素存在唯一性，因此可以用来作去重处理，存储不重复的数据。3.插入速度和删除速度非常快，遍历查找速度也非常快，但是略低于键值对类型。 1const set &#x3D; new Set([&amp;#x27;foo&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-11-03T11:20:38.000Z">
-<meta property="article:modified_time" content="2024-11-18T10:06:16.000Z">
+<meta property="article:modified_time" content="2024-11-18T10:13:25.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="Set">
 <meta property="article:tag" content="Map">
@@ -299,7 +299,7 @@
 </li>
 <li><p>运行前后很可能成员的个数不一样，且垃圾回收机制运行是不可预测的，因此<code>WeakSet</code>没有size属性和不可遍历、也就没有<code>forEach</code>方法。</p>
 </li>
-<li><p><code>WeakSet</code>的一个用处，是储存 DOM 节点，而不用担心这些节点从文档移除时，会引发内存泄漏。</p>
+<li><p><code>WeakSet</code>的一个用处，是储存 DOM 节点，而不用担心这些节点从文档移除时，会引发<a href="/2024/10/18/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" title="内存泄漏">内存泄漏</a>。</p>
 </li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foos = <span class="keyword">new</span> <span class="title class_">WeakSet</span>()</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        foos.<span class="title function_">add</span>(<span class="variable language_">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">method</span> () &#123;</span><br><span class="line">        <span class="keyword">if</span> (!foos.<span class="title function_">has</span>(<span class="variable language_">this</span>)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Foo.prototype.method 只能在Foo的实例上调用！&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -403,7 +403,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2024-11-18T10:06:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-11-18 18:06:16</time>
+    更新时间：<time datetime="2024-11-18T10:13:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-11-18 18:13:25</time>
   </p>
 
 
