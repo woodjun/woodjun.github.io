@@ -10,15 +10,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>async和await | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="async函数就是Generator的语法糖，返回的是Promise对象。 await表达式可以让一个函数执行暂停直到一个promise已经resolved，然后等到fulfilled后才恢复执行，已完成的promise会作为await的值。 这也就意味着await不一定非要放在async函数中，单独拿出来也是可以的。">
+  <meta name="description" content="async函数就是Generator的语法糖，返回的是Promise对象。 await表达式可以让一个函数执行暂停直到一个promise已经resolved，然后等到fulfilled后才恢复执行，已完成的promise会作为await的值。 1234async function fetchUrl(url) &amp;#123;    const res &#x3D; await fetch(url);    re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="async和await">
 <meta property="og:url" content="http://example.com/2022/02/20/async%E5%92%8Cawait/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="async函数就是Generator的语法糖，返回的是Promise对象。 await表达式可以让一个函数执行暂停直到一个promise已经resolved，然后等到fulfilled后才恢复执行，已完成的promise会作为await的值。 这也就意味着await不一定非要放在async函数中，单独拿出来也是可以的。">
+<meta property="og:description" content="async函数就是Generator的语法糖，返回的是Promise对象。 await表达式可以让一个函数执行暂停直到一个promise已经resolved，然后等到fulfilled后才恢复执行，已完成的promise会作为await的值。 1234async function fetchUrl(url) &amp;#123;    const res &#x3D; await fetch(url);    re">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-02-20T13:52:26.000Z">
-<meta property="article:modified_time" content="2024-11-18T10:39:45.000Z">
+<meta property="article:modified_time" content="2024-11-20T14:37:21.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="js专题">
 <meta name="twitter:card" content="summary">
@@ -232,9 +232,15 @@
       
         <p>async函数就是Generator的<strong>语法糖</strong>，返回的是<strong>Promise对象</strong>。</p>
 <p>await表达式可以让一个函数执行暂停直到一个promise已经resolved，然后等到fulfilled后才恢复执行，已完成的promise会作为await的值。</p>
-<p>这也就意味着await不一定非要放在async函数中，单独拿出来也是可以的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchUrl</span>(<span class="params">url</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(url);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>fetchUrl</code>在遇到await时会暂停，当fetch这个promise已完成后恢复执行，并且将<code>fetch(url)</code>得到的值作为await的返回值。</p>
 <span id="more"></span>
 
+<p>看上面的例子感觉await后面应该接一个Promise，<strong>结果却是后面可以跟任何值</strong>，如果不是promise，就会先被强制转为promise再继续执行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bar</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="number">21</span>;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 上面例子等价于</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bar</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="number">21</span>);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>await不一定非要放在async函数中，单独拿出来也是可以的。</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// await接Promise对象</span></span><br><span class="line"><span class="keyword">var</span> res = <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">resolve</span>(<span class="number">1</span>)</span><br><span class="line">  &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(res) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// await接thenable对象</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>&#123;</span><br><span class="line">  <span class="title function_">then</span>(<span class="params">resolve</span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(<span class="number">2</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> res2 = <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Foo</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(res2) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>await不能够接收到Promise对象或thenable对象中的<strong>reject</strong>信息，想要捕获错误信息必须使用<code>try..catch..</code>语法进行捕获。</p>
@@ -278,7 +284,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2024-11-18T10:39:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-11-18 18:39:45</time>
+    更新时间：<time datetime="2024-11-20T14:37:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-11-20 22:37:21</time>
   </p>
 
 

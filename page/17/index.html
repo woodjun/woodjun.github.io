@@ -233,7 +233,9 @@
       
         <p>async函数就是Generator的<strong>语法糖</strong>，返回的是<strong>Promise对象</strong>。</p>
 <p>await表达式可以让一个函数执行暂停直到一个promise已经resolved，然后等到fulfilled后才恢复执行，已完成的promise会作为await的值。</p>
-<p>这也就意味着await不一定非要放在async函数中，单独拿出来也是可以的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchUrl</span>(<span class="params">url</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(url);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>fetchUrl</code>在遇到await时会暂停，当fetch这个promise已完成后恢复执行，并且将<code>fetch(url)</code>得到的值作为await的返回值。</p>
         
           <a class="article-more-a" href="/2022/02/20/async%E5%92%8Cawait/#more">阅读更多 >></a>
         
