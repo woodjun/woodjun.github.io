@@ -18,7 +18,7 @@
 <meta property="og:description" content="闭包的定义 闭包是指那些能够访问自由变量的函数，自由变量是指在函数中使用的，但既不是函数参数也不是函数局部变量的变量。  闭包 &#x3D; 函数 + 函数能够访问自由变量   也可以简单的理解：  即使创建函数的执行上下文已经被销毁，但是值仍然存在。 在代码中引用了自由变量">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-19T09:58:14.000Z">
-<meta property="article:modified_time" content="2021-12-04T04:24:16.000Z">
+<meta property="article:modified_time" content="2024-11-21T15:01:57.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="闭包">
 <meta name="twitter:card" content="summary">
@@ -252,28 +252,38 @@
 <ol>
 <li>进入全局代码，创建全局上下文，全局执行上下文压入执行上下文栈</li>
 <li>全局执行上下文初始化</li>
-<li>执行checkscope函数，创建checkscope执行上下文，checkscope执行上下文被压入执行上下文栈</li>
-<li>checkscope执行上下文初始化，创建变量对象、作用域链、this等</li>
-<li>checkscope函数执行完毕，checkscope执行上下文被弹出</li>
-<li>执行foo函数，创建foo执行上下文，foo执行上下文压入执行上下文栈中</li>
-<li>foo执行上下文初始化，创建变量对象、作用域链、this等</li>
-<li>foo函数执行完毕，checkscope执行上下文被弹出</li>
+<li>执行<code>checkscope</code>函数，创建<code>checkscope</code>执行上下文，<code>checkscope</code>执行上下文被压入执行上下文栈</li>
+<li><code>checkscope</code>执行上下文初始化，创建变量对象、作用域链、this等</li>
+<li><code>checkscope</code>函数执行完毕，<code>checkscope</code>执行上下文被弹出</li>
+<li>执行<code>foo</code>函数，创建<code>foo</code>执行上下文，<code>foo</code>执行上下文压入执行上下文栈中</li>
+<li><code>foo</code>执行上下文初始化，创建变量对象、作用域链、this等</li>
+<li><code>foo</code>函数执行完毕，<code>checkscope</code>执行上下文被弹出</li>
 </ol>
 </li>
-<li><p>上面的checkout的执行上下文明明被销毁了，为什么foo函数还能够访问scope变量呢？</p>
+<li><p>上面的checkout的执行上下文明明被销毁了，为什么<code>foo</code>函数还能够访问scope变量呢？</p>
 <ul>
-<li><p>原因就是js的作用域链导致的，在foo执行上下文初始化的时候，foo为了读取scope变量，将checkscope活动变量添加到foo作用域链中</p>
+<li><p>原因就是js的作用域链导致的，在<code>foo</code>执行上下文初始化的时候，<code>foo</code>为了读取scope变量，将<code>checkscope</code>活动变量添加到<code>foo</code>作用域链中</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fooContext = &#123;</span><br><span class="line">  <span class="title class_">Scope</span>: [<span class="variable constant_">AO</span>, checkscopeContext.<span class="property">AO</span>, globalContext.<span class="property">AO</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>foo函数可以通过作用域链能够拿到scope变量的值，因此就算checkscope执行上下文被销毁，还是能够访问到scope变量</p>
+<li><p><code>foo</code>函数可以通过作用域链能够拿到scope变量的值，因此就算<code>checkscope</code>执行上下文被销毁，还是能够访问到scope变量</p>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="闭包的应用"><a href="#闭包的应用" class="headerlink" title="闭包的应用"></a>闭包的应用</h3><ul>
-<li><p>缓存函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">memorize</span>(<span class="params">fn, hasder</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> memorize = <span class="keyword">function</span>(<span class="params">key</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> cache = memorize.<span class="property">cache</span></span><br><span class="line">    <span class="keyword">var</span> address = <span class="string">&#x27;&#x27;</span> + (hasder ? hasder.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>) : key)</span><br><span class="line">    <span class="keyword">if</span> (!cache[address]) &#123;</span><br><span class="line">      <span class="keyword">return</span> cache[address] = fn.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cache[address]</span><br><span class="line">  &#125;</span><br><span class="line">  memorize.<span class="property">cache</span> = &#123;&#125;</span><br><span class="line">  <span class="keyword">return</span> memorize</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>节流和防抖</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 防抖</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">debounce</span>(<span class="params">fn, wait, immediate</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> timeout, result</span><br><span class="line">  <span class="keyword">var</span> debounce = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="variable language_">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="variable language_">arguments</span></span><br><span class="line">    <span class="keyword">if</span> (timeout) <span class="built_in">clearTimeout</span>(timeout)</span><br><span class="line">    <span class="keyword">if</span> (immediate) &#123;</span><br><span class="line">      timeout = <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        timeout = <span class="literal">null</span></span><br><span class="line">      &#125;, wait)</span><br><span class="line">      <span class="keyword">if</span> (callNow) result = fn.<span class="title function_">apply</span>(<span class="variable language_">this</span>, args)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timeout = <span class="title function_">serTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        fn.<span class="title function_">apply</span>(<span class="variable language_">this</span>, args)</span><br><span class="line">      &#125;, wait)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">  debounce.<span class="property">cancel</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout)</span><br><span class="line">    timeout = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> debounce</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 节流</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">throttle</span>(<span class="params">fn, time</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timer = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">let</span> args = <span class="variable language_">arguments</span></span><br><span class="line">    timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      fn.<span class="title function_">apply</span>(<span class="literal">null</span>, args)</span><br><span class="line">      <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">      timer = <span class="literal">null</span></span><br><span class="line">    &#125;, time)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<h3 id="闭包的优缺点"><a href="#闭包的优缺点" class="headerlink" title="闭包的优缺点"></a>闭包的优缺点</h3><p>闭包在日常开发中有着广泛的应用，同时也带来了一些优缺点。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li><p>闭包可以创建私有变量，通过函数内部定义的变量和函数，实现信息的隐藏和封装，例如<a href="/2022/02/26/%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81/" title="防抖和节流">防抖和节流</a>。</p>
+</li>
+<li><p>利用闭包可以模拟实现类似于面向对象编程中的模块模式，定义私有变量和公共方法，从而创建具有特定功能的模块。</p>
+</li>
+<li><p>闭包还可以用于实现函数的记忆化，即缓存函数的计算结果，以提高函数的性能。当函数再被调用时，输入相同的结果，就会返回已缓存的结果，无需再重复计算。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">memorize</span>(<span class="params">fn, hasder</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> memorize = <span class="keyword">function</span>(<span class="params">key</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> cache = memorize.<span class="property">cache</span></span><br><span class="line">    <span class="keyword">var</span> address = <span class="string">&#x27;&#x27;</span> + (hasder ? hasder.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>) : key)</span><br><span class="line">    <span class="keyword">if</span> (!cache[address]) &#123;</span><br><span class="line">      <span class="keyword">return</span> cache[address] = fn.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cache[address]</span><br><span class="line">  &#125;</span><br><span class="line">  memorize.<span class="property">cache</span> = &#123;&#125;</span><br><span class="line">  <span class="keyword">return</span> memorize</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>由于闭包会持有对其外部作用域的应用，如果滥用闭包，可能会导致内存消耗增加。特别是当闭包中包含了大量的变量和对象的时候。</li>
+<li>如果闭包中的函数频繁的调用，并且每次调用都需要访问器外部作用域的变量，那么这种访问可能会产生一定的性能开销。</li>
+<li>如果闭包使用不当，可能会导致<a href="/2024/10/18/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" title="内存泄漏">内存泄漏</a>的情况出现。闭包中的变量可能会被意外地修改或访问，从而引发不可预见的问题。</li>
 </ul>
 
       
@@ -309,7 +319,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2021-12-04T04:24:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-04 12:24:16</time>
+    更新时间：<time datetime="2024-11-21T15:01:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-11-21 23:01:57</time>
   </p>
 
 
@@ -322,7 +332,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%97%AD%E5%8C%85%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="article-toc-text">闭包的定义</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%97%AD%E5%8C%85%E5%8E%9F%E7%90%86"><span class="article-toc-text">闭包原理</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%97%AD%E5%8C%85%E7%9A%84%E5%BA%94%E7%94%A8"><span class="article-toc-text">闭包的应用</span></a></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%97%AD%E5%8C%85%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="article-toc-text">闭包的定义</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%97%AD%E5%8C%85%E5%8E%9F%E7%90%86"><span class="article-toc-text">闭包原理</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%97%AD%E5%8C%85%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="article-toc-text">闭包的优缺点</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BC%98%E7%82%B9"><span class="article-toc-text">优点</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="article-toc-text">缺点</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
