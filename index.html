@@ -643,15 +643,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一种为各种不同的数据结构提供统一的访问机制的接口。</p>
-<h3 id="Iterator遍历过程"><a href="#Iterator遍历过程" class="headerlink" title="Iterator遍历过程"></a>Iterator遍历过程</h3><ul>
+        <p>一种有趣的现象：普通对象不可使用<code>for...of</code>进行遍历，而数组却可以遍历，按道理来说，数组也是其中一种的object，也不可以遍历才对。出现这一现象的原因在于Iterator可以为各种不同的数据结构提供统一的访问机制的接口。</p>
+<h3 id="Iterator遍历过程"><a href="#Iterator遍历过程" class="headerlink" title="Iterator遍历过程"></a>Iterator遍历过程</h3><ol>
 <li><p>创建指针对象，指向当前数据结构的起始位置。</p>
 </li>
-<li><p>第一次调用指针对象next,指针指向数据结构的第一个成员</p>
+<li><p>第一次调用指针对象next，指针指向数据结构的第一个成员，第二次指向第二个，以此类推。</p>
 </li>
-<li><p>不断调用next,指针直接往下走直到结束位置</p>
+<li><p>不断调用next，指针直接往下走直到结束位置。</p>
 </li>
-</ul>
+</ol>
         
           <a class="article-more-a" href="/2024/11/26/Iterator/#more">阅读更多 >></a>
         
