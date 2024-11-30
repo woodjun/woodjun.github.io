@@ -451,16 +451,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li><p>ES6提供的一种异步编程解决方案</p>
-</li>
-<li><p>可以理解成一种状态机，内部可以封装多种状态</p>
-</li>
-<li><p>返回一个遍历对象，function关键字有一个<code>*</code>号；<code>*</code>号位置只能在function和函数变量名之间。内部使用yield表达式</p>
-</li>
-<li><p>不使用yield表达式，Generator函数会变成暂缓执行函数，使用next()才开始输出结果</p>
-</li>
-</ul>
+        <p>Generator是<code>ES6</code>提供的一种异步编程解决方案，可以理解成一种状态机，内部可以封装多种状态。</p>
+<p>Generator函数返回一个遍历对象，其在function和函数变量名之间存在一个<code>*</code>，且内部会使用yield表达式。调用Generator函数后，该函数并不会直接输出结果，而是返回一个指向内部状态的指针对象，需要使用next()才开始输出结果。</p>
         
           <a class="article-more-a" href="/2024/11/28/Generator/#more">阅读更多 >></a>
         
