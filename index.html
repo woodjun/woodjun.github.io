@@ -635,8 +635,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <span id="more"></span>
-
+        <p>typescript是<code>javascript</code>的超集，即typescript = type + <code>javascript</code>，也就意味着<code>javascript</code>出现的所有类型都可以在typescript找到对应的类型注解。</p>
+<h3 id="原始类型"><a href="#原始类型" class="headerlink" title="原始类型"></a>原始类型</h3><p>除了<a href="/2024/09/18/js%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="js数据类型">js数据类型</a>中常见的number、string、boolean、null和undefined，还有<code>es6</code>和<code>es11</code>新引入的symbol和<code>bigint</code>的基本数据类型都可以在ts中找到对应的类型注解：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">name</span>: <span class="built_in">string</span> = <span class="string">&#x27;Miss Li&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">age</span>: <span class="built_in">number</span> = <span class="number">18</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">male</span>: <span class="built_in">boolean</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">bigintVar</span>: <span class="built_in">bigint</span> = <span class="number">18n</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">symbolVar</span>: <span class="built_in">symbol</span> = <span class="title class_">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="attr">undef</span>: <span class="literal">undefined</span> = <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">nul</span>: <span class="literal">null</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2024/11/27/ts%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/#more">阅读更多 >></a>
+        
       
       
     </div>
