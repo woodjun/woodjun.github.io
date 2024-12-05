@@ -10,16 +10,20 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>热更新原理 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="webpack热更新（HMR）会在应用程序运行过程中，替换、添加或者删除模块，而无需完全刷新整个页面。通过以下几种方式来提升开发速度：  保留在完全重新加载页面期间丢失的应用状态。 只更新变更内容，节省开放时间。 在源代码中对css&#x2F;js进行修改，会立刻在浏览器中进行更新，这几乎相当于在浏览器devtools上直接修改样式。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="热更新原理">
 <meta property="og:url" content="http://example.com/2024/12/03/%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="webpack热更新（HMR）会在应用程序运行过程中，替换、添加或者删除模块，而无需完全刷新整个页面。通过以下几种方式来提升开发速度：  保留在完全重新加载页面期间丢失的应用状态。 只更新变更内容，节省开放时间。 在源代码中对css&#x2F;js进行修改，会立刻在浏览器中进行更新，这几乎相当于在浏览器devtools上直接修改样式。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/12/03/%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/hot.png">
 <meta property="article:published_time" content="2024-12-03T11:38:00.000Z">
 <meta property="article:modified_time" content="2024-12-03T11:39:46.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="热更新">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/12/03/%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/hot.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -228,7 +232,37 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><code>webpack</code>热更新（<code>HMR</code>）会在应用程序运行过程中，替换、添加或者删除模块，而无需完全刷新整个页面。通过以下几种方式来提升开发速度：</p>
+<ul>
+<li>保留在完全重新加载页面期间丢失的应用状态。</li>
+<li>只更新变更内容，节省开放时间。</li>
+<li>在源代码中对<code>css/js</code>进行修改，会立刻在浏览器中进行更新，这几乎相当于在浏览器<code>devtools</code>上直接修改样式。</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="HMR流程概述"><a href="#HMR流程概述" class="headerlink" title="HMR流程概述"></a><code>HMR</code>流程概述</h3><p><img src="/2024/12/03/%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/hot.png"></p>
+<p>上图是<code>webpack</code>配合<code>webpack-dev-server</code>进行应用开发的模块热更新流程图。</p>
+<ul>
+<li>红色方框是服务器，橙色方框是浏览器。</li>
+<li>绿色填充是<code>webpack</code>控制区域，深蓝色填充是<code>webpack-dev-server</code>控制区域，红色填充是文件系统，青色填充是应用本身。</li>
+</ul>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ul>
+<li><p>在 <code>webpack</code> 的 watch 模式下，文件系统中某一个文件发生修改，<code>webpack</code> 监听到文件变化，根据配置文件对模块重新编译打包。</p>
+</li>
+<li><p><code>webpack-dev-server</code> 和 <code>webpack</code> 之间的接口交互，而在这一步，主要是 <code>webpack-dev-server</code> 的中间件 <code>webpack-dev-middleware</code> 和 <code>webpack</code> 之间的交互，<code>webpack-dev-middleware</code> 调用 <code>webpack</code> 暴露的 <code>API</code>对代码变化进行监控，并且告诉 <code>webpack</code> 将代码打包到内存中。</p>
+</li>
+<li><p><code>webpack-dev-server</code> 对文件变化的一个监控，这一步不同于第一步，并不是监控代码变化重新打包。当我们在配置文件中配置了 static 属性时，<code>webpack-dev-server</code> 会监听这些文件夹中静态文件的变化，变化后会通知浏览器端对应用进行 <code>window.location.reload()</code>。注意，这儿是浏览器刷新，和 <code>HMR</code> 是两个概念。</p>
+</li>
+<li><p><code>webpack-dev-server</code> 代码的工作，主要是通过 <code>sockjs</code>（<code>webpack-dev-server</code> 的依赖）在浏览器端 <code>webpack-dev-server/client</code> 和服务端之间建立一个 <code>websocket</code> 长连接，将 <code>webpack</code> 编译打包的各个阶段的状态信息告知浏览器端，同时也包括第三步中 Server 监听静态文件变化的信息。浏览器端根据这些 socket 消息进行不同的操作。当然服务端传递的最主要信息还是新模块的 hash 值，后面的步骤根据这一 hash 值来进行模块热替换。</p>
+</li>
+<li><p><code>webpack-dev-server/client</code> 端并不能够请求更新的代码，也不会执行热更新模块操作，而把这些工作又交回给了 <code>webpack</code>，<code>webpack/hot/dev-server</code> 的工作就是根据 <code>webpack-dev-server/client</code> 传给它的信息以及 <code>webpack-dev-server</code> 的配置决定是刷新浏览器呢还是进行模块热更新。当然如果仅仅是刷新浏览器，也就没有后面那些步骤了。</p>
+</li>
+<li><p><code>HotModuleReplacement.runtime</code> 是客户端 <code>HMR</code> 的中枢，它接收到上一步传递给他的新模块的 hash 值，它通过 <code>webpack_require.hmrM</code> 向 server 端发送 fetch 请求，服务端返回一个 <code>json</code>，该 <code>json</code> 包含模块变更的信息的 <code>json</code> 文件，模块名与 hash进行组合获取到更新列表后，该模块再次通过 <code>jsonp</code> 请求，获取到最新的模块代码。这就是上图中 7、8、9 步骤。</p>
+</li>
+<li><p>而第 10 步是决定 <code>HMR</code> 成功与否的关键步骤，在该步骤中，<code>HotModuleReplacement.runtime</code> 将会对新旧模块进行对比，决定是否更新模块，在决定更新模块后，检查模块之间的依赖关系，更新模块的同时更新模块间的依赖引用。最后一步，当 <code>HMR</code> 失败后，回退到 <code>window.location.reload()</code> 操作，也就是进行浏览器刷新来获取最新打包代码。</p>
+</li>
+</ul>
+
       
       
     </div>
@@ -275,7 +309,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#HMR%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="article-toc-text">HMR流程概述</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%B5%81%E7%A8%8B"><span class="article-toc-text">流程</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
