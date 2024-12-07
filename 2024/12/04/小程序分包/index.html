@@ -10,16 +10,20 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>小程序分包 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="小程序分包就是把一个完整的小程序项目，按需求和功能划分为不同的子包，在构建的时候打包成不同的分包，用户使用的时候再按需加载。在没有分包之前，小程序中所有的页面都会被打包到主包中，导致主包的体积过大，也就意味小程序首次加载所需的事件变长，不利于用户体验。 分包可以优化小程序首次启动的下载时间，同时更有利于团队之间的开发合作，每个人只用负责自己的功能模块。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="小程序分包">
 <meta property="og:url" content="http://example.com/2024/12/04/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%86%E5%8C%85/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="小程序分包就是把一个完整的小程序项目，按需求和功能划分为不同的子包，在构建的时候打包成不同的分包，用户使用的时候再按需加载。在没有分包之前，小程序中所有的页面都会被打包到主包中，导致主包的体积过大，也就意味小程序首次加载所需的事件变长，不利于用户体验。 分包可以优化小程序首次启动的下载时间，同时更有利于团队之间的开发合作，每个人只用负责自己的功能模块。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/12/04/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%86%E5%8C%85/package.png">
 <meta property="article:published_time" content="2024-12-04T13:19:57.000Z">
 <meta property="article:modified_time" content="2024-12-04T13:21:41.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="分包">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/12/04/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%86%E5%8C%85/package.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -228,7 +232,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>小程序分包就是把一个完整的小程序项目，按需求和功能划分为不同的子包，在构建的时候打包成不同的分包，用户使用的时候再按需加载。在没有分包之前，小程序中所有的页面都会被打包到主包中，导致主包的体积过大，也就意味小程序首次加载所需的事件变长，不利于用户体验。</p>
+<p>分包可以优化小程序首次启动的下载时间，同时更有利于团队之间的开发合作，每个人只用负责自己的功能模块。</p>
+<span id="more"></span>
+
+<h3 id="普通分包"><a href="#普通分包" class="headerlink" title="普通分包"></a>普通分包</h3><p>分包后，小程序由一个主包+多个分包组成。在小程序启动时，会默认下载主包并启动主包内页面（<code>TabBar</code>页面必须放到主包中），直到用户进入分包的某个页面时候，客户端才会把对应的分包下载下来，下载完成之后再进行展示。</p>
+<ul>
+<li>主包：一般只包含项目的启动页面和<code>TabBar</code>页面 ，以及一些公共资源。</li>
+<li>分包：只包含当前分包相关的页面和私有资源。</li>
+</ul>
+<p><img src="/2024/12/04/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%86%E5%8C%85/package.png"></p>
+<p>小程序对分包的大小有所限制，单个主包/分包的大小不能超过2M，整个小程序所有分包（包括主包）的大小不能超过20M。所有分包的配置都是放在<code>subPackages</code>中，配置如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;pages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;pages/index/index&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;subPackages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span><span class="string">&quot;pkg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;p&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;pages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;pages/cat/cat&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      independent<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> <span class="comment">// 独立分包标注</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span><span class="string">&quot;pkg2&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;p2&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;pages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;pages/dog/cdog&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="comment">// 分包预下载</span></span><br><span class="line">  <span class="attr">&quot;preloadRule&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;pages/index/index&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;package&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;p2&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="comment">// 加载分包name为p2</span></span><br><span class="line">      <span class="attr">&quot;network&quot;</span><span class="punctuation">:</span> <span class="string">&quot;all&quot;</span><span class="punctuation">,</span> <span class="comment">// all和wifi</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span> </span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="打包原则"><a href="#打包原则" class="headerlink" title="打包原则"></a>打包原则</h4><ul>
+<li>小程序会按照<code>subPackages</code>的配置项进行分包，不在这个配置项中的页面都会被打包到主包中。</li>
+<li>主包的页面统一放在pages的配置项中。</li>
+<li><code>TabBar</code>页面必须放在主包中。</li>
+<li>分包之间不能相互嵌套。</li>
+</ul>
+<h4 id="引用原则"><a href="#引用原则" class="headerlink" title="引用原则"></a>引用原则</h4><ul>
+<li>主包无法引用分包内的私有资源。</li>
+<li>分包之间不能相互引用私有资源。</li>
+<li>分包可以引用主包的公共资源。</li>
+</ul>
+<h3 id="独立分包"><a href="#独立分包" class="headerlink" title="独立分包"></a>独立分包</h3><p>独立分包本质上也是分包，只不过它可以独立于主包和其他分包单独运行。和普通分包的区别在于普通分包必须依赖主包才能执行，而独立分包不依赖主包的情况下可以独立运行。</p>
+<p>可以使用<code>independent: true</code>将普通分包设立成独立分包，独立分包的最大特点在于<strong>独立</strong>。也就意味着<strong>独立分包与主包和分包是相互隔离的，不能相互引用彼此的资源</strong>。也就是说，独立分包是不能够引用主包的公共资源，并且独立分包之间也是不能够相互引用的。</p>
+<h3 id="分包预下载"><a href="#分包预下载" class="headerlink" title="分包预下载"></a>分包预下载</h3><p>分包预下载是指在进入小程序的某个页面时，由框架自动预下载可能需要的分包，从而提升后续分包页面的启动速度。需要在<code>preloadRule</code>配置项中配置预加载规则，</p>
+<p>需要注意的是：<strong>同一个分包中的页面享有共同的预下载大小限额为2M</strong>，比如：页面A和B都在同一个分包中，A中的预加载总大小0.5M的分包，B中最多只能预下载1.5M。</p>
+
       
       
     </div>
@@ -275,7 +307,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%99%AE%E9%80%9A%E5%88%86%E5%8C%85"><span class="article-toc-text">普通分包</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%89%93%E5%8C%85%E5%8E%9F%E5%88%99"><span class="article-toc-text">打包原则</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%BC%95%E7%94%A8%E5%8E%9F%E5%88%99"><span class="article-toc-text">引用原则</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%8B%AC%E7%AB%8B%E5%88%86%E5%8C%85"><span class="article-toc-text">独立分包</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%88%86%E5%8C%85%E9%A2%84%E4%B8%8B%E8%BD%BD"><span class="article-toc-text">分包预下载</span></a></li></ol>
   
 <nav id="article-nav">
   
