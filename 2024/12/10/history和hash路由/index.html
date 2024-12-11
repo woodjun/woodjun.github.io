@@ -234,7 +234,29 @@
         <p>在前端开发中，特别是使用单页面应用框架（React、<code>Vue</code>等）时，路由管理都是一个关键的部分。路由决定了应用如何响应URL变化，以及如何在不用重新加载整个页面的情况下更新视图。在这个过程中，history和hash是两种常见的路由实现方式。</p>
 <span id="more"></span>
 
-<h3 id="Hash路由"><a href="#Hash路由" class="headerlink" title="Hash路由"></a>Hash路由</h3><h3 id="History路由"><a href="#History路由" class="headerlink" title="History路由"></a>History路由</h3>
+<h3 id="Hash路由"><a href="#Hash路由" class="headerlink" title="Hash路由"></a>Hash路由</h3><p>hash路由是利用URL中的<code>#</code>（哈希符号）部分来实现路由的。哈希符号后面的内容不会发送到服务器，因此改变哈希值不会导致页面重新加载。这种模式的浏览器支持度很好，低版本的IE浏览器也支持这种模式。</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>hash路由主要是利用<code>onhashchange</code>事件来监听路由哈希值的变化。浏览器监听到hash值的变化，就会按照规则加载相应的代码。除此之外，hash值变化对应的URL都会被浏览器记录下来，这样浏览器就能实现页面的前进或后退。虽然没有请求后端服务器，但是页面的hash值已经和对应的URL相关联了。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>兼容性：几乎所有的浏览器都支持hash路由，包括一些较老的浏览器。</li>
+<li>简单性：实现起来相对简单，不需要对服务器进行特殊配置。</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li><code>SEO</code>问题：因为哈希部分内容不会被搜索引擎索引，所以使用hash路由的页面在搜索引擎优化方面可能会受到一些影响。</li>
+</ul>
+<h3 id="History路由"><a href="#History路由" class="headerlink" title="History路由"></a>History路由</h3><p>history路由是利用<code>HTML5</code>的<code>History API</code>（如<code>pushState</code>、<code>replaceState</code>和<code>popState</code>事件）来实现路由的。这种方式允许改变URL的路径部分，而不会导致页面重新加载，同时还能保持干净的URL（没有哈希符号）。</p>
+<h4 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h4><p><code>History API</code>可以分为两大部分：切换历史状态和修改历史状态。</p>
+<p><strong>修改历史状态：</strong><code>HTML5</code>的<code>History API</code>新增了<code>pushState</code>和<code>replaceState</code>方法，这两种方法应用于浏览器的历史记录栈，提供了对历史记录进行修改的功能。虽然它们能够修改URL，但是浏览器不会立即向后端发送请求。</p>
+<p><strong>切换历史状态：</strong>forward、back和go方法对应浏览器的前进、后退和跳转操作，可以切换浏览器的历史状态。</p>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>干净的URL：没有哈希符号，URL看起来更美观。</li>
+<li>更好的<code>SEO</code>：因为路径部分内容可以被搜索引擎索引，所以history路由在<code>SEO</code>方面通常比hash路由更好。</li>
+<li>更灵活：<code>History API</code>提供了更多的控制，如改变URL的同时还能够修改页面状态。</li>
+</ul>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>服务器配置：为了确保在用户直接访问某个URL或者刷新页面时能够正确的加载应用，服务器需要配置为所有路由请求返回同一个入口文件（通常是<code>index.html</code>）。</li>
+<li>兼容性：虽然现代浏览器都支持<code>History API</code>，但是一些非常老的浏览器可能不支持。</li>
+</ul>
+
       
       
     </div>
@@ -285,7 +307,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Hash%E8%B7%AF%E7%94%B1"><span class="article-toc-text">Hash路由</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#History%E8%B7%AF%E7%94%B1"><span class="article-toc-text">History路由</span></a></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#Hash%E8%B7%AF%E7%94%B1"><span class="article-toc-text">Hash路由</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="article-toc-text">实现</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BC%98%E7%82%B9"><span class="article-toc-text">优点</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="article-toc-text">缺点</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#History%E8%B7%AF%E7%94%B1"><span class="article-toc-text">History路由</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%AE%9E%E7%8E%B0-1"><span class="article-toc-text">实现</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%BC%98%E7%82%B9-1"><span class="article-toc-text">优点</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="article-toc-text">缺点</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
