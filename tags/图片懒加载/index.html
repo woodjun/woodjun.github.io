@@ -8,20 +8,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>类型推断和类型断言 | 木头个人博客</title>
+  <title>Tag: 图片懒加载 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="类型推断ts中的类型推断是编辑器的一项强大的功能，它能够根据上下文自动推断出变量的类型，而无需显式的指定对应的类型。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="类型推断和类型断言">
-<meta property="og:url" content="http://example.com/2024/12/02/%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD%E5%92%8C%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="木头个人博客">
+<meta property="og:url" content="http://example.com/tags/%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="类型推断ts中的类型推断是编辑器的一项强大的功能，它能够根据上下文自动推断出变量的类型，而无需显式的指定对应的类型。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-12-02T12:25:23.000Z">
-<meta property="article:modified_time" content="2024-12-04T15:15:09.000Z">
 <meta property="article:author" content="Wood">
-<meta property="article:tag" content="类型推断">
-<meta property="article:tag" content="类型断言">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
@@ -208,153 +202,80 @@
           <div id="js-content" class="content-ll">
             
 
-<article id="post-类型推断和类型断言" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      类型推断和类型断言
-    </h1>
-  
 
-        
-        
-  <a href="/2024/12/02/%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD%E5%92%8C%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80/" class="archive-article-date">
-  	<time datetime="2024-12-02T12:25:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-12-02</time>
+
+  
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2022" class="archive-year">2022</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+  <a href="/2022/05/11/%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/" class="archive-article-date">
+  	<time datetime="2022-05-11T15:47:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-11</time>
   </a>
 
 
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2022/05/11/%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/">
+      图片懒加载
       
-        <h3 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h3><p>ts中的类型推断是编辑器的一项强大的功能，它能够根据上下文自动推断出变量的类型，而无需显式的指定对应的类型。</p>
-<span id="more"></span>
+    </a>
+    </h1>
+  
 
-<h4 id="基本类型推断"><a href="#基本类型推断" class="headerlink" title="基本类型推断"></a>基本类型推断</h4><p>在ts中，如果你声明变量没有标注类型并且赋值，编译器会自动推断出该变量的类型。但是如果仅仅声明变量并且没有标注类型的话，编译器会自动推断为any类型。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">10</span>; <span class="comment">// 推断为number</span></span><br><span class="line"><span class="keyword">let</span> y = <span class="string">&#x27;hello&#x27;</span>; <span class="comment">// 推断为string</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> val; <span class="comment">// 推断为any</span></span><br><span class="line">val = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-
-<h4 id="最佳通用类型"><a href="#最佳通用类型" class="headerlink" title="最佳通用类型"></a>最佳通用类型</h4><p>在一个或多个表达式中，变量的类型会从这些表达式中的所有类型来推断出一个最合适的通用类型。结合下面例子来说，当一个数组放入多种类型的数据，就意味着这个数组可能存在多种类型，而这种情况有适合联合类型来进行解释，因此，编译器就会推断数组类型为联合类型。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="string">&#x27;hello&#x27;</span>, <span class="literal">null</span>]; <span class="comment">// 推断为(number | string | null)[]</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="上下文类型推断"><a href="#上下文类型推断" class="headerlink" title="上下文类型推断"></a>上下文类型推断</h4><p>某些情况下，ts的类型推断可能会受到周围上下文的影响，这通常会发生在函数调用或者赋值给定已知类型的变量。下面例子中，函数的返回值类型会根据变量a和b的类型的变化而变化，也就是说函数返回值类型是根据上下文的来判断的。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 推断返回值类型为string</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params"><span class="attr">a</span>: <span class="built_in">number</span>, <span class="attr">b</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 推断返回值类型为number</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params"><span class="attr">a</span>: <span class="built_in">number</span>, <span class="attr">b</span>: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>类型断言能够显式告知类型检查程序当前这边变量的类型，可以进行类型分析地修正类型。简单一点来说，就是将一个将变量的已知类型更改为新指定类型的操作。</p>
-<p>语法：<code>&lt;type&gt;variable</code>或<code>variable as type</code>。</p>
-<p><code>&lt;type&gt;variable</code>这种写法在<code>TSX</code>中尖括号断言并不很好地被分析出来，少用这种格式。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="attr">unknownVar</span>: <span class="built_in">unknown</span>;</span><br><span class="line">(unknownVar <span class="keyword">as</span> &#123; <span class="attr">foo</span>: <span class="function">() =&gt;</span> &#123;&#125; &#125;).<span class="title function_">foo</span>();</span><br><span class="line"><span class="comment">// 转为any就可以为所欲为</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">str</span>: <span class="built_in">string</span> = <span class="string">&quot;Miss Li&quot;</span>;</span><br><span class="line">(str <span class="keyword">as</span> <span class="built_in">any</span>).<span class="title function_">func</span>().<span class="title function_">foo</span>().<span class="property">prop</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将不符合预期的类型断言成正确的类型</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">IFoo</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">const</span> <span class="attr">obj</span>: &#123;</span><br><span class="line">  <span class="attr">foo</span>: <span class="title class_">IFoo</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  foo = &#123;&#125; <span class="keyword">as</span> <span class="title class_">IFoo</span></span><br><span class="line">&#125; = obj</span><br></pre></td></tr></table></figure>
-
-<h4 id="双重断言"><a href="#双重断言" class="headerlink" title="双重断言"></a>双重断言</h4><p>如果在使用类型断言是，原类型和断言类型之间的差异过大，ts也会给出一个报错。可以使用双重断言的方式来消除报错。可以先将类型转为any或者unknown，再转为想要的类型，例如：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">str</span>: <span class="built_in">string</span> = <span class="string">&quot;Miss Li&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 X 类型 到 Y 类型的断言可能是错误的</span></span><br><span class="line">(str <span class="keyword">as</span> &#123; <span class="attr">handler</span>: <span class="function">() =&gt;</span> &#123;&#125; &#125;).<span class="title function_">handler</span>();</span><br><span class="line"><span class="comment">// 双重断言</span></span><br><span class="line">((str <span class="keyword">as</span> <span class="built_in">any</span>) <span class="keyword">as</span> &#123; <span class="attr">handler</span>: <span class="function">() =&gt;</span> &#123;&#125; &#125;).<span class="title function_">handler</span>();</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line">((str <span class="keyword">as</span> <span class="built_in">unknown</span>) <span class="keyword">as</span> &#123; <span class="attr">handler</span>: <span class="function">() =&gt;</span> &#123;&#125; &#125;).<span class="title function_">handler</span>();</span><br></pre></td></tr></table></figure>
-
-<h4 id="非空断言"><a href="#非空断言" class="headerlink" title="非空断言"></a>非空断言</h4><p>非空断言可以标记前面的一个声明一定是非空的，也就是剔除null或者undefined的情况。它使用<code>!</code>语法，即<code>obj!.func!()!.prop</code>。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">const</span> <span class="attr">foo</span>: &#123;</span><br><span class="line">  func?: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    prop?: <span class="built_in">number</span> | <span class="literal">null</span>;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 这种情况会报错，func和prop都是可选的</span></span><br><span class="line">foo.<span class="title function_">func</span>().<span class="property">prop</span>.<span class="title function_">toFixed</span>();</span><br><span class="line"><span class="comment">// 可以强制认为它们是存在</span></span><br><span class="line">foo.<span class="property">func</span>!().<span class="property">prop</span>!.<span class="title function_">toFixed</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可选链</span></span><br><span class="line">foo.<span class="property">func</span>?.().<span class="property">prop</span>?.<span class="title function_">toFixed</span>();</span><br></pre></td></tr></table></figure>
-
-<p>使用非空断言有个问题就是，如果存在一个环节出现null或者undefined，就容易出现程序报错，导致下面的代码执行不下去。与之相对应的是一个可选链，使用语法<code>?.</code>，当某个环节出现null或者undefined时，会自动停止调用。</p>
-
-      
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">类型推断</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">类型断言</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">图片懒加载</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/ts//" class="article-tag-list-link color3">ts</a>
+        			<a href="/categories/性能优化//" class="article-tag-list-link color5">性能优化</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-        
-  <p class="archive-updated-time">
-    更新时间：<time datetime="2024-12-04T15:15:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-12-04 23:15:09</time>
-  </p>
-
-
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="article-toc-text">类型推断</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="article-toc-text">基本类型推断</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%9C%80%E4%BD%B3%E9%80%9A%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="article-toc-text">最佳通用类型</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="article-toc-text">上下文类型推断</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80"><span class="article-toc-text">类型断言</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%8F%8C%E9%87%8D%E6%96%AD%E8%A8%80"><span class="article-toc-text">双重断言</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E9%9D%9E%E7%A9%BA%E6%96%AD%E8%A8%80"><span class="article-toc-text">非空断言</span></a></li></ol></li></ol>
-  
-<nav id="article-nav">
-  
-    <a href="/2024/12/03/%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          热更新原理
-        
-      </div>
-    </a>
   
   
-    <a href="/2024/12/01/ts%E7%B1%BB%E5%92%8C%E4%BF%AE%E9%A5%B0%E7%AC%A6/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ts类和修饰符</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+    </div></section>
   
 
-  
+    
 
-  
-
-  
-
-  
 
 
           </div>
@@ -377,16 +298,16 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
 		showTags: true,
-    pageTotal: 0,
+    pageTotal: 1,
 	}
 </script>
 
