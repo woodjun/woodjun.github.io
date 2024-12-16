@@ -13,7 +13,7 @@
   <meta name="description" content="http&#x2F;1.1定义的请求方法有8种：GET(请求资源)、POST(提交表单)、PUT(上传)、DELETE(删除)、CONNECT(建立隧道)、HEAD(请求响应头部)、OPTIONS(返回资源所支持的方法)、TRACE(追溯中间代理)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="http请求方式">
-<meta property="og:url" content="http://example.com/2022/01/03/http%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:url" content="http://example.com/2022/01/03/http%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F/index.html">
 <meta property="og:site_name" content="木头个人博客">
 <meta property="og:description" content="http&#x2F;1.1定义的请求方法有8种：GET(请求资源)、POST(提交表单)、PUT(上传)、DELETE(删除)、CONNECT(建立隧道)、HEAD(请求响应头部)、OPTIONS(返回资源所支持的方法)、TRACE(追溯中间代理)。">
 <meta property="og:locale" content="en_US">
@@ -207,7 +207,7 @@
           <div id="js-content" class="content-ll">
             
 
-<article id="post-http请求方法" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-http请求方式" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -220,7 +220,7 @@
 
         
         
-  <a href="/2022/01/03/http%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  <a href="/2022/01/03/http%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F/" class="archive-article-date">
   	<time datetime="2022-01-03T03:23:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-03</time>
   </a>
 
@@ -273,20 +273,28 @@
 <td>要求目标服务器返回原始http请求的内容。它可用来查看中间服务器对http请求的影响。</td>
 </tr>
 </tbody></table>
-<h3 id="get和post的区别"><a href="#get和post的区别" class="headerlink" title="get和post的区别"></a>get和post的区别</h3><ul>
+<h3 id="get和post的区别"><a href="#get和post的区别" class="headerlink" title="get和post的区别"></a>get和post的区别</h3><h4 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h4><ul>
 <li><strong>GET请求在URL中传送的参数是有长度限制(针对浏览器)的，而POST么有。</strong></li>
-<li><strong>GET产生一个TCP数据包，POST产生两个TCP数据包，也就是说对于GET请求，浏览器会把header和data一并发送出去，而POST请求是先发送header请求，服务器响应100，才会继续发送data数据过去。</strong></li>
 <li><strong>GET请求只能进行url编码，而POST支持多种编码方式。</strong></li>
-<li><strong>GET具备幂等性，而POST不具备幂等性。</strong></li>
+<li>GET产生的URL地址可以被书签，而POST不可以。</li>
+</ul>
+<h4 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h4><ul>
 <li><strong>GET请求会被浏览器主动cache，而POST不会，除非手动设置。</strong></li>
+<li>GET在浏览器回退时是无害的，而POST会再次提交请求。</li>
+</ul>
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><ul>
 <li>对参数的数据类型，GET只接受ASCII字符，而POST没有限制。</li>
 <li>GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。</li>
 <li>GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。</li>
-<li>GET在浏览器回退时是无害的，而POST会再次提交请求。</li>
-<li>GET产生的URL地址可以被书签，而POST不可以。</li>
-<li>GET参数通过URL传递，POST放在Request body中</li>
+<li>GET参数通过URL传递，POST放在Request body中。</li>
 </ul>
-<h3 id="幂等性"><a href="#幂等性" class="headerlink" title="幂等性"></a>幂等性</h3><p>幂等性就是用户对于同一操作发起的一次或者多次请求的结果都是一致的，不会因为多次点击而产生了副作用。</p>
+<h4 id="TCP数据包"><a href="#TCP数据包" class="headerlink" title="TCP数据包"></a>TCP数据包</h4><ul>
+<li><strong>GET产生一个TCP数据包，POST产生两个TCP数据包，也就是说对于GET请求，浏览器会把header和data一并发送出去，而POST请求是先发送header请求，服务器响应100，才会继续发送data数据过去。</strong></li>
+</ul>
+<h4 id="幂等性"><a href="#幂等性" class="headerlink" title="幂等性"></a>幂等性</h4><ul>
+<li><strong>GET具备幂等性，而POST不具备幂等性。</strong></li>
+</ul>
+<h3 id="幂等性-1"><a href="#幂等性-1" class="headerlink" title="幂等性"></a>幂等性</h3><p>幂等性就是用户对于同一操作发起的一次或者多次请求的结果都是一致的，不会因为多次点击而产生了副作用。</p>
 <p>HTTP的幂等性是针对于<strong>RESTful接口规范</strong>的，RESTful规范将http当成应用层协议，遵循http协议的各种规定。</p>
 <h4 id="请求方法的幂等性"><a href="#请求方法的幂等性" class="headerlink" title="请求方法的幂等性"></a>请求方法的幂等性</h4><p><strong>GET</strong>方法用于获取资源，不应有副作用，不管请求多少次，都不会改变资源的状态，所以是幂等性的。</p>
 <p><strong>DELETE</strong>方法用于删除资源，有副作用，但是调用一次或N次对系统产生的副作用是相同的，一旦删除资源就会不存在，再调用删除对应的资源不会影响系统，所以是幂等性的。</p>
@@ -339,7 +347,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#8%E7%A7%8D%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="article-toc-text">8种请求方法</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#get%E5%92%8Cpost%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="article-toc-text">get和post的区别</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B9%82%E7%AD%89%E6%80%A7"><span class="article-toc-text">幂等性</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95%E7%9A%84%E5%B9%82%E7%AD%89%E6%80%A7"><span class="article-toc-text">请求方法的幂等性</span></a></li></ol></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#8%E7%A7%8D%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="article-toc-text">8种请求方法</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#get%E5%92%8Cpost%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="article-toc-text">get和post的区别</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#URL"><span class="article-toc-text">URL</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="article-toc-text">浏览器</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%8F%82%E6%95%B0"><span class="article-toc-text">参数</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#TCP%E6%95%B0%E6%8D%AE%E5%8C%85"><span class="article-toc-text">TCP数据包</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%B9%82%E7%AD%89%E6%80%A7"><span class="article-toc-text">幂等性</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B9%82%E7%AD%89%E6%80%A7-1"><span class="article-toc-text">幂等性</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95%E7%9A%84%E5%B9%82%E7%AD%89%E6%80%A7"><span class="article-toc-text">请求方法的幂等性</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
