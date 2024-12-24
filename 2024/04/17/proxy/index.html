@@ -235,7 +235,70 @@
 
 <span id="more"></span>
 
-<h3 id="拦截操作"><a href="#拦截操作" class="headerlink" title="拦截操作"></a>拦截操作</h3><h4 id="get-target-propkey-receiver"><a href="#get-target-propkey-receiver" class="headerlink" title="get(target, propkey, receiver)"></a>get(target, propkey, receiver)</h4><p>拦截对象属性的读取，下面使用get拦截实现读取数组负数的例子：</p>
+<p>不过proxy只能够对对象的第一层数据进行监听，如果想要对嵌套对象进行监听的话，需要对getter函数做一层封装。下面能够实现对嵌套对象监听的原因在于：每访问一层数据就会触发getter函数一次，而getter函数又会对下一层数据做监听处理，所有能够监听嵌套对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">reactive</span>(<span class="params">obj</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">&#x27;object&#x27;</span> || obj === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> observed = <span class="keyword">new</span> <span class="title class_">Proxy</span>(obj, &#123;</span><br><span class="line">    <span class="title function_">get</span>(<span class="params">target, key, receiver</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;get target: &#x27;</span>, target);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;key: &#x27;</span>, key);</span><br><span class="line">      <span class="keyword">const</span> res = <span class="title class_">Reflect</span>.<span class="title function_">get</span>(target, key, receiver);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">typeof</span> res === <span class="string">&#x27;object&#x27;</span> ? <span class="title function_">reactive</span>(res) : res;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">set</span>(<span class="params">target, key, val, receiver</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;set target: &#x27;</span>, target);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;key: &#x27;</span>, key);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;val: &#x27;</span>, val);</span><br><span class="line">      <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">set</span>(target, key, val, receiver);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> observed;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">b</span>: &#123;</span><br><span class="line">    <span class="attr">c</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">d</span>: &#123;</span><br><span class="line">      <span class="attr">e</span>: <span class="number">3</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">f</span>: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">j</span>: <span class="number">5</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> proxy = <span class="title function_">reactive</span>(obj);</span><br><span class="line">proxy.<span class="property">b</span>.<span class="property">c</span> = <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>get(target,propKey,receiver)</td>
+<td>拦截对象属性的读取</td>
+</tr>
+<tr>
+<td>set(target,propKey,value,receiver)</td>
+<td>拦截对象属性的设置</td>
+</tr>
+<tr>
+<td>has(target,propKey)</td>
+<td>拦截<code>propKey in proxy</code>的操作，返回一个布尔值</td>
+</tr>
+<tr>
+<td>deleteProperty(target,propKey)</td>
+<td>拦截<code>delete proxy[propKey]</code>的操作，返回一个布尔值</td>
+</tr>
+<tr>
+<td>ownKeys(target)</td>
+<td>拦截<code>Object.keys(proxy)</code>、<code>for...in</code>等循环，返回一个数组</td>
+</tr>
+<tr>
+<td>getOwnPropertyDescriptor(target, propKey)</td>
+<td>拦截<code>Object.getOwnPropertyDescriptor(proxy, propKey)</code>，返回属性的描述对象</td>
+</tr>
+<tr>
+<td>defineProperty(target, propKey, propDesc)</td>
+<td>拦截<code>Object.defineProperty(proxy, propKey, propDesc）</code>，返回一个布尔值</td>
+</tr>
+<tr>
+<td>preventExtensions(target)</td>
+<td>拦截<code>Object.preventExtensions(proxy)</code>，返回一个布尔值</td>
+</tr>
+<tr>
+<td>getPrototypeOf(target)</td>
+<td>拦截<code>Object.getPrototypeOf(proxy)</code>，返回一个对象</td>
+</tr>
+<tr>
+<td>isExtensible(target)</td>
+<td>拦截<code>Object.isExtensible(proxy)</code>，返回一个布尔值</td>
+</tr>
+<tr>
+<td>setPrototypeOf(target, proto)</td>
+<td>拦截<code>Object.setPrototypeOf(proxy, proto)</code>，返回一个布尔值</td>
+</tr>
+<tr>
+<td>apply(target, object, args)</td>
+<td>拦截 Proxy 实例作为函数调用的操作</td>
+</tr>
+<tr>
+<td>construct(target, args)</td>
+<td>拦截 Proxy 实例作为构造函数调用的操作</td>
+</tr>
+</tbody></table>
+<h4 id="get-target-propkey-receiver"><a href="#get-target-propkey-receiver" class="headerlink" title="get(target, propkey, receiver)"></a>get(target, propkey, receiver)</h4><p>拦截对象属性的读取，下面使用get拦截实现读取数组负数的例子：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createArray</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> handler = &#123;</span><br><span class="line">        <span class="title function_">get</span>(<span class="params">target, propKey, receiver</span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> index = <span class="title class_">Number</span>(propKey);</span><br><span class="line">            <span class="keyword">if</span> (index &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                propKey = <span class="title class_">String</span>(target.<span class="property">length</span> + index);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">get</span>(target, propKey, receiver);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> target = [];</span><br><span class="line">    target.<span class="title function_">push</span>(...args);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Proxy</span>(target, handler);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="set-target-propKey-value-receiver"><a href="#set-target-propKey-value-receiver" class="headerlink" title="set(target, propKey, value, receiver)"></a>set(target, propKey, value, receiver)</h4><p>用来拦截某个属性的赋值操作，set方法的返回值为布尔值，表示是否操作成功。如果对象的某个属性不可写的话，set方法将不起作用。例如：</p>
@@ -302,7 +365,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%8B%A6%E6%88%AA%E6%93%8D%E4%BD%9C"><span class="article-toc-text">拦截操作</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#get-target-propkey-receiver"><span class="article-toc-text">get(target, propkey, receiver)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#set-target-propKey-value-receiver"><span class="article-toc-text">set(target, propKey, value, receiver)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#has-target-propKey"><span class="article-toc-text">has(target, propKey)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#apply-target-object-args"><span class="article-toc-text">apply(target, object, args)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#construct-target-args"><span class="article-toc-text">construct(target, args)</span></a></li></ol></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="article-toc-text">实例方法</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#get-target-propkey-receiver"><span class="article-toc-text">get(target, propkey, receiver)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#set-target-propKey-value-receiver"><span class="article-toc-text">set(target, propKey, value, receiver)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#has-target-propKey"><span class="article-toc-text">has(target, propKey)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#apply-target-object-args"><span class="article-toc-text">apply(target, object, args)</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#construct-target-args"><span class="article-toc-text">construct(target, args)</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
