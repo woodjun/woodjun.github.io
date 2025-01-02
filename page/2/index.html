@@ -606,8 +606,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <span id="more"></span>
-
+        <p><code>vue</code>的模板语法里面的变量、表达式和指令等等，放到浏览器中是无法识别的。不过我们打开控制台看到的<code>html</code>明显和模板里面的不一样，这都是由<code>vue</code>中的模板编译代码负责对模板进行编译和转换。需要将template转换成<code>AST</code>，再到<code>VNode</code>，最后在mount阶段将<code>VNode</code>挂载渲染成真正的DOM。</p>
+<p><img src="/2024/12/17/vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/compiler.png"></p>
+        
+          <a class="article-more-a" href="/2024/12/17/vue%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91/#more">阅读更多 >></a>
+        
       
       
     </div>
