@@ -10,16 +10,22 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>IntersectionObserver | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="Intersection Observer API是一种异步检测目标元素与祖先元素或视口相交时会触发回调函数的API。过去我们想要实现这种效果的时候，常常需要借助滚动事件或元素的getBoundingClientRect来判断相关元素是否进入视口位置，例如图片懒加载。 上面提到的两种方式都是需要运行在主线程中，如果频繁触发就会造成性能问题，而且这种方式使用起来也是比较繁琐的。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="IntersectionObserver">
 <meta property="og:url" content="http://example.com/2025/01/01/IntersectionObserver/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="Intersection Observer API是一种异步检测目标元素与祖先元素或视口相交时会触发回调函数的API。过去我们想要实现这种效果的时候，常常需要借助滚动事件或元素的getBoundingClientRect来判断相关元素是否进入视口位置，例如图片懒加载。 上面提到的两种方式都是需要运行在主线程中，如果频繁触发就会造成性能问题，而且这种方式使用起来也是比较繁琐的。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/01/01/IntersectionObserver/construtor.png">
+<meta property="og:image" content="http://example.com/2025/01/01/IntersectionObserver/object.png">
+<meta property="og:image" content="http://example.com/2025/01/01/IntersectionObserver/entry.png">
 <meta property="article:published_time" content="2025-01-01T14:19:40.000Z">
 <meta property="article:modified_time" content="2025-01-01T14:19:40.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="IntersectionObserver">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/01/01/IntersectionObserver/construtor.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -228,7 +234,90 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <span id="more"></span>
+        <p><code>Intersection Observer API</code>是一种异步检测目标元素与祖先元素或视口相交时会触发回调函数的<code>API</code>。过去我们想要实现这种效果的时候，常常需要借助滚动事件或元素的<code>getBoundingClientRect</code>来判断相关元素是否进入视口位置，例如<a href="/2022/05/11/%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/" title="图片懒加载">图片懒加载</a>。</p>
+<p>上面提到的两种方式都是需要运行在主线程中，如果频繁触发就会造成性能问题，而且这种方式使用起来也是比较繁琐的。</p>
+<span id="more"></span>
+
+<p><code>Intersection Observer API</code>会注册一个回调函数，满足以下情况都会触发：</p>
+<ol>
+<li>目标元素进入或退出视口位置。</li>
+<li>交叉比达到阈值，阈值如果是数组的话，可能会触发多次。</li>
+</ol>
+<h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>使用构造器可能new一个实例对象，允许接收两个参数，一个必选callback，一个可选options。</p>
+<blockquote>
+<p>var observer = new IntersectionObserver(callback[, options]);</p>
+</blockquote>
+<p><img src="/2025/01/01/IntersectionObserver/construtor.png"></p>
+<h4 id="callback"><a href="#callback" class="headerlink" title="callback"></a>callback</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>entries</td>
+<td>由<code>IntersectionObserverEntry</code>对象组成的数组<br>但每个被触发的阈值，都或多或少与指定阈值有偏差。</td>
+</tr>
+<tr>
+<td>observer</td>
+<td>返回被调用的<code>IntersectionObserver</code>实例。</td>
+</tr>
+</tbody></table>
+<h4 id="options"><a href="#options" class="headerlink" title="options"></a>options</h4><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>root</td>
+<td>指定根元素。如果传值为 null，则为顶级文档的视窗。</td>
+</tr>
+<tr>
+<td>rootMargin</td>
+<td>根元素的扩缩边距。其传值形式与 CSS 中 margin 一样，用于控制根元素每一边的扩缩(单位为 px 或%)，从而控制计算根元素和目标元素的交集的区域范围。</td>
+</tr>
+<tr>
+<td>threshold</td>
+<td>阈值，回调函数触发的条件。取值范围为 0.0-1.0。在视口位置。当传入数值类型时，只会触发一次。当传入数组(升序)类型时，可触发多次。</td>
+</tr>
+</tbody></table>
+<p>具体例子可以参考<a href="/2022/05/11/%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/" title="图片懒加载">图片懒加载</a>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> options = &#123;</span><br><span class="line">  <span class="attr">root</span>: <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#root&quot;</span>), <span class="comment">//根元素</span></span><br><span class="line">  <span class="attr">rootMargin</span>: <span class="string">&quot;0px&quot;</span>, <span class="comment">//传值形式类似于css的margin 传一个值则四个边都为0</span></span><br><span class="line">  <span class="attr">threshold</span>: <span class="number">0</span>, <span class="comment">//触发条件 表示目标元素刚进入根元素时触发</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//IntersectionObserver对象</span></span><br><span class="line"><span class="keyword">let</span> observer = <span class="keyword">new</span> <span class="title class_">IntersectionObserver</span>(callback, options);</span><br><span class="line"><span class="keyword">let</span> target = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#target&quot;</span>); <span class="comment">//目标元素</span></span><br><span class="line">observer.<span class="title function_">observe</span>(target); <span class="comment">//开始监听该目标元素</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="实例对象"><a href="#实例对象" class="headerlink" title="实例对象"></a>实例对象</h3><p>实例对象的三个属性都是只读属性，和构造器中options参数类似，可以参考上面的表格。</p>
+<img src="/2025/01/01/IntersectionObserver/object.png" style="zoom:80%;">
+
+<h4 id="四个方法"><a href="#四个方法" class="headerlink" title="四个方法"></a>四个方法</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>observe(target)</td>
+<td>开始监听指定目标元素</td>
+</tr>
+<tr>
+<td>unobserve(target)</td>
+<td>停止监听指定目标元素</td>
+</tr>
+<tr>
+<td>takeRecords()</td>
+<td>返回所有观察目标的IntersectionObserverEntry对象数组</td>
+</tr>
+<tr>
+<td>disconnect()</td>
+<td>停止全部监听工作</td>
+</tr>
+</tbody></table>
+<h3 id="IntersectionObserverEntry对象"><a href="#IntersectionObserverEntry对象" class="headerlink" title="IntersectionObserverEntry对象"></a>IntersectionObserverEntry对象</h3><p><code>IntersectionObserverEntry</code>对象的七个属性都是只读属性，如下：</p>
+<p><img src="/2025/01/01/IntersectionObserver/entry.png"></p>
 
       
       
@@ -276,7 +365,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%9E%84%E9%80%A0%E5%99%A8"><span class="article-toc-text">构造器</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#callback"><span class="article-toc-text">callback</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#options"><span class="article-toc-text">options</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1"><span class="article-toc-text">实例对象</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="article-toc-text">四个方法</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#IntersectionObserverEntry%E5%AF%B9%E8%B1%A1"><span class="article-toc-text">IntersectionObserverEntry对象</span></a></li></ol>
   
 <nav id="article-nav">
   
