@@ -325,14 +325,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><ul>
-<li>计算属性是一个函数，将计算属性定义在computed对象当中。</li>
-<li>计算属性是基于它们响应式依赖进行缓存，只有响应式依赖发生改变是才会重新求值，即计算属性中return后面语句依赖数据发生改变时才会触发计算属性更新，否则访问计算属性只会返回缓存中的数据。</li>
-<li>return中的语句必须是有响应式依赖才行，例如<code>Date.now()</code>没有响应式依赖。</li>
-<li>缓存对于能够对性能开销较大有很大的好处，可以优化性能和避免进行大量的计算。</li>
-<li>不支持异步操作。</li>
-<li>内部有get和set方法，默认是get方法。</li>
-</ul>
+        <h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><p>计算属性是一个函数，将计算属性定义在computed对象当中，是基于它们响应式依赖进行缓存，只有响应式依赖发生改变是才会重新求值，即计算属性中return后面语句依赖数据发生改变时才会触发计算属性更新，否则访问计算属性只会返回缓存中的数据。缓存对于能够对性能开销较大有很大的好处，可以优化性能和避免进行大量的计算。</p>
         
           <a class="article-more-a" href="/2024/11/18/watch%E5%92%8Ccomputed/#more">阅读更多 >></a>
         
