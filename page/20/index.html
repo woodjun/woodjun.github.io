@@ -423,7 +423,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="二叉树的最小深度"><a href="#二叉树的最小深度" class="headerlink" title="二叉树的最小深度"></a>二叉树的最小深度</h3><p>给定一个二叉树，找出其最小深度。</p>
+        <h3 id="二叉树的最大深度"><a href="#二叉树的最大深度" class="headerlink" title="二叉树的最大深度"></a>二叉树的最大深度</h3><p>给定一个二叉树，找出其最大深度。</p>
+<p>最大深度为<strong>根节点</strong>到<strong>叶子节点</strong>的<strong>最长路径</strong>上的节点数。</p>
+<p>给定二叉树 <code>[3,9,20,null,null,15,7]</code>，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  3         </span><br><span class="line"> / \</span><br><span class="line">9  20</span><br><span class="line">  /  \</span><br><span class="line"> 15   7</span><br></pre></td></tr></table></figure>
+
+<p>返回它的最大深度 3 。</p>
+<p><strong>解题思路：</strong></p>
+<p>利用递归的形式统计左右子树的深度，再比较左右子树的深度，取出最大值加上一个根节点的深度就可以得到二叉树的最大深度。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">maxDepth</span>(<span class="params">root</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> root ? <span class="title class_">Math</span>.<span class="title function_">max</span>(<span class="title function_">maxDepth</span>(root.<span class="property">left</span>), <span class="title function_">maxDepth</span>(root.<span class="property">right</span>)) + <span class="number">1</span> : <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="二叉树的最小深度"><a href="#二叉树的最小深度" class="headerlink" title="二叉树的最小深度"></a>二叉树的最小深度</h3><p>给定一个二叉树，找出其最小深度。</p>
 <p>最小深度是从<strong>根节点</strong>到<strong>叶子节点</strong>的<strong>最短路径</strong>上的节点数量。</p>
 <p>给定二叉树 <code>[3,9,20,null,null,15,7]</code>,</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  <span class="number">3</span></span><br><span class="line"> / \</span><br><span class="line"><span class="number">9</span>  <span class="number">20</span></span><br><span class="line">  /  \</span><br><span class="line"> <span class="number">15</span>   <span class="number">7</span></span><br></pre></td></tr></table></figure>
