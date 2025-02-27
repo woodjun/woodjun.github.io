@@ -13,20 +13,20 @@
   <meta name="description" content="在说脚本加载之前，我们首先需要了解浏览器渲染解析过程，以便于解决浏览器渲染过程中出现的css阻塞、js脚本阻塞问题。 浏览器渲染解析过程  DOM树：渲染引擎从上到下开始解析HTML文档，将标签转换DOM树的DOM节点上。如果遇到外部引用css文件，浏览器会去服务器请求这些文件，并构建CSSOM树。 CSSOM树：解析css（包括外部css文件和样式元素）来创建CSSOM树。DOM树和CSSOM树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js脚本加载">
-<meta property="og:url" content="http://example.com/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/index.html">
+<meta property="og:url" content="http://example.com/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/index.html">
 <meta property="og:site_name" content="木头个人博客">
 <meta property="og:description" content="在说脚本加载之前，我们首先需要了解浏览器渲染解析过程，以便于解决浏览器渲染过程中出现的css阻塞、js脚本阻塞问题。 浏览器渲染解析过程  DOM树：渲染引擎从上到下开始解析HTML文档，将标签转换DOM树的DOM节点上。如果遇到外部引用css文件，浏览器会去服务器请求这些文件，并构建CSSOM树。 CSSOM树：解析css（包括外部css文件和样式元素）来创建CSSOM树。DOM树和CSSOM树">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/render.png">
-<meta property="og:image" content="http://example.com/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_default.png">
-<meta property="og:image" content="http://example.com/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_async.png">
-<meta property="og:image" content="http://example.com/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_defer.png">
+<meta property="og:image" content="http://example.com/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/render.png">
+<meta property="og:image" content="http://example.com/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_default.png">
+<meta property="og:image" content="http://example.com/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_async.png">
+<meta property="og:image" content="http://example.com/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_defer.png">
 <meta property="article:published_time" content="2024-10-19T18:38:06.000Z">
-<meta property="article:modified_time" content="2024-10-27T11:53:36.000Z">
+<meta property="article:modified_time" content="2025-02-27T13:15:22.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="脚本">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/render.png">
+<meta name="twitter:image" content="http://example.com/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/render.png">
   
     <link rel="alternative" href="/atom.xml" title="木头个人博客" type="application/atom+xml">
   
@@ -212,7 +212,7 @@
           <div id="js-content" class="content-ll">
             
 
-<article id="post-js脚本加载" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-脚本加载" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -225,7 +225,7 @@
 
         
         
-  <a href="/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/" class="archive-article-date">
+  <a href="/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/" class="archive-article-date">
   	<time datetime="2024-10-19T18:38:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-10-20</time>
   </a>
 
@@ -236,7 +236,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在说脚本加载之前，我们首先需要了解浏览器渲染解析过程，以便于解决浏览器渲染过程中出现的css阻塞、js脚本阻塞问题。</p>
-<h3 id="浏览器渲染解析过程"><a href="#浏览器渲染解析过程" class="headerlink" title="浏览器渲染解析过程"></a>浏览器渲染解析过程</h3><p><img src="/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/render.png"></p>
+<h3 id="浏览器渲染解析过程"><a href="#浏览器渲染解析过程" class="headerlink" title="浏览器渲染解析过程"></a>浏览器渲染解析过程</h3><p><img src="/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/render.png"></p>
 <ul>
 <li>DOM树：渲染引擎从上到下开始解析HTML文档，将标签转换DOM树的DOM节点上。<strong>如果遇到外部引用css文件，浏览器会去服务器请求这些文件，并构建CSSOM树。</strong></li>
 <li>CSSOM树：解析css（包括外部css文件和样式元素）来创建CSSOM树。<strong>DOM树和CSSOM树的构建过程是并行的，但是CSSOM的加载和解析过程会阻塞DOM的渲染</strong>。</li>
@@ -255,16 +255,20 @@
 <h4 id="正常方式"><a href="#正常方式" class="headerlink" title="正常方式"></a>正常方式</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>这种情况下js会阻塞浏览器，浏览器必须等待index.js文件加载和执行完毕才能去做其他事情。</p>
-<p><img src="/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_default.png"></p>
+<p><img src="/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_default.png"></p>
 <h4 id="async方式"><a href="#async方式" class="headerlink" title="async方式"></a>async方式</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">&quot;index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>async模式下，js不会阻塞浏览器做任何其他事情，它的加载是异步的，<strong>当它加载完毕时，js脚本就会立即执行</strong>。</p>
-<p><img src="/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_async.png"></p>
+<p><img src="/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_async.png"></p>
 <h4 id="defer方式"><a href="#defer方式" class="headerlink" title="defer方式"></a>defer方式</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">&quot;index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>defer模式下，js的加载也是异步的，<strong>执行是被推迟的，等整个文档解析完成时才会执行脚本</strong>。</p>
-<p><img src="/2024/10/20/js%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_defer.png"></p>
+<p><img src="/2024/10/20/%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD/script_defer.png"></p>
 <p>总的来说，一般当我们的脚本与DOM元素和其他脚本之间的依赖关系不大时，选用async较好；当脚本依赖于DOM元素和其他脚本执行完毕时，选用defer更好。</p>
+<h3 id="link和script的区别"><a href="#link和script的区别" class="headerlink" title="link和script的区别"></a>link和script的区别</h3><ul>
+<li><strong>加载资源不同</strong>：link标签通常是用来加载css样式表的，而script标签则是用来引入或者嵌入js代码的。</li>
+<li><strong>加载机制不同</strong>：link引入css时，浏览器会异步加载，<strong>不会阻塞页面解析，但是会阻塞页面渲染</strong>。而script标签默认情况会阻塞页面解析，直到脚本下载并执行完毕，不过使用defer和async可以改变行为。</li>
+</ul>
 
       
       
@@ -299,7 +303,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2024-10-27T11:53:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-10-27 19:53:36</time>
+    更新时间：<time datetime="2025-02-27T13:15:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-02-27 21:15:22</time>
   </p>
 
 
@@ -312,7 +316,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="article-toc-text">浏览器渲染解析过程</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E8%84%9A%E6%9C%AC%E9%98%BB%E5%A1%9E"><span class="article-toc-text">脚本阻塞</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#css%E9%98%BB%E5%A1%9E"><span class="article-toc-text">css阻塞</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#js%E9%98%BB%E5%A1%9E"><span class="article-toc-text">js阻塞</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#js%E7%9A%84%E4%B8%89%E7%A7%8D%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F"><span class="article-toc-text">js的三种加载方式</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%AD%A3%E5%B8%B8%E6%96%B9%E5%BC%8F"><span class="article-toc-text">正常方式</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#async%E6%96%B9%E5%BC%8F"><span class="article-toc-text">async方式</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#defer%E6%96%B9%E5%BC%8F"><span class="article-toc-text">defer方式</span></a></li></ol></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="article-toc-text">浏览器渲染解析过程</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E8%84%9A%E6%9C%AC%E9%98%BB%E5%A1%9E"><span class="article-toc-text">脚本阻塞</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#css%E9%98%BB%E5%A1%9E"><span class="article-toc-text">css阻塞</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#js%E9%98%BB%E5%A1%9E"><span class="article-toc-text">js阻塞</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#js%E7%9A%84%E4%B8%89%E7%A7%8D%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F"><span class="article-toc-text">js的三种加载方式</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%AD%A3%E5%B8%B8%E6%96%B9%E5%BC%8F"><span class="article-toc-text">正常方式</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#async%E6%96%B9%E5%BC%8F"><span class="article-toc-text">async方式</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#defer%E6%96%B9%E5%BC%8F"><span class="article-toc-text">defer方式</span></a></li></ol></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#link%E5%92%8Cscript%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="article-toc-text">link和script的区别</span></a></li></ol>
   
 <nav id="article-nav">
   
