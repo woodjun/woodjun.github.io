@@ -10,13 +10,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>实时简历 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="专业技能熟练运用 html、css、js、es6、ts、webpack、git 熟练 Vue2&#x2F;3 框架的使用，对其内部原理有一定的了解 熟练 Element 和 Vant 的使用 熟练使用 Uniapp 开发微信小程序 熟练使用 css 预处理器 Sass">
+<meta property="og:type" content="article">
 <meta property="og:title" content="实时简历">
 <meta property="og:url" content="http://example.com/2024/10/25/%E5%AE%9E%E6%97%B6%E7%AE%80%E5%8E%86/index.html">
 <meta property="og:site_name" content="木头个人博客">
+<meta property="og:description" content="专业技能熟练运用 html、css、js、es6、ts、webpack、git 熟练 Vue2&#x2F;3 框架的使用，对其内部原理有一定的了解 熟练 Element 和 Vant 的使用 熟练使用 Uniapp 开发微信小程序 熟练使用 css 预处理器 Sass">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-10-25T11:50:13.000Z">
-<meta property="article:modified_time" content="2025-03-04T11:01:02.000Z">
+<meta property="article:modified_time" content="2025-03-08T13:54:43.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="简历">
 <meta name="twitter:card" content="summary">
@@ -228,7 +230,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <span id="more"></span>
+        <h3 id="专业技能"><a href="#专业技能" class="headerlink" title="专业技能"></a>专业技能</h3><p>熟练运用 html、css、js、es6、ts、webpack、git</p>
+<p>熟练 Vue2/3 框架的使用，对其内部原理有一定的了解</p>
+<p>熟练 Element 和 Vant 的使用</p>
+<p>熟练使用 Uniapp 开发微信小程序</p>
+<p>熟练使用 css 预处理器 Sass</p>
+<span id="more"></span>
+
+<h3 id="工作经历"><a href="#工作经历" class="headerlink" title="工作经历"></a>工作经历</h3><p><strong>深传科技集团有限公司</strong> </p>
+<p>2022.4.6-2024.4.26</p>
+<p>工作期间主要负责“穗时尚+”和“别抽啦”的<strong>小程序</strong>和 <strong>PC 端</strong>业务的开发和维护。</p>
+<p>工作内容包括了静态页面编写、组件的封装、对接后端接口和维护已上线项目等。</p>
+<p>目前“别抽啦”小程序已有 8247 名控烟志愿者，处理用户投诉场所的次数为 62481 次。</p>
+<h3 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a>项目经历</h3><h4 id="穗时尚"><a href="#穗时尚" class="headerlink" title="穗时尚+"></a>穗时尚+</h4><p><strong>2023.05-2024.04</strong> </p>
+<p><strong>项目描述：</strong>“穗时尚”小程序是为了打造一款监督、管理和考评广州垃圾投放点的管理系统，用来解决投放点垃圾落地和乱堆放等环境卫生问题。</p>
+<p><strong>负责内容：</strong>负责小程序和 PC 端的点位地图、基础信息、点位信息、数据统计和宣传培训的开发和维护工作。</p>
+<p><strong>技术栈：</strong>小程序使用 uniapp+vue3+ts+sass+vite，PC 端使用vue2+element+ts+vuex+sass+webpack</p>
+<p><strong>亮点和难点：</strong>菜单可以根据不同用户的权限进行展示；点位地图展示不同类型投放点和解决加载大量点位卡顿问题；针对大文件传输采用分片上传的形式进行优化。</p>
+<p><strong>解决方案：</strong>菜单权限使用对象将不同菜单对应的权限标识存储，根据后端返回的用户权限标识进行过滤菜单；点位地图通过获取地图可视区域的边界坐标以及限制展示点位个数，将这些数据传给后端可得到可视区域内的点位；大文件传输通过将文件分割成多个固定大小的块，并为每个块加上索引，待所有分片上传完成后，服务端会按照索引顺序合并成一个完整的文件。</p>
+<h4 id="别抽啦"><a href="#别抽啦" class="headerlink" title="别抽啦"></a>别抽啦</h4><p><strong>2022.04-2024.04</strong> </p>
+<p><strong>项目描述：</strong>“别抽啦”小程序是为了打造宣传、上报和管控一体化的全流程控烟管理信息系统，以提高控烟力度和控烟效率。</p>
+<p><strong>负责内容：</strong>负责小程序和 PC 端业务功能的开发和维护，除了控烟普法专栏的其他模块。</p>
+<p><strong>技术栈：</strong>小程序使用 uniapp+vue3+ts+sass+vite，PC 端使用vue2+element+ts+vuex+sass+webpack</p>
+<p><strong>亮点和难点：</strong>控烟地图展示用户投诉场所位置以及投诉评率；无障碍改造和适老化改造帮助特殊群体能够完成独立操作；宣传海报使用 canvas 生成图片并保存到相册。</p>
+<p><strong>解决方案：</strong>控烟地图获取地图可视区域的边界坐标传给后端，得到可视区域内的点位展示到地图上。</p>
 
       
       
@@ -263,7 +288,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2025-03-04T11:01:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-03-04 19:01:02</time>
+    更新时间：<time datetime="2025-03-08T13:54:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-03-08 21:54:43</time>
   </p>
 
 
@@ -276,7 +301,7 @@
   </div>
 </article>
 
-  
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E4%B8%93%E4%B8%9A%E6%8A%80%E8%83%BD"><span class="article-toc-text">专业技能</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%B7%A5%E4%BD%9C%E7%BB%8F%E5%8E%86"><span class="article-toc-text">工作经历</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%8F%E5%8E%86"><span class="article-toc-text">项目经历</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E7%A9%97%E6%97%B6%E5%B0%9A"><span class="article-toc-text">穗时尚+</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%88%AB%E6%8A%BD%E5%95%A6"><span class="article-toc-text">别抽啦</span></a></li></ol></li></ol>
   
 <nav id="article-nav">
   
