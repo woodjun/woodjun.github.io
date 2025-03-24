@@ -10,16 +10,16 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>垃圾回收机制 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="内存管理无论哪一种程序语言，内存的生命周期总是大致相同的。  分配程序所需的内存 使用分配到的内存（读、写） 不需要时将内存释放">
+  <meta name="description" content="垃圾回收机制是自动管理内存的核心机制，通过识别和回收不再使用的内存对象，避免内存泄漏和程序崩溃。其核心原理在于内存管理周期和垃圾判断依据。 无论哪一种程序语言，内存管理的周期都是分为三个阶段：分配内存-&gt;使用内存-&gt;释放内存，当系统发现这些变量不再被使用时，会自动释放这些变量内存，这一个过程由js引擎自动完成内存分配和内存释放，无需开发者手动干预。 判断是否为垃圾的根据在于：可达性，即">
 <meta property="og:type" content="article">
 <meta property="og:title" content="垃圾回收机制">
 <meta property="og:url" content="http://example.com/2021/11/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="内存管理无论哪一种程序语言，内存的生命周期总是大致相同的。  分配程序所需的内存 使用分配到的内存（读、写） 不需要时将内存释放">
+<meta property="og:description" content="垃圾回收机制是自动管理内存的核心机制，通过识别和回收不再使用的内存对象，避免内存泄漏和程序崩溃。其核心原理在于内存管理周期和垃圾判断依据。 无论哪一种程序语言，内存管理的周期都是分为三个阶段：分配内存-&gt;使用内存-&gt;释放内存，当系统发现这些变量不再被使用时，会自动释放这些变量内存，这一个过程由js引擎自动完成内存分配和内存释放，无需开发者手动干预。 判断是否为垃圾的根据在于：可达性，即">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2021/11/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%E6%B3%95.gif">
 <meta property="article:published_time" content="2021-11-28T16:18:40.000Z">
-<meta property="article:modified_time" content="2024-10-25T14:37:00.000Z">
+<meta property="article:modified_time" content="2025-03-24T15:53:32.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="底层原理">
 <meta name="twitter:card" content="summary">
@@ -232,31 +232,37 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><p>无论哪一种程序语言，内存的生命周期总是大致相同的。</p>
-<ol>
-<li>分配程序所需的内存</li>
-<li>使用分配到的内存（读、写）</li>
-<li>不需要时将内存释放</li>
-</ol>
+        <p>垃圾回收机制是自动管理内存的核心机制，通过识别和回收不再使用的内存对象，避免内存泄漏和程序崩溃。其核心原理在于<strong>内存管理周期</strong>和<strong>垃圾判断依据</strong>。</p>
+<p>无论哪一种程序语言，内存管理的周期都是分为三个阶段：<strong>分配内存-&gt;使用内存-&gt;释放内存</strong>，当系统发现这些变量不再被使用时，会自动释放这些变量内存，这一个过程由js引擎自动完成内存分配和内存释放，无需开发者手动干预。</p>
+<p>判断是否为垃圾的根据在于：<strong>可达性</strong>，即从根对象（全局变量、活动函数调用栈、DOM引用等）出发，所有能被访问到的对象被视为”存活“，否则就会被标记为”垃圾“。</p>
+<p>垃圾回收机制不是立即执行的，而是<strong>周期性</strong>的执行，如果一个对象不可达，那么在下次垃圾回收就会被回收。</p>
+<p>目前主流浏览器主要采用的垃圾回收机制有两种，分别是<strong>引用计数法</strong>和<strong>标记清除法</strong>。</p>
 <span id="more"></span>
 
-<p>当系统发现这些变量不再被使用时，会自动释放这些变量内存，通过语言的垃圾回收机制回收这些内存。</p>
-<p>在js中，数据类型分为两类，基本数据类型和引用类型，其中基本数据类型的内存是保存在栈中，引用类型的内存是保存在堆中。</p>
-<p>对于栈中的内存空间，由操作系统进行分配和释放；堆中的内存空间操作系统无法做到自动释放，需要js引擎来手动释放内存。</p>
-<h3 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h3><p>目前主流浏览器主要采用的垃圾回收机制有两种，分别是引用计数法和标记清除法。</p>
-<h4 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h4><p>在内存管理的上下文中，如果一个对象可以访问另一个对象，则称该对象引用另一个对象。如果有零个指向它的引用，则认为是可垃圾回收的。</p>
+<h3 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h3><p>每个对象都会维护一个引用计数器，记录有多少引用指向它，当一个对象的引用数为0时就会被视为“垃圾”，将会被回收。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">  <span class="attr">obj2</span>: &#123;</span><br><span class="line">    <span class="attr">num</span>: <span class="number">1</span></span><br><span class="line">  &#125; <span class="comment">// obj2作为属性被obj1引用一次</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj3 = obj1 <span class="comment">// obj1被引用一次</span></span><br><span class="line">obj1 = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> obj4 = obj3.<span class="property">obj2</span> <span class="comment">// obj2作为属性被obj4引用一次</span></span><br><span class="line">obj3 = <span class="number">123</span> <span class="comment">// obj3还不能被回收，因为obj3中obj2还被obj4引用着</span></span><br><span class="line">obj4 = <span class="literal">null</span> <span class="comment">// 这时候obj3可以被回收了，同时obj2也可以被回收，因为obj1引用obj2已经被解除，同时obj4引用obj2也被解除</span></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>引用计数法有一个明显的限制，对于循环引用这种情况无能为力，很容易造成内存泄漏。以下代码出现两个对象中的每一个都被引用过一次，引用次数不为零，显然不会被垃圾回收。</li>
-</ul>
+<p>引用计数法有一个明显的限制，对于循环引用这种情况无能为力，很容易造成内存泄漏。以下代码出现两个对象中的每一个都被引用过一次，引用次数不为零，显然不会被垃圾回收。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> o1 = &#123;&#125;</span><br><span class="line">  <span class="keyword">var</span> o2 = &#123;&#125;</span><br><span class="line">  o1.<span class="property">a</span> = o2</span><br><span class="line">  o2.<span class="property">a</span> = o1</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">foo</span>()</span><br></pre></td></tr></table></figure>
 
-<h4 id="标记清除法"><a href="#标记清除法" class="headerlink" title="标记清除法"></a>标记清除法</h4><p>标记清除法有一个概念叫对象可达性，也就是从初始的根对象（window, global）的指针开始，从这个根对象向下搜索其子节点，被搜索到的子节点说明该节点的引用对象可达，并为其留下标记，然后递归这个搜索过程，直到所有子节点都被遍历结束，那么没有被标记的对象节点，说明该对象没有被任何地方引用，可以证明这个一个需要被释放内存的对象，可以被垃圾回收器回收。</p>
+<h3 id="标记清除法"><a href="#标记清除法" class="headerlink" title="标记清除法"></a>标记清除法</h3><p>标记清除法会从根对象开始，递归遍历所有对象，将可以被遍历到的对象进行标记，遍历结束后没有被标记到的对象视为不可达，内存将会被回收。这样就可以解决循环引用问题。</p>
 <p><img src="/2021/11/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%E6%B3%95.gif"></p>
 <p>这种方式就可以解决循环引用问题，foo()函数执行完毕之后，两个对象不再被全局对象中的某个变量引用，因此，垃圾收集器就会认为它们不可访问，可以进行垃圾回收。</p>
-<p>想要了解Chrome V8垃圾回收机制，推荐阅读：</p>
-<p><a target="_blank" rel="noopener" href="https://hub.fastgit.org/yacan8/blog/issues/33">深入理解Chrome V8垃圾回收机制</a></p>
+<h3 id="分代回收机制"><a href="#分代回收机制" class="headerlink" title="分代回收机制"></a>分代回收机制</h3><p>现代浏览器的V8引擎使用的就是分代回收机制，分代回收机制会将内存堆划分为<strong>新生代</strong>和<strong>老生代</strong>。</p>
+<p>其中新生代主要存储新创建的和生命周期较短的对象，执行垃圾回收的频率较高；老生代主要存储生命周期较长的对象，执行垃圾回收的频率较低。</p>
+<h4 id="新生代内存结构"><a href="#新生代内存结构" class="headerlink" title="新生代内存结构"></a>新生代内存结构</h4><p>新生代内存被划分为两个相等的半空间：<strong>From-Space</strong>和<strong>To-Space</strong>。From-Space用来存储当前活动对象，To-Space作为存活对象的临时区域，用来存储From-Space复制过来的存活对象。</p>
+<h4 id="新生代回收机制"><a href="#新生代回收机制" class="headerlink" title="新生代回收机制"></a>新生代回收机制</h4><p>从根对象开始，标记所有可达对象，然后将From-Space中存活对象复制到To-Space，复制完成之后就会清空From-Space。回收结束后就会交换From-Space和To-Space角色，原To-Space就会变为新的From-Space。</p>
+<h4 id="新生代晋升老生代条件"><a href="#新生代晋升老生代条件" class="headerlink" title="新生代晋升老生代条件"></a>新生代晋升老生代条件</h4><p><strong>多次存活</strong>：每次垃圾回收，对象年龄就会加一，对象年龄到达阈值后就会复制到老生代。</p>
+<p><strong>体积过大</strong>：对象大小超过单个半空间容量限制。</p>
+<p><strong>To-Space空间不足</strong>：复制过程中发现To-Space空间不足以容纳存活对象时就会直接晋升为老生代。</p>
+<h4 id="老生代回收机制"><a href="#老生代回收机制" class="headerlink" title="老生代回收机制"></a>老生代回收机制</h4><p>老生代回收机制通常采用<strong>标记清除法（Mark-Sweep）</strong>和<strong>标记整理法（Mark-Compact）</strong>。其中标记清除法和上面所说方法的一样，而标记整理法是为了解决标记清除阶段产生的内存碎片，会将存活对象向一端移动，挪出内存空间。</p>
+<h4 id="老生代触发条件"><a href="#老生代触发条件" class="headerlink" title="老生代触发条件"></a>老生代触发条件</h4><ul>
+<li>老生代空间不足时</li>
+<li>手动调用回收</li>
+<li>调用定时器时可能会触发</li>
+</ul>
+<h4 id="垃圾回收优化和并行回收"><a href="#垃圾回收优化和并行回收" class="headerlink" title="垃圾回收优化和并行回收"></a>垃圾回收优化和并行回收</h4><h5 id="增量式回收"><a href="#增量式回收" class="headerlink" title="增量式回收"></a>增量式回收</h5><p>增量式回收将回收过程分解为多个小步骤，穿插在程序执行过程中。</p>
+<h5 id="并行和并发回收"><a href="#并行和并发回收" class="headerlink" title="并行和并发回收"></a>并行和并发回收</h5><p>利用多喝CPU，同时运行多个回收线程，垃圾回收线程和程序线程同时运行。</p>
 
       
       
@@ -291,7 +297,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2024-10-25T14:37:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-10-25 22:37:00</time>
+    更新时间：<time datetime="2025-03-24T15:53:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-03-24 23:53:32</time>
   </p>
 
 
@@ -304,7 +310,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="article-toc-text">内存管理</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="article-toc-text">垃圾回收机制</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%B3%95"><span class="article-toc-text">引用计数法</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%E6%B3%95"><span class="article-toc-text">标记清除法</span></a></li></ol></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%B3%95"><span class="article-toc-text">引用计数法</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4%E6%B3%95"><span class="article-toc-text">标记清除法</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%88%86%E4%BB%A3%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="article-toc-text">分代回收机制</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%96%B0%E7%94%9F%E4%BB%A3%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84"><span class="article-toc-text">新生代内存结构</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%96%B0%E7%94%9F%E4%BB%A3%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="article-toc-text">新生代回收机制</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E6%96%B0%E7%94%9F%E4%BB%A3%E6%99%8B%E5%8D%87%E8%80%81%E7%94%9F%E4%BB%A3%E6%9D%A1%E4%BB%B6"><span class="article-toc-text">新生代晋升老生代条件</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E8%80%81%E7%94%9F%E4%BB%A3%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="article-toc-text">老生代回收机制</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E8%80%81%E7%94%9F%E4%BB%A3%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="article-toc-text">老生代触发条件</span></a></li><li class="article-toc-item article-toc-level-4"><a class="article-toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%BC%98%E5%8C%96%E5%92%8C%E5%B9%B6%E8%A1%8C%E5%9B%9E%E6%94%B6"><span class="article-toc-text">垃圾回收优化和并行回收</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-5"><a class="article-toc-link" href="#%E5%A2%9E%E9%87%8F%E5%BC%8F%E5%9B%9E%E6%94%B6"><span class="article-toc-text">增量式回收</span></a></li><li class="article-toc-item article-toc-level-5"><a class="article-toc-link" href="#%E5%B9%B6%E8%A1%8C%E5%92%8C%E5%B9%B6%E5%8F%91%E5%9B%9E%E6%94%B6"><span class="article-toc-text">并行和并发回收</span></a></li></ol></li></ol></li></ol>
   
 <nav id="article-nav">
   
