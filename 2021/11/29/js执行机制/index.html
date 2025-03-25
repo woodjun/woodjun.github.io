@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://example.com/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.jpg">
 <meta property="og:image" content="http://example.com/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/微任务和宏任务.jpg">
 <meta property="article:published_time" content="2021-11-28T16:09:37.000Z">
-<meta property="article:modified_time" content="2024-11-17T15:36:03.000Z">
+<meta property="article:modified_time" content="2025-03-25T15:50:24.000Z">
 <meta property="article:author" content="Wood">
 <meta property="article:tag" content="底层原理">
 <meta name="twitter:card" content="summary">
@@ -237,12 +237,12 @@
 <span id="more"></span>
 
 <p>任务分为同步任务和异步任务；</p>
-<p><strong>同步任务：</strong>那些没有被引擎挂起、在主线程上排队执行的任务。也就是前一个任务执行完毕，才能执行后一个任务。</p>
+<p><strong>同步任务：</strong>那些按照代码书写顺序依次执行的任务，不会进入任务队列，而是直接在主线程中执行，这些任务会阻塞后续代码的执行，直到当前任务完成。</p>
 <p><strong>异步任务：</strong>那些被引擎放在一边，不进入主线程，而是进入任务队列中的任务，只有异步任务返回结果或者满足某个条件，才会将该任务放入主线程执行，其他任务可以直接往后执行，不会造成阻塞问题。</p>
 <h4 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h4><p><img src="/2021/11/29/js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.jpg"></p>
 <p>从上图可知：</p>
 <ol>
-<li>任务进入执行栈后，引擎遇到同步任务就会将其放入主线程，异步任务收钱就会进入事件列表（event table），当异步任务满足某个执行条件，才会进入事件队列当中（event queue）。</li>
+<li>任务进入执行栈后，引擎遇到同步任务就会将其放入主线程，异步任务首先就会进入事件列表（event table），当异步任务满足某个执行条件，才会进入事件队列当中（event queue）。</li>
 <li>待所有同步任务执行完毕之后，浏览器js引擎中的monitoring process进程（用于检查主线程或者回调栈call stack的任务是否为空）检测到主线程中的任务为空，就会从事件队列中取出对应的异步任务中回到结果继续往下执行。</li>
 <li>不断的重复以上流程，直至所有任务被执行完毕。</li>
 </ol>
@@ -304,7 +304,7 @@
       
         
   <p class="archive-updated-time">
-    更新时间：<time datetime="2024-11-17T15:36:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-11-17 23:36:03</time>
+    更新时间：<time datetime="2025-03-25T15:50:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-03-25 23:50:24</time>
   </p>
 
 
