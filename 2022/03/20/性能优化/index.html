@@ -18,6 +18,7 @@
 <meta property="og:description" content="从浏览器输入url获取网页资源到展示页面到屏幕上这个阶段所需的时间，就是前端性能优化的核心。性能优化的目的就是想方设法地减少这个阶段所耗费的时间。 想要了解浏览器输入url发生了什么？请戳浏览器输入url发生了什么 众所周知，这个阶段所耗费的时间主要集中在http请求资源阶段。也就意味着，缩短这个阶段耗费的时间，就能够极大地提升前端性能。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2022/03/20/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/请求获取时间.png">
+<meta property="og:image" content="http://example.com/2022/03/20/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/webpack-gzip.png">
 <meta property="article:published_time" content="2022-03-20T14:25:28.000Z">
 <meta property="article:modified_time" content="2024-12-12T13:07:32.000Z">
 <meta property="article:author" content="Wood">
@@ -263,6 +264,7 @@
 <p>html：HtmlWebpackPlugin</p>
 </blockquote>
 <h5 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h5><p>gzip压缩是目前最流行和最有效的压缩方法，webpack中的<code>compression-webpack-plugin</code>插件能够开启gzip压缩。</p>
+<p><img src="/2022/03/20/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/webpack-gzip.png"></p>
 <h5 id="http2"><a href="#http2" class="headerlink" title="http2"></a>http2</h5><p>众所周知，每次请求都会携带上头部信息，并且大部分头部信息变化不大甚至没有变化，http2提供头部压缩功能，能够对http头部信息进行压缩。</p>
 
       
