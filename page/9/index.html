@@ -617,7 +617,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p>类似于数组，但是成员是唯一的，没有重复的值，可以接受一个数组或具有iterable接口的伪数组。</p>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>1.没有下标，不是按照下标存储，但是是有序的，因此不能使用下标循环遍历。<br>2.没有重复元素，任何元素存在唯一性，因此可以用来作去重处理，存储不重复的数据。<br>3.插入速度和删除速度非常快，遍历查找速度也非常快，但是略低于键值对类型。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>1.没有索引概念，因此不能通过下标访问，元素按插入顺序进行迭代的。<br>2.没有重复元素，任何元素存在唯一性，因此可以用来作去重处理，存储不重复的数据。<br>3.插入速度和删除速度非常快，遍历查找速度也非常快，但是略低于键值对类型。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="string">&#x27;foo&#x27;</span>, <span class="string">&#x27;bar&#x27;</span>]);</span><br></pre></td></tr></table></figure>
 
 <p>加入值时不会发生类型转换，内部算法类似于运算符===，不同的是认为<code>NaN</code>等于自身，两个对象总是不相等的。</p>
