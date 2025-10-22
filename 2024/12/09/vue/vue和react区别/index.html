@@ -10,12 +10,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>vue和react区别 | 木头个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="设计思想与定位Vue：Vue是渐进式的JavaScript框架，可以逐步引入其功能，适合逐步改造的项目。他提供了丰富的指令和内置功能，使得开发者能够更快地构建应用。 React：React则主张函数式编程和组件化，强调通过组件构建用户界面。">
+  <meta name="description" content="核心设计理念Vue：Vue是渐进式框架，提供从视图层到路由、状态管理的完整解决方案，官方文档友好，学习曲线相对平缓。 React：React专注于构建用户界面的库，强调函数式编程和不可变数据，其生态系统更多由社区驱动，学习成本相对较高。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue和react区别">
 <meta property="og:url" content="http://example.com/2024/12/09/vue/vue%E5%92%8Creact%E5%8C%BA%E5%88%AB/index.html">
 <meta property="og:site_name" content="木头个人博客">
-<meta property="og:description" content="设计思想与定位Vue：Vue是渐进式的JavaScript框架，可以逐步引入其功能，适合逐步改造的项目。他提供了丰富的指令和内置功能，使得开发者能够更快地构建应用。 React：React则主张函数式编程和组件化，强调通过组件构建用户界面。">
+<meta property="og:description" content="核心设计理念Vue：Vue是渐进式框架，提供从视图层到路由、状态管理的完整解决方案，官方文档友好，学习曲线相对平缓。 React：React专注于构建用户界面的库，强调函数式编程和不可变数据，其生态系统更多由社区驱动，学习成本相对较高。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-09T14:17:00.000Z">
 <meta property="article:modified_time" content="2024-12-10T15:01:54.000Z">
@@ -231,24 +231,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="设计思想与定位"><a href="#设计思想与定位" class="headerlink" title="设计思想与定位"></a>设计思想与定位</h3><p><code>Vue</code>：<code>Vue</code>是渐进式的JavaScript框架，可以逐步引入其功能，适合逐步改造的项目。他提供了丰富的指令和内置功能，使得开发者能够更快地构建应用。</p>
-<p><code>React</code>：<code>React</code>则主张函数式编程和组件化，强调通过组件构建用户界面。</p>
+        <h3 id="核心设计理念"><a href="#核心设计理念" class="headerlink" title="核心设计理念"></a>核心设计理念</h3><p><code>Vue</code>：<code>Vue</code>是渐进式框架，提供从视图层到路由、状态管理的完整解决方案，官方文档友好，学习曲线相对平缓。</p>
+<p><code>React</code>：<code>React</code>专注于构建用户界面的库，强调函数式编程和不可变数据，其生态系统更多由社区驱动，学习成本相对较高。</p>
 <span id="more"></span>
 
-<h3 id="模板语法-vs-JSX"><a href="#模板语法-vs-JSX" class="headerlink" title="模板语法 vs JSX"></a>模板语法 vs <code>JSX</code></h3><p><code>Vue</code>：<code>Vue</code>使用基于HTML的模板语法，通过template标签和HTML的写法来构建视图，同时<code>Vue</code>也支持使用<code>JSX</code>语法，不过较少使用。</p>
-<p><code>React</code>：React使用<code>JSX</code>语法，将HTML和JavaScript结合在一起。<code>JSX</code>是JavaScript的语法扩展，允许在JavaScript中编写类似HTML的代码</p>
-<h3 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h3><p><code>Vue</code>：<code>Vue</code>提供了双向数据绑定，使用<code>v-model</code>指令可以实现表单元素数据的双向绑定。</p>
-<p><code>React</code>：React采用单向数据流，通过props将数据从父组件传递给子组件，表单元素的双向绑定需要手动实现。</p>
-<h3 id="UI更新策略"><a href="#UI更新策略" class="headerlink" title="UI更新策略"></a><code>UI</code>更新策略</h3><p><code>Vue</code>：<code>Vue</code>是响应式的，会根据数据的变化去计划更新，并且通过<a href="/2022/02/24/vue/diff%E7%AE%97%E6%B3%95/" title="diff算法">diff算法</a>来提高更新渲染效率。</p>
-<p><code>React</code>：React则是使用新的数据去替换旧的数据，通过虚拟DOM和<code>Diff</code>算法来实现用户界面更新。</p>
+<h3 id="模板语法-vs-JSX"><a href="#模板语法-vs-JSX" class="headerlink" title="模板语法 vs JSX"></a>模板语法 vs <code>JSX</code></h3><p><code>Vue</code>：<code>Vue</code>使用单文件组件，将模板、样式和逻辑组合在vue文件中，通过<code>v-if</code>等指令来操作DOM，结构更加直观。在逻辑复用方面上，vue提供mixin、作用域插槽和Composition API。</p>
+<p><code>React</code>：React使用<code>JSX</code>语法，将HTML融入JavaScript，实现All in JS的组件开发方式。在逻辑复用方面上，react通过高阶组件、render props和Hooks来实现。</p>
+<h3 id="响应式数据管理"><a href="#响应式数据管理" class="headerlink" title="响应式数据管理"></a>响应式数据管理</h3><p><code>Vue</code>：vue基于响应式系统，通过proxy或Object.defineProperty来实现数据监听，数据变动时会自动更新相关视图，使用<code>v-model</code>可使数据双向绑定。vue的响应式粒度到属性级别，自动追踪依赖。</p>
+<p><code>React</code>：React采用单向数据流，需手动调用setState或Hooks触发更新，并强调不可变数据理念。React以组件为单位重渲染，需显示声明依赖。</p>
+<h3 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h3><p><code>Vue</code>：<code>Vue</code>的<code>Vuex</code>数据可变，组件可直接dispatch action或commit来更新数据。</p>
+<p><code>React</code>：Reduxj坚持不可变数据，只能通过dispatch action，本质上是新的state替换掉旧的state。</p>
+<h3 id="性能优化机制"><a href="#性能优化机制" class="headerlink" title="性能优化机制"></a>性能优化机制</h3><p><code>Vue</code>：<code>Vue</code>的响应式系统自动优化，通过依赖追踪实现精准更新，但是在大型应用中，过多的watcher可能会导致性能压力。vue使用虚拟DOM和<a href="/2022/02/24/vue/diff%E7%AE%97%E6%B3%95/" title="diff算法">diff算法</a>，vue在列表对比时采用两端到中间的方式更加高效。</p>
+<p><code>React</code>：React需要手动优化，通过<code>PureComponent</code>、<code>shouldComponentUpdate</code>或<code>React.memo</code>控制渲染，虽然更加可控，但也增加了开发者的负担。react同样使用虚拟DOM和diff算法。</p>
+<h3 id="生态系统"><a href="#生态系统" class="headerlink" title="生态系统"></a>生态系统</h3><p><code>Vue</code>：<code>Vue</code>官方提供路由、状态管理等全家桶工具，开箱即用性更强，适合快速开发中小型项目。</p>
+<p><code>React</code>：React生态更加依赖社区，配合Next.js、React Native等可构建跨平台应用。。</p>
 <h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><p><code>Vue</code>：<code>Vue</code>提供了<code>Vue Router</code>作为官方的路由解决方案，集成度高和使用方便。</p>
 <p><code>React</code>：React没有官方路由库，通常使用React Router作为路由的解决方案。</p>
-<h3 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h3><p><code>Vue</code>：<code>Vue</code>提供了<code>Vuex</code>作为官方的状态管理库，适用于大型应用的状态管理。</p>
-<p><code>React</code>：React没有官方的状态管理库，通常使用<code>Redux</code>或者<code>MobX</code>作为状态管理的解决方案。</p>
-<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p><code>Vue</code>：<code>Vue</code>的性能表现优异，尤其在处理复杂的视图和大量数据时，得益于其虚拟DOM和<a href="/2022/02/24/vue/diff%E7%AE%97%E6%B3%95/" title="diff算法">diff算法</a>。</p>
-<p><code>React</code>：React也通过虚拟DOM来提高性能，并且具有较好的渲染性能。</p>
-<h3 id="生态系统"><a href="#生态系统" class="headerlink" title="生态系统"></a>生态系统</h3><p><code>Vue</code>：<code>Vue</code>的生态系统相对完整，提供了<code>Vue CLI</code>、<code>Vue Router</code>、<code>VueX</code>等官方工具库，开发者可以快速上手并构建应用。</p>
-<p><code>React</code>：React的生态系统更加庞大和多样化，开发者可以根据需求选择不同的库和工具。</p>
 
       
       
@@ -304,7 +302,7 @@
   </div>
 </article>
 
-  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3%E4%B8%8E%E5%AE%9A%E4%BD%8D"><span class="article-toc-text">设计思想与定位</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95-vs-JSX"><span class="article-toc-text">模板语法 vs JSX</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="article-toc-text">数据绑定</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#UI%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="article-toc-text">UI更新策略</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="article-toc-text">路由</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86"><span class="article-toc-text">状态管理</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%80%A7%E8%83%BD"><span class="article-toc-text">性能</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%94%9F%E6%80%81%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">生态系统</span></a></li></ol>
+  <ol class="article-toc"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5"><span class="article-toc-text">核心设计理念</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95-vs-JSX"><span class="article-toc-text">模板语法 vs JSX</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86"><span class="article-toc-text">响应式数据管理</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86"><span class="article-toc-text">状态管理</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%9C%BA%E5%88%B6"><span class="article-toc-text">性能优化机制</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E7%94%9F%E6%80%81%E7%B3%BB%E7%BB%9F"><span class="article-toc-text">生态系统</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="article-toc-text">路由</span></a></li></ol>
   
 <nav id="article-nav">
   
