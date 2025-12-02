@@ -240,7 +240,7 @@
 <h3 id="响应式数据管理"><a href="#响应式数据管理" class="headerlink" title="响应式数据管理"></a>响应式数据管理</h3><p><code>Vue</code>：vue基于响应式系统，通过proxy或Object.defineProperty来实现数据监听，数据变动时会自动更新相关视图，使用<code>v-model</code>可使数据双向绑定。vue的响应式粒度到属性级别，自动追踪依赖。</p>
 <p><code>React</code>：React采用单向数据流，需手动调用setState或Hooks触发更新，并强调不可变数据理念。React以组件为单位重渲染，需显示声明依赖。</p>
 <h3 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h3><p><code>Vue</code>：<code>Vue</code>的<code>Vuex</code>数据可变，组件可直接dispatch action或commit来更新数据。</p>
-<p><code>React</code>：Reduxj坚持不可变数据，只能通过dispatch action，本质上是新的state替换掉旧的state。</p>
+<p><code>React</code>：Redux坚持不可变数据，只能通过dispatch action，本质上是新的state替换掉旧的state。</p>
 <h3 id="性能优化机制"><a href="#性能优化机制" class="headerlink" title="性能优化机制"></a>性能优化机制</h3><p><code>Vue</code>：<code>Vue</code>的响应式系统自动优化，通过依赖追踪实现精准更新，但是在大型应用中，过多的watcher可能会导致性能压力。vue使用虚拟DOM和<a href="/2022/02/24/vue/diff%E7%AE%97%E6%B3%95/" title="diff算法">diff算法</a>，vue在列表对比时采用两端到中间的方式更加高效。</p>
 <p><code>React</code>：React需要手动优化，通过<code>PureComponent</code>、<code>shouldComponentUpdate</code>或<code>React.memo</code>控制渲染，虽然更加可控，但也增加了开发者的负担。react同样使用虚拟DOM和diff算法。</p>
 <h3 id="生态系统"><a href="#生态系统" class="headerlink" title="生态系统"></a>生态系统</h3><p><code>Vue</code>：<code>Vue</code>官方提供路由、状态管理等全家桶工具，开箱即用性更强，适合快速开发中小型项目。</p>
